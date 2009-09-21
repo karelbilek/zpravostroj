@@ -1,0 +1,137 @@
+---
+wanted:
+    - articleBody
+    - perex
+    - clanek
+    - opener
+    - bbtext
+    - d-perex
+    - d-text
+    - fulltitle
+    - text
+    - b_s_news_article_content
+    - box_article_text
+    - boxContent
+    - content
+not_wanted:
+    - equ-img
+    - ad
+    - time
+    - time-date
+    - datum
+    - authors
+    - articleVideo
+    - acmDescription
+    - related
+    - shareWin
+    - shareLink
+    - shareBox
+    - articlePhotos
+    - acmAuthor
+    - prep-3
+    - prep-2
+    - prep-1
+    - hlavicka
+    - hlavni-menu
+    - pata
+    - reklamni-sloupec
+    - cl
+    - lista-content
+    - cas
+    - info
+    - right
+    - clear
+    - img
+    - author
+    - autor
+    - bookmarky-dolni
+    - akce
+    - right-part width219
+    - equip-tv
+    - moot2
+    - d-prime-odkazy2
+    - tag
+    - tagy
+    - tags
+    - d-elements-a-foto
+    - d-elements-a
+    - d-tools
+    - adfox-12
+    - fr
+    - img
+    - desc
+    - desc2
+    - social-bookmark-bottom social-bookmark-c3
+    - complete not4bbtext
+    - complete  not4bbtext
+    - tit not4bbtext
+    - tit  not4bbtext
+    - det-txt box
+    - det-txt  box
+    - tools
+    - form_email
+    - social-bookmarking
+    - wide-square
+    - chatbox
+    - table_box_top
+    - article_box_big_image
+    - reklama_box_standard
+    - article_box_big_baner
+    - article_box_right_coment
+    - comment_table_box
+    - background_inside
+    - sidebordercontent
+    - sideborderblock
+    - casopis
+    - impuls
+    - pravy-sloupec
+    - casopis_side
+    - jeden_tyden
+    - lista_top
+    - partHeader
+    - reklama_3
+    - reklama_2
+    - reklama_1
+    - artTime
+    - artAuthors
+    - textovytip
+    - related
+    - cb
+    - reklama-popis not4bbtext
+    - sklikContent
+    - ads
+    - relatedContent
+    - adRectangle
+    - adFull
+    - date
+    - photo
+    - photolist
+    - box modry levy fotogalerie
+    - wallpaper
+    - tip-col
+    - ad-col
+    - box special
+    - box modry video
+    - adfox-12
+    - box tv-program
+    - etarget
+    - r-head
+    - r-body
+    - moot2
+    - logo-moot
+    - moot-tit
+    - nr
+    - b-box
+    - hlavniz
+    - neprehlednete
+    - b-box prep-1
+    - self-promo
+    - eyes
+    - akce
+    - acomware
+    - clear
+    - box aukce
+    - forum
+    - features
+    - pata
+    - patka
