@@ -10,3 +10,5 @@ I guess it's all in GNU GPL v2, because it uses some chunks of GPL code now and 
 if you really want to use it, install TectoMT, put Zpravostroj/Modules into PERL5LIB and PERLLIB somehow, set some of the configure.yaml stuff like RSS and database, and ... do whatever you like, if you are lucky enough to figure out how to run it. and since it doesn't have any coherent output - YET - you probably won't be lucky enough.
 
 but you can't expect writing long readme from me now, can you?
+
+thats all for now I guess
