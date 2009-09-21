@@ -17,7 +17,7 @@ sub split_size{my $r=shift;my @ol=split (" ", $r);return scalar @ol;}
 
 sub utf8_array_to_hash {
 	my @array = @_;
-	my %hash = map ((decode("utf8", $_)=>1), @{$arrayref});
+	my %hash = map ((decode("utf8", $_)=>1), @array);
 	return %hash;
 }
 
