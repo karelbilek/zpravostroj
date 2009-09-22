@@ -57,7 +57,8 @@ sub is_word {
 
 sub is_banned {
 	if (!$banned_read) {
-		%banned=utf8_array_to_hash(@{load_yaml_file("information/banned_words.yaml")});
+		my @array = @{load_yaml_file("informations/banned_words.yaml")};
+		@banned{@array}=(1) x @array;
 		$banned_read=1;
 	}
 	my $what=shift;
