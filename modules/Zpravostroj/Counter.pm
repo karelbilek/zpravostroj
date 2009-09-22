@@ -26,13 +26,13 @@ my $max_first_themes = 15;
 	
 sub clean_subthemes {
 	
-	my $hashref = shift;
+	my $hash_ref = shift;
 
-	foreach my $theme (keys %themes) {
+	foreach my $theme (keys %$hash_ref) {
 			#keys are generated in the beginning, so it has to test existence again
-		if ($themes{$theme}) {
+		if ($hash_ref->{$theme}) {
 			foreach(allSubThemes(" ",$theme)) {
-				delete $themes{$_};
+				delete $hash_ref->{$_};
 			}
 
 		}
@@ -40,36 +40,36 @@ sub clean_subthemes {
 }
 
 sub remember_forms {
-	my $formsref = shift;
+	my $forms_ref = shift;
 	
 	my @last_words_copy = @_;
 	
 	while (@last_words_copy) {
 		my $joined = join(" ", map($_->{lemma}, @last_words_copy));
-		$forms{$joined} = join("_", map($_->{form}, @last_words_copy)) unless defined $forms{$joined};
+		$forms_ref->{$joined} = join("_", map($_->{form}, @last_words_copy)) unless defined $forms_ref->{$joined};
 		shift @last_words_copy;
 	}
 }
 
 sub just_first {
 	#take just first N stuff, based on score
-	my $hashref = shift;
+	my $themes_ref = shift;
 	
 	my $n = shift;
 	
 	my $it = 0;
-	foreach my $key (sort {$themes{$b}<=>$themes{$a}} keys %themes) {
+	foreach my $key (sort {$themes_ref->{$b}<=>$themes_ref->{$a}} keys %$themes_ref) {
 		$it++;
 		if ($it > $n) {
-			delete ($themes{$key});
+			delete ($themes_ref->{$key});
 		}
 	}
 }
 
 sub add {
-	my $formsref = shift;
+	my $forms_ref = shift;
 	
-	my $themeref = shift;
+	my $themes_ref = shift;
 	
 	my @normal_words = @_;
 	
@@ -79,17 +79,17 @@ sub add {
 		my $joined = join (" ", @normal_words);
 		
 		my $length;
-		if ($forms{$joined}){
+		if ($forms_ref->{$joined}){
 				#!!!!! pozor pozor!! achtung bitte!
 				# the length of the WHOLE FORM - with all those "lost forms" before - gets counted
 				# but it gets counted to the LEMMA version in %themes hash!
-			$length = split_size($forms{$joined});
+			$length = split_size($forms_ref->{$joined});
 			$length = 1 unless $length;
 		} else {
 			$length = @normal_words;
 		}
 				#here - $joined is LEMMA!!
-        ($themes{$joined})+=2-(1/$length);
+        ($themes_ref->{$joined})+=2-(1/$length);
 
         shift @normal_words;
     }
@@ -97,23 +97,23 @@ sub add {
 }
 
 sub count_node {
-	my $named_entitiesref = shift;
+	my $named_entities_ref = shift;
 	
-	my $themesref = shift;
+	my $themes_ref = shift;
 	
-	my $formsref = shift;
+	my $forms_ref = shift;
 	
-	my $last_wordsref = shift;
+	my $last_words_ref = shift;
 	
-	my $unused_formsref = shift;
+	my $unused_forms_ref = shift;
 	
 	my $node = shift;
 		
-	if ($node->get_deref_attr('m.rf')) {
+	if ($node->get_de_ref_attr('m.rf')) {
 		#it is a named entity.
 		my $type;
 		if (($type=($node->get_attr('ne_type'))) and (length(my $name = $node->get_attr('normalized_name'))>3) and ($type =~ /^(g|m|q|P|ps)/)) {
-			add(\%forms, \%named_entities, $name); 
+			add($forms_ref, $named_entities_ref, $name); 
 		}
 	} elsif (my $lemma = ($node->get_attr('lemma'))) {
 		#it is a word
@@ -122,15 +122,15 @@ sub count_node {
 			#the one that I like
 			my $form = ($node->get_attr('form'));
 
-			push (@last_words, {lemma=>$lemma_b, form=>$unused_forms.$form});
-			$unused_forms = "";
+			push (@$last_words_ref, {lemma=>$lemma_b, form=>$unused_forms_ref.$form});
+			$$unused_forms_ref = "";
 					
-			if (@last_words > $max_length) {
-				shift @last_words;
+			if (@$last_words_ref > $max_length) {
+				shift @$last_words_ref;
 			}
 			
-			remember_forms(\%forms, @last_words);
-			add(\%forms, \%themes, map($_->{lemma}, @last_words));
+			remember_forms($forms_ref, @$last_words_ref);
+			add($forms_ref, $themes_ref, map($_->{lemma}, @$last_words_ref));
 				#theoretically, I can rewrite this to work on the whole @last_words
 				# BUT... I use the same procedure on entities and it would probably not work
 				# I will try it maybe someday, but not today
@@ -139,12 +139,12 @@ sub count_node {
 		} else {
 			if (is_word($node->get_attr('form'))) {
 				#"a", "nebo", "který" ...
-				$unused_forms=$unused_forms.$node->get_attr('form')." ";		
+				$unused_forms_ref=$$unused_forms_ref.$node->get_attr('form')." ";		
 			}
 		}
 	}
     if (my @children = ($node->get_children)) {
-        map (count_node(\%named_entities, \%themes, \%forms, \@last_words, \$unused_forms, $_), @children);
+        map (count_node($named_entities_ref, $themes_ref, $forms_ref, $last_words_ref, $unused_forms_ref, $_), @children);
     }
 }
 
