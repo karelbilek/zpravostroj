@@ -39,6 +39,19 @@ sub clean_subthemes {
 	}
 }
 
+sub remember_forms {
+	my $formsref = shift;
+	my %forms = %$formsref;
+	
+	my @last_words_copy = @_;
+	
+	while (@last_words_copy) {
+		my $joined = join(" ", map($_->{lemma}, @last_words_copy));
+		$forms{$joined} = join("_", map($_->{form}, @last_words_copy)) unless defined $forms{$joined};
+		shift @last_words_copy;
+	}
+}
+
 sub just_first {
 	#take just first N stuff, based on score
 	my $hashref = shift;
@@ -109,7 +122,7 @@ sub count_node {
 		#it is a named entity.
 		my $type;
 		if (($type=($node->get_attr('ne_type'))) and (length(my $name = $node->get_attr('normalized_name'))>3) and ($type =~ /^(g|m|q|P|ps)/)) {
-			$add(\%forms, \%named_entities, $name); 
+			add(\%forms, \%named_entities, $name); 
 		}
 	} elsif (my $lemma = ($node->get_attr('lemma'))) {
 		#it is a word
@@ -118,15 +131,19 @@ sub count_node {
 			#the one that I like
 			my $form = ($node->get_attr('form'));
 
-			push (@last_words, {"lemma" => $lemma_b, "form" => $unused_forms.$form});
+			push (@last_words, {lemma=>$lemma_b, form=>$unused_forms.$form});
 			$unused_forms = "";
 					
 			if (@last_words > $max_length) {
 				shift @last_words;
 			}
 			
-			&$remember_forms;
-			&$add(\%themes, map($_->[0], @last_words));
+			remember_forms(\%forms, @last_words);
+			add(\%themes, map($_->{lemma}, @last_words));
+				#theoretically, I can rewrite this to work on the whole @last_words
+				# BUT... I use the same procedure on entities and it would probably not work
+				# I will try it maybe someday, but not today
+				# you will start to like it, eventually
 		} else {
 			if (is_word($node->get_attr('form'))) {
 				#"a", "nebo", "který" ...
@@ -135,7 +152,7 @@ sub count_node {
 		}
 	}
     if (my @children = ($node->get_children)) {
-        map ($count_node(\%named_entities, \%themes, \%forms, \@last_words, \$unused_forms, $_), @children);
+        map (count_node(\%named_entities, \%themes, \%forms, \@last_words, \$unused_forms, $_), @children);
     }
 }
 
@@ -168,8 +185,8 @@ sub count_TMT {
 		my $n_root = $bundle->get_tree('SCzechN');
 		my $m_root = $bundle->get_tree('SCzechM');
 		
-		&$count_node(\%named_entities, \%themes, \%forms, \@last_words, \$unused_forms, $n_root);
-		&$count_node(\%named_entities, \%themes, \%forms, \@last_words, \$unused_forms, $m_root);
+		count_node(\%named_entities, \%themes, \%forms, \@last_words, \$unused_forms, $n_root);
+		count_node(\%named_entities, \%themes, \%forms, \@last_words, \$unused_forms, $m_root);
 	
 	}
 		
