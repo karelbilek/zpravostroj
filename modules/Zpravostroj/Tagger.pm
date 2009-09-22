@@ -11,8 +11,6 @@ use utf8;
 use TectoMT::Scenario;
 use TectoMT::Document;
 
-use YAML::XS;
-
 use Zpravostroj::Other;
 
 use base 'Exporter';
@@ -35,8 +33,8 @@ sub save_words {
 	my $node = shift;
 	
 	if (my $lemma = ($node->get_attr('lemma'))) {
-		if (my $lemma_b = (make_normal_word($lemma))) {
-			push (@{$words_ref},{lemma=>$lemma, form=>${$unused_forms_ref}.($node->get_attr('form'))});
+		if (my $lemma_better = (make_normal_word($lemma))) {
+			push (@{$words_ref},{lemma=>$lemma_better, form=>${$unused_forms_ref}.($node->get_attr('form'))});
 			${$unused_forms_ref} = "";
 		} else {
 			if (is_word($node->get_attr('form'))) {
@@ -71,13 +69,13 @@ sub doc_to_YAML {
 	my $document = shift;
 	my @words;
 	my @named;
-	my $unused_forms;
+	my $unused_forms="";
 	foreach my $bundle ( $document->get_bundles() ) {
 		save_words(\@words, \$unused_forms, $bundle->get_tree('SCzechM'));
 		save_named(\@named, $bundle->get_tree('SCzechN'));
 	}
 	my %reshash = (words=>\@words, named=>\@named);
-	return Dump(\%reshash);
+	return \%reshash;
 }
 
 my $scenario_initialized = 0;
