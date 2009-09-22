@@ -11,13 +11,14 @@ use utf8;
 use TectoMT::Scenario;
 use TectoMT::Document;
 
+use YAML::XS;
+
 use Zpravostroj::Other;
 
 use base 'Exporter';
 our @EXPORT = qw( tag_texts);
 
-
-
+my @wanted_named = qw(g m q P ps);
 
 sub create_new_document{
 	my $text = shift;
@@ -28,15 +29,55 @@ sub create_new_document{
 	return $document;
 }
 
+sub save_words {
+	my $words_ref = shift;
+	my $unused_forms_ref = shift;
+	my $node = shift;
+	
+	if (my $lemma = ($node->get_attr('lemma'))) {
+		if (my $lemma_b = (make_normal_word($lemma))) {
+			push (@{$words_ref},{lemma=>$lemma, form=>${$unused_forms_ref}.($node->get_attr('form'))});
+			${$unused_forms_ref} = "";
+		} else {
+			if (is_word($node->get_attr('form'))) {
+				#"a", "nebo", "který" ...
+				${$unused_forms_ref}=${$unused_forms_ref}.$node->get_attr('form')." ";		
+			}
+		}
+	}
+	foreach my $child ($node->get_children) {
+		save_words($words_ref, $unused_forms_ref, $child);
+	}
+}
+
+sub save_named {
+	my $named_ref = shift;
+	my $node = shift;
+	
+	if ($node->get_deref_attr('m.rf')) {
+		#it is a named entity.
+		my $type;
+		if (($type=($node->get_attr('ne_type'))) and (length(my $name = $node->get_attr('normalized_name'))>3) and ($type =~ "/^".join("|", @wanted_named)."/")) {
+			push (@{$named_ref}, $name);
+		}
+	}
+	
+	foreach my $child ($node->get_children) {
+		save_named($named_ref, $child);
+	}
+}
+
 sub doc_to_YAML {
 	my $document = shift;
-	my %forms;
-	my @entities;
-	
-	
-	
-	
-	
+	my @words;
+	my @named;
+	my $unused_forms;
+	foreach my $bundle ( $document->get_bundles() ) {
+		save_words(\@words, \$unused_forms, $bundle->get_tree('SCzechM'));
+		save_named(\@named, $bundle->get_tree('SCzechN'));
+	}
+	my %reshash = (words=>\@words, named=>\@named);
+	return Dump(\%reshash);
 }
 
 my $scenario_initialized = 0;
