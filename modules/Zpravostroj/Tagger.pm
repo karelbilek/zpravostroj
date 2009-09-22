@@ -1,4 +1,4 @@
-package News::Tagger;
+package Zpravostroj::Tagger;
 
 use 5.008;
 use strict;
@@ -11,6 +11,7 @@ use utf8;
 use TectoMT::Scenario;
 use TectoMT::Document;
 
+use Zpravostroj::Other;
 
 use base 'Exporter';
 our @EXPORT = qw( tag_texts);
@@ -19,7 +20,6 @@ our @EXPORT = qw( tag_texts);
 
 
 sub create_new_document{
-	use TectoMT::Document;
 	my $text = shift;
 	
 	my $document = TectoMT::Document->new();
@@ -29,13 +29,14 @@ sub create_new_document{
 }
 
 sub doc_to_YAML {
-	use TectoMT::Document;
-	
 	my $document = shift;
-	my $res="";
-	open my $resh, '>', \$res;
-	$document->serialize_to(\*$resh);
-	return decode("utf8", $res);
+	my %forms;
+	my @entities;
+	
+	
+	
+	
+	
 }
 
 my $scenario_initialized = 0;
