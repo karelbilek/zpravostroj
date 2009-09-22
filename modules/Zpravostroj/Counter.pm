@@ -6,6 +6,7 @@ use warnings;
 use Zpravostroj::Other;
 use TectoMT::Document;
 use TectoMT::Bundle;
+use File::Temp;
 
 use Encode;
 
@@ -157,26 +158,34 @@ sub count_node {
 }
 
 sub count_TMT {
-
+	
+	my $text = shift;
+	
+	my $tmp = File::Temp->new( UNLINK => 1);
+	print $tmp $text;
+		#this is quite stupid but that's the way TectoMT is ;_°
+	
+	my $document = TectoMT::Document->new( { 'filename' => $tmp->filename } );
+	$document->set_attr("czech_source_text", $text);
+	
+	
 	
 	my %named_entities;
 
 	my %themes;
 		#hashes with scores of entites
-		#lemma=>score
-		
+		#lemma=>score	
+			
 	my %forms;
-		#hash, used to retrieve form from lemma
-		
+		#hash, used to retrieve form from lemma	
+			
 	my @last_words;
-
-
 	my $unused_forms="";
-		#forms, that had not been used
+		#forms, that had not been used	
+		
 	
-	my $text = shift;
-	my $document = TectoMT::Document->new;
-	$document->set_attr("czech_source_text", $text);
+	
+	
 	
 	foreach my $bundle ( $document->get_bundles() ) {
 		
