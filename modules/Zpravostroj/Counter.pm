@@ -34,7 +34,6 @@ sub clean_subthemes {
 			foreach(allSubThemes(" ",$theme)) {
 				delete $hash_ref->{$_};
 			}
-
 		}
 	}
 }
@@ -109,7 +108,7 @@ sub count_node {
 	
 	my $node = shift;
 		
-	if ($node->get_de_ref_attr('m.rf')) {
+	if ($node->get_deref_attr('m.rf')) {
 		#it is a named entity.
 		my $type;
 		if (($type=($node->get_attr('ne_type'))) and (length(my $name = $node->get_attr('normalized_name'))>3) and ($type =~ /^(g|m|q|P|ps)/)) {
