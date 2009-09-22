@@ -9,7 +9,7 @@ sub doit {
 sub doit2 {
 	my $hashref = shift;
 	my %hash=%$hashref;
-	$hashref->{ping} = "pink";
+	$hash{ping} = "pink";
 }
 
 # sub doit3 {
@@ -17,7 +17,12 @@ sub doit2 {
 # 	$hashref->{ping} = "pink";
 # }
 
-my %hash;
-$hash{ping}="pong";
-doit2 \%hash;
-print $hash{ping};
+sub shitsucks {
+
+	my %hash;
+	$hash{ping}="pong";
+	doit2 \%hash;
+	print $hash{ping};
+}
+
+shitsucks;

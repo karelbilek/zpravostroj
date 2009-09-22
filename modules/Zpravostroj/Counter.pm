@@ -27,7 +27,6 @@ my $max_first_themes = 15;
 sub clean_subthemes {
 	
 	my $hashref = shift;
-	my %themes = %$hashref;
 
 	foreach my $theme (keys %themes) {
 			#keys are generated in the beginning, so it has to test existence again
@@ -42,7 +41,6 @@ sub clean_subthemes {
 
 sub remember_forms {
 	my $formsref = shift;
-	my %forms = %$formsref;
 	
 	my @last_words_copy = @_;
 	
@@ -56,7 +54,6 @@ sub remember_forms {
 sub just_first {
 	#take just first N stuff, based on score
 	my $hashref = shift;
-	my %themes =%$hashref;
 	
 	my $n = shift;
 	
@@ -71,10 +68,8 @@ sub just_first {
 
 sub add {
 	my $formsref = shift;
-	my %forms = %$formsref;
 	
 	my $themeref = shift;
-	my %themes = %$themeref;
 	
 	my @normal_words = @_;
 	
@@ -103,19 +98,14 @@ sub add {
 
 sub count_node {
 	my $named_entitiesref = shift;
-	my %named_entities = %$named_entitiesref;
 	
 	my $themesref = shift;
-	my %themes = %$themesref;
 	
 	my $formsref = shift;
-	my %forms = %$formsref;
 	
 	my $last_wordsref = shift;
-	my @last_words = @$last_wordsref;
 	
 	my $unused_formsref = shift;
-	my $unused_forms = $$unused_formsref;
 	
 	my $node = shift;
 		
@@ -145,7 +135,7 @@ sub count_node {
 				# BUT... I use the same procedure on entities and it would probably not work
 				# I will try it maybe someday, but not today
 				# you will start to like it, eventually
-			print keys %themes;
+			
 		} else {
 			if (is_word($node->get_attr('form'))) {
 				#"a", "nebo", "který" ...
