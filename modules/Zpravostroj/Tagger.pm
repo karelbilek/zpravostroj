@@ -39,7 +39,7 @@ sub save_words {
 		} else {
 			if (is_word($node->get_attr('form'))) {
 				#"a", "nebo", "který" ...
-				${$unused_forms_ref}=${$unused_forms_ref}.$node->get_attr('form')." ";		
+				${$unused_forms_ref}=${$unused_forms_ref}.$node->get_attr('form')."_";		
 			}
 		}
 	}
