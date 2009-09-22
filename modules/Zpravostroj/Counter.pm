@@ -13,7 +13,7 @@ use Encode;
 
 
 use base 'Exporter';
-our @EXPORT = qw( countTMT);
+our @EXPORT = qw( count_TMT);
 
 my $max_length=10;
 	#max. length of THEME
@@ -140,11 +140,12 @@ sub count_node {
 			}
 			
 			remember_forms(\%forms, @last_words);
-			add(\%themes, map($_->{lemma}, @last_words));
+			add(\%forms, \%themes, map($_->{lemma}, @last_words));
 				#theoretically, I can rewrite this to work on the whole @last_words
 				# BUT... I use the same procedure on entities and it would probably not work
 				# I will try it maybe someday, but not today
 				# you will start to like it, eventually
+			print keys %themes;
 		} else {
 			if (is_word($node->get_attr('form'))) {
 				#"a", "nebo", "který" ...
@@ -163,6 +164,7 @@ sub count_TMT {
 	
 	my $tmp = File::Temp->new( UNLINK => 1);
 	print $tmp $text;
+	close $tmp;
 		#this is quite stupid but that's the way TectoMT is ;_°
 	
 	my $document = TectoMT::Document->new( { 'filename' => $tmp->filename } );
@@ -198,7 +200,7 @@ sub count_TMT {
 		count_node(\%named_entities, \%themes, \%forms, \@last_words, \$unused_forms, $m_root);
 	
 	}
-		
+	
 	just_first(\%named_entities, $max_first_entities);
 	just_first(\%themes, $max_first_themes);
     

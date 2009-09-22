@@ -1,9 +1,9 @@
 use strict;
 use warnings;
 
-use Zpravostroj::Counter;
+use Zpravostroj::Counter qw(count_TMT);
 
-$lol = '<?xml version="1.0" encoding="utf-8"?>
+my $sthg = '<?xml version="1.0" encoding="utf-8"?>
 
 <tmt_document xmlns="http://ufal.mff.cuni.cz/pdt/pml/">
  <head>
@@ -190,5 +190,4 @@ $lol = '<?xml version="1.0" encoding="utf-8"?>
 </tmt_document>
 ';
 
-
-CountTMT
+print count_TMT($sthg);
