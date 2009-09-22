@@ -2,8 +2,10 @@ use strict;
 use warnings;
 use utf8;
 
+use YAML::XS qw(DumpFile);
+
 use Zpravostroj::Tagger;
 
 my ($res) = tag_texts('Do týdne má být jasno, zda policisté obviní čtveřici výtržníků za útok na šéfa ODS Mirka Topolánka. Mladíci napadli expremiéra při srpnovém mítinku v Hustopečích u Brna. A později vypověděli, že si je najal někdo z týmu občanských demokratů. V úterý se však objevily spekulace, že za napadením stojí ČSSD. Ministr vnitra Martin Pecina údajně u vedení ODS apeloval, aby bylo stáhnuto trestní oznámení.Jenže ani takový krok by nezajistil konec vyšetřování, který měl Pecina prosazovat v zájmu hladkého průběhu volební kampaně."Nemělo by to žádný vliv. Jako ministr by si to mohl zjistit. Trestní řízení pokračuje bez ohledu na to, zda pan Topolánek trestní oznámení stáhne, či nikoliv," konstatuje pro on-line deník TÝDEN.CZ advokátka podezřelých Klára Slámová.Advokátka Klára Slámová zastupuje čtyři muže, kteří zaútočili na šéfa ODS Topolánka. "O zásahu ministra jsem se dozvěděla z médií. Ale jsme za ni rádi," připouští právnička v rozhovoru pro on-line deník TÝDEN.CZ.Vůbec ne, i kdyby bylo stáhnuto trestní oznámení, tak to nemá žádný vliv. Tak se dá postupovat pouze v určitých, přesně právně vymezených trestních řízeních.S námi to hlavně nekonzultoval. Dozvěděla jsem se to až z médií. A za jeho intervenci jsme rádi. Má pravdu v tom, že by se to mělo kvalifikovat jen jako přestupek."Náš cíl je samozřejmě, aby jejich čin byl kvalifikován jako přestupek. Za pomoc jsme rádi, s nikým jsme ji ale nedohadovali," dodává Slámová.Vyšetřování případu zatím stále pokračuje. Dozorující státní zástupkyně Anežka Forstová se pro agenturu ČTK nechala slyšet, že do konce příštího týdne by mělo být jasno, zda padnou nějaká obvinění.Stěžejním pro konečné rozhodnutí bude, zda na Topolánka létala pouze vajíčka (jak tvrdí útočníci), nebo i kameny.Aféru znovu rozvířil článek Lidových novin, v němž bylo uvedeno, že ministr Pecina chtěl po Topolánkovi, aby stáhl trestní oznámení.Pecina takovou interpretaci odmítá. "Nikdy jsem předsedu ODS aktivně nekontaktoval. Jsem šokován způsobem, kterým se po více než dvou týdnech Mirek Topolánek či někdo z jeho okolí snaží celou záležitost dezinterpretovat," zlobí se Pecina.');
 
-print $res;
+DumpFile("tagger.dump",$res);

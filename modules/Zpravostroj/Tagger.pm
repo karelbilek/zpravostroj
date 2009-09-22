@@ -65,7 +65,7 @@ sub save_named {
 	}
 }
 
-sub doc_to_YAML {
+sub doc_to_hash {
 	my $document = shift;
 	my @words;
 	my @named;
@@ -83,6 +83,8 @@ my $scenario;
 
 sub tag_texts {
 	
+	open my $saveerr, ">&STDERR";
+	open STDERR, '>', "/dev/null";
 	unless ($scenario_initialized) {
 		$scenario = TectoMT::Scenario->new({'blocks'=> [ qw(SCzechW_to_SCzechM::Sentence_segmentation SCzechW_to_SCzechM::Tokenize  SCzechW_to_SCzechM::TagHajic SCzechM_to_SCzechN::Czech_named_ent_SVM_recognizer) ]});
 		$scenario_initialized = 1;
@@ -92,16 +94,15 @@ sub tag_texts {
 
 	my @documents = map(create_new_document($_), @texts);
 	
-	open my $saveerr, ">&STDERR";
-	open STDERR, '>', "/dev/null";
+
 
 	$scenario->apply_on_tmt_documents(@documents);
 	
 	
 	open STDERR, ">&", $saveerr;
 	
-	my @YAMLs = map (doc_to_YAML($_), @documents);
-	return @YAMLs;
+	my @hashes = map (doc_to_hash($_), @documents);
+	return @hashes;
 }
 
 1;

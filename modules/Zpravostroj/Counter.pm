@@ -4,16 +4,11 @@ use strict;
 use warnings;
 
 use Zpravostroj::Other;
-use TectoMT::Document;
-use TectoMT::Bundle;
-use File::Temp;
-
-use Encode;
 
 
 
 use base 'Exporter';
-our @EXPORT = qw( count_TMT);
+our @EXPORT = qw( count_themes);
 
 my $max_length=10;
 	#max. length of THEME
@@ -147,46 +142,41 @@ sub count_node {
     }
 }
 
-sub count_TMT {
+sub count_themes {
 	
-	my $text = shift;
-	
-	my $tmp = File::Temp->new( UNLINK => 1);
-	print $tmp $text;
-	close $tmp;
-		#this is quite stupid but that's the way TectoMT is ;_°
-	
-	my $document = TectoMT::Document->new( { 'filename' => $tmp->filename } );
-	$document->set_attr("czech_source_text", $text);
+	my $hash_ref = shift;
+	my %all_hash = %$hash_ref;
 	
 	
-	
-	my %named_entities;
-
-	my %themes;
+	my %scores;
 		#hashes with scores of entites
 		#lemma=>score	
 			
-	my %forms;
+	my %joined_forms;
 		#hash, used to retrieve form from lemma	
 			
 	my @last_words;
-	my $unused_forms="";
-		#forms, that had not been used	
+	
+	foreach my $word (@{$hash_ref->{words}}) {
+		push(@last_words, $word);
 		
-	
-	
-	
-	
-	foreach my $bundle ( $document->get_bundles() ) {
-		
-		Report::fatal("Evaluated bundle does not have SCzechN tree") unless ($bundle->contains_tree('SCzechN'));
-		Report::fatal("Evaluated bundle does not have SCzechM tree") unless ($bundle->contains_tree('SCzechM'));
-		my $n_root = $bundle->get_tree('SCzechN');
-		my $m_root = $bundle->get_tree('SCzechM');
-		
-		count_node(\%named_entities, \%themes, \%forms, \@last_words, \$unused_forms, $n_root);
-		count_node(\%named_entities, \%themes, \%forms, \@last_words, \$unused_forms, $m_root);
+		if (@last_words > $max_length) {
+			shift @last_words;
+		}
+
+		my @last_words_copy = @last_words;
+		while (@last_words_copy) {
+			my $joined_lemma = join(" ", map($_->{lemma}, @last_words_copy));
+			my $joined_form = join("_", map($_->{form}, @last_words_copy)); 
+			$joined_forms{$joined_lemma} = $joined_form unless defined $joined_forms{$joined_lemma};
+			
+			my $length = split_size($forms_ref->{$joined});
+			$length = 1 unless $length;
+			
+			$scores{$joined_lemma}+=2-(1/$length)
+			
+			shift @last_words_copy;
+		}
 	
 	}
 	

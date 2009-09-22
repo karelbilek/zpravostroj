@@ -13,7 +13,7 @@ use base 'Exporter';
 our @EXPORT = qw(split_size all_subthemes is_word is_banned make_normal_word);
 
 #workaround for weird split behaviour in scalar context
-sub split_size{my $r=shift;my @ol=split (" ", $r);return scalar @ol;}
+sub split_size{my $r=shift;my @ol=split (" |_", $r);return scalar @ol;}
 
 sub utf8_array_to_hash {
 	my @array = @_;
