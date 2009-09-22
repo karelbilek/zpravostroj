@@ -61,7 +61,7 @@ sub is_banned {
 		$banned_read=1;
 	}
 	my $what=shift;
-	return ($banned{$what});
+	return ($banned{lc($what)});
 }
 
 sub make_normal_word {
@@ -75,7 +75,7 @@ sub make_normal_word {
     $text =~ s/ *$//;
         #remove final space(s)
 	
-    return $text if (((length ($text))>=3) and !($banned{lc($text)}));
+    return $text if (((length ($text))>=3) and !(is_banned($text)));
 	"";
 }
 

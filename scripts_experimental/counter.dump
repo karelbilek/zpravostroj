@@ -1,0 +1,33 @@
+---
+- form: pro
+  lemma: pro
+- form: A za jeho
+  lemma: jeho
+- form: má být
+  lemma: mít být
+- form: u Brna
+  lemma: Brno
+- form: v Hustopečích
+  lemma: Hustopeče
+- form: Ministr
+  lemma: ministr
+- form: ČSSD
+  lemma: ČSSD
+- form: jsme za ni rádi
+  lemma: být rád
+- form: Mirek Topolánek
+  lemma: Mirek Topolánky
+- form: Do týdne
+  lemma: týden
+- form: Mirka Topolánka
+  lemma: Mirek Topolánek
+- form: stáhnuto trestní oznámení
+  lemma: stáhnout trestní oznámení
+- form: by to
+  lemma: být ten
+- form: Martin Pecina
+  lemma: Martin Pecina
+- form: Anežka Forstová
+  lemma: Anežka Forstová
+- form: Klára Slámová
+  lemma: Klára slámový
