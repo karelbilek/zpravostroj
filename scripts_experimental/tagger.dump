@@ -1,0 +1,577 @@
+---
+named:
+- Mirek
+- Mirek Topolánek
+- Topolánek
+- Hustopeče
+- Brno
+- ČSSD
+- Martin
+- Martin Pecina
+- Pecina
+- Pecina
+- Topolánky
+- Klára
+- Klára slámový
+- slámový
+- Klára
+- Klára slámový
+- slámový
+- Anežka
+- Anežka Forstová
+- Forstová
+- Pecina
+- Pecina
+- Mirek
+- Mirek Topolánky
+- Topolánky
+- Pecina
+words:
+- form: Do týdne
+  lemma: týden
+- form: má
+  lemma: mít
+- form: být
+  lemma: být
+- form: jasno
+  lemma: jasno
+- form: zda
+  lemma: zda
+- form: policisté
+  lemma: policista
+- form: obviní
+  lemma: obvinit
+- form: čtveřici
+  lemma: čtveřice
+- form: výtržníků
+  lemma: výtržník
+- form: za útok
+  lemma: útok
+- form: na šéfa
+  lemma: šéf
+- form: ODS
+  lemma: ODS
+- form: Mirka
+  lemma: Mirek
+- form: Topolánka
+  lemma: Topolánek
+- form: Mladíci
+  lemma: mladík
+- form: napadli
+  lemma: napadnout
+- form: expremiéra
+  lemma: expremiér
+- form: při
+  lemma: při
+- form: srpnovém
+  lemma: srpnový
+- form: mítinku
+  lemma: mítink
+- form: v Hustopečích
+  lemma: Hustopeče
+- form: u Brna
+  lemma: Brno
+- form: A později
+  lemma: pozdě
+- form: vypověděli
+  lemma: vypovědět
+- form: že si je najal
+  lemma: najmout
+- form: někdo
+  lemma: někdo
+- form: z týmu
+  lemma: tým
+- form: občanských
+  lemma: občanský
+- form: demokratů
+  lemma: demokrat
+- form: V úterý
+  lemma: úterý
+- form: se však
+  lemma: však
+- form: objevily
+  lemma: objevit
+- form: spekulace
+  lemma: spekulace
+- form: že za napadením
+  lemma: napadení
+- form: stojí
+  lemma: stát
+- form: ČSSD
+  lemma: ČSSD
+- form: Ministr
+  lemma: ministr
+- form: vnitra
+  lemma: vnitro
+- form: Martin
+  lemma: Martin
+- form: Pecina
+  lemma: Pecina
+- form: údajně
+  lemma: údajně
+- form: u vedení
+  lemma: vedení
+- form: ODS
+  lemma: ODS
+- form: apeloval
+  lemma: apelovat
+- form: aby
+  lemma: aby
+- form: bylo
+  lemma: být
+- form: stáhnuto
+  lemma: stáhnout
+- form: trestní
+  lemma: trestní
+- form: oznámení
+  lemma: oznámení
+- form: Jenže
+  lemma: jenže
+- form: ani
+  lemma: ani
+- form: takový
+  lemma: takový
+- form: krok
+  lemma: krok
+- form: by
+  lemma: být
+- form: nezajistil
+  lemma: zajistit
+- form: konec
+  lemma: konec
+- form: vyšetřování
+  lemma: vyšetřování
+- form: který
+  lemma: který
+- form: měl
+  lemma: mít
+- form: Pecina
+  lemma: Pecina
+- form: prosazovat
+  lemma: prosazovat
+- form: v zájmu
+  lemma: zájem
+- form: hladkého
+  lemma: hladký
+- form: průběhu
+  lemma: průběh
+- form: volební
+  lemma: volební
+- form: kampaně
+  lemma: kampaň
+- form: Nemělo
+  lemma: mít
+- form: by
+  lemma: být
+- form: to
+  lemma: ten
+- form: žádný
+  lemma: žádný
+- form: vliv
+  lemma: vliv
+- form: Jako
+  lemma: jako
+- form: ministr
+  lemma: ministr
+- form: by
+  lemma: být
+- form: si to
+  lemma: ten
+- form: mohl
+  lemma: moci
+- form: zjistit
+  lemma: zjistit
+- form: Trestní
+  lemma: trestní
+- form: řízení
+  lemma: řízení
+- form: pokračuje
+  lemma: pokračovat
+- form: bez
+  lemma: bez
+- form: ohledu
+  lemma: ohled
+- form: na to
+  lemma: ten
+- form: zda
+  lemma: zda
+- form: pan
+  lemma: pan
+- form: Topolánek
+  lemma: Topolánky
+- form: trestní
+  lemma: trestní
+- form: oznámení
+  lemma: oznámení
+- form: stáhne
+  lemma: stáhnout
+- form: či nikoliv
+  lemma: nikoliv
+- form: konstatuje
+  lemma: konstatovat
+- form: pro
+  lemma: pro
+- form: on line
+  lemma: linout
+- form: deník
+  lemma: deník
+- form: TÝDEN
+  lemma: týden
+- form: CZ advokátka
+  lemma: advokátka
+- form: podezřelých
+  lemma: podezřelý
+- form: Klára
+  lemma: Klára
+- form: Slámová
+  lemma: slámový
+- form: Advokátka
+  lemma: advokátka
+- form: Klára
+  lemma: Klára
+- form: Slámová
+  lemma: slámový
+- form: zastupuje
+  lemma: zastupovat
+- form: čtyři
+  lemma: čtyři
+- form: muže
+  lemma: muž
+- form: kteří
+  lemma: který
+- form: zaútočili
+  lemma: zaútočit
+- form: na šéfa
+  lemma: šéf
+- form: ODS
+  lemma: ODS
+- form: Topolánka
+  lemma: Topolána
+- form: O zásahu
+  lemma: zásah
+- form: ministra
+  lemma: ministr
+- form: jsem
+  lemma: být
+- form: se dozvěděla
+  lemma: dozvědět
+- form: z médií
+  lemma: médium
+- form: Ale
+  lemma: ale
+- form: jsme
+  lemma: být
+- form: za ni rádi
+  lemma: rád
+- form: připouští
+  lemma: připouštět
+- form: právnička
+  lemma: právník
+- form: v rozhovoru
+  lemma: rozhovor
+- form: pro
+  lemma: pro
+- form: on line
+  lemma: linout
+- form: deník
+  lemma: deník
+- form: TÝDEN
+  lemma: týden
+- form: CZ Vůbec
+  lemma: vůbec
+- form: ne i kdyby
+  lemma: kdyby
+- form: bylo
+  lemma: být
+- form: stáhnuto
+  lemma: stáhnout
+- form: trestní
+  lemma: trestní
+- form: oznámení
+  lemma: oznámení
+- form: tak
+  lemma: tak
+- form: to
+  lemma: ten
+- form: nemá
+  lemma: mít
+- form: žádný
+  lemma: žádný
+- form: vliv
+  lemma: vliv
+- form: Tak
+  lemma: tak
+- form: se dá
+  lemma: dát
+- form: postupovat
+  lemma: postupovat
+- form: pouze
+  lemma: pouze
+- form: v určitých
+  lemma: určitý
+- form: přesně
+  lemma: přesně
+- form: právně
+  lemma: právně
+- form: vymezených
+  lemma: vymezený
+- form: trestních
+  lemma: trestní
+- form: řízeních
+  lemma: řízení
+- form: S námi to
+  lemma: ten
+- form: hlavně
+  lemma: hlavně
+- form: nekonzultoval
+  lemma: konzultovat
+- form: Dozvěděla
+  lemma: dozvědět
+- form: jsem
+  lemma: být
+- form: se to
+  lemma: ten
+- form: až z médií
+  lemma: médium
+- form: A za jeho
+  lemma: jeho
+- form: intervenci
+  lemma: intervence
+- form: jsme
+  lemma: být
+- form: rádi
+  lemma: rád
+- form: Má
+  lemma: mít
+- form: pravdu
+  lemma: pravda
+- form: v tom
+  lemma: ten
+- form: že by
+  lemma: být
+- form: se to
+  lemma: ten
+- form: mělo
+  lemma: mít
+- form: kvalifikovat
+  lemma: kvalifikovat
+- form: jen
+  lemma: jen
+- form: jako
+  lemma: jako
+- form: přestupek
+  lemma: přestupek
+- form: Náš
+  lemma: můj
+- form: cíl
+  lemma: cíl
+- form: je
+  lemma: být
+- form: samozřejmě
+  lemma: samozřejmě
+- form: aby
+  lemma: aby
+- form: jejich
+  lemma: jeho
+- form: čin
+  lemma: čin
+- form: byl
+  lemma: být
+- form: kvalifikován
+  lemma: kvalifikovat
+- form: jako
+  lemma: jako
+- form: přestupek
+  lemma: přestupek
+- form: Za pomoc
+  lemma: pomoc
+- form: jsme
+  lemma: být
+- form: rádi
+  lemma: rád
+- form: s nikým
+  lemma: nikdo
+- form: jsme
+  lemma: být
+- form: ji ale
+  lemma: ale
+- form: nedohadovali
+  lemma: dohadovat
+- form: dodává
+  lemma: dodávat
+- form: Slámová
+  lemma: slámový
+- form: Vyšetřování
+  lemma: vyšetřování
+- form: případu
+  lemma: případ
+- form: zatím
+  lemma: zatím
+- form: stále
+  lemma: stále
+- form: pokračuje
+  lemma: pokračovat
+- form: Dozorující
+  lemma: dozorující
+- form: státní
+  lemma: státní
+- form: zástupkyně
+  lemma: zástupkyně
+- form: Anežka
+  lemma: Anežka
+- form: Forstová
+  lemma: Forstová
+- form: se pro
+  lemma: pro
+- form: agenturu
+  lemma: agentura
+- form: ČTK
+  lemma: ČTK
+- form: nechala
+  lemma: nechat
+- form: slyšet
+  lemma: slyšet
+- form: že do konce
+  lemma: konec
+- form: příštího
+  lemma: příští
+- form: týdne
+  lemma: týden
+- form: by
+  lemma: být
+- form: mělo
+  lemma: mít
+- form: být
+  lemma: být
+- form: jasno
+  lemma: jasno
+- form: zda
+  lemma: zda
+- form: padnou
+  lemma: padnout
+- form: nějaká
+  lemma: nějaký
+- form: obvinění
+  lemma: obvinění
+- form: Stěžejním
+  lemma: stěžejní
+- form: pro
+  lemma: pro
+- form: konečné
+  lemma: konečný
+- form: rozhodnutí
+  lemma: rozhodnutí
+- form: bude
+  lemma: být
+- form: zda
+  lemma: zda
+- form: na Topolánka
+  lemma: Topolánek
+- form: létala
+  lemma: létat
+- form: pouze
+  lemma: pouze
+- form: vajíčka
+  lemma: vajíčko
+- form: jak
+  lemma: jak
+- form: tvrdí
+  lemma: tvrdit
+- form: útočníci
+  lemma: útočník
+- form: nebo
+  lemma: nebo
+- form: i kameny
+  lemma: kámen
+- form: Aféru
+  lemma: aféra
+- form: znovu
+  lemma: znovu
+- form: rozvířil
+  lemma: rozvířit
+- form: článek
+  lemma: článek
+- form: Lidových
+  lemma: lidový
+- form: novin
+  lemma: novina
+- form: v němž
+  lemma: jenž
+- form: bylo
+  lemma: být
+- form: uvedeno
+  lemma: uvést
+- form: že ministr
+  lemma: ministr
+- form: Pecina
+  lemma: Pecina
+- form: chtěl
+  lemma: chtít
+- form: po Topolánkovi
+  lemma: Topolánk
+- form: aby
+  lemma: aby
+- form: stáhl
+  lemma: stáhnout
+- form: trestní
+  lemma: trestní
+- form: oznámení
+  lemma: oznámení
+- form: Pecina
+  lemma: Pecina
+- form: takovou
+  lemma: takový
+- form: interpretaci
+  lemma: interpretace
+- form: odmítá
+  lemma: odmítat
+- form: Nikdy
+  lemma: nikdy
+- form: jsem
+  lemma: být
+- form: předsedu
+  lemma: předseda
+- form: ODS
+  lemma: ODS
+- form: aktivně
+  lemma: aktivně
+- form: nekontaktoval
+  lemma: kontaktovat
+- form: Jsem
+  lemma: být
+- form: šokován
+  lemma: šokovat
+- form: způsobem
+  lemma: způsob
+- form: kterým
+  lemma: který
+- form: se po více
+  lemma: hodně
+- form: než
+  lemma: než
+- form: dvou
+  lemma: dva
+- form: týdnech
+  lemma: týden
+- form: Mirek
+  lemma: Mirek
+- form: Topolánek
+  lemma: Topolánky
+- form: či někdo
+  lemma: někdo
+- form: z jeho
+  lemma: jeho
+- form: okolí
+  lemma: okolí
+- form: snaží
+  lemma: snažit
+- form: celou
+  lemma: celý
+- form: záležitost
+  lemma: záležitost
+- form: dezinterpretovat
+  lemma: dezinterpretovat
+- form: zlobí
+  lemma: zlobit
+- form: se Pecina
+  lemma: Pecina
