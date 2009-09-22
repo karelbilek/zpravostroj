@@ -55,7 +55,7 @@ sub is_word {
 	return ($what =~ /^[A-Za-z0-9$czechs]+$/);
 }
 
-sub is_banned{
+sub is_banned {
 	if (!$banned_read) {
 		%banned=utf8_array_to_hash(@{load_yaml_file("information/banned_words.yaml")});
 		$banned_read=1;
@@ -75,7 +75,7 @@ sub make_normal_word {
     $text =~ s/ *$//;
         #remove final space(s)
 	
-    return $text if (((length ($text))>=3) and !($banned{$text}));
+    return $text if (((length ($text))>=3) and !($banned{lc($text)}));
 	"";
 }
 
