@@ -10,6 +10,8 @@ use YAML::XS qw(LoadFile DumpFile);
 
 use Zpravostroj::Other;
 
+use base 'Exporter';
+our @EXPORT = qw( get_pool_count add_new_articles read_articles update_articles);
 
 my $database_dir = read_option("data_address")."/articles";
 my $pool_dir = $database_dir."/pool";
@@ -54,4 +56,23 @@ sub read_articles {
 		push (@result, LoadFile($pooldir."/".$i));
 	}
 	return @result;
+}
+
+sub update_articles {
+	my $begin = shift;
+	$begin=0 if !$begin;
+	my @input = @_;
+	foreach my $i ($begin..$begin+(scalar @input)){
+		($i<get_pool_count) or die "I can't update article no. $i when there are only ".get_pool_count." articles.";
+		
+		my %article = %{LoadFile($pooldir."/".$i)};
+		my %updating = %{shift (@input)};
+		
+		foreach (keys %updating) {
+			(exists $all_article_properties{$_}) or die "forbidden article property $_";
+			$article{$_} = $updating{$_};
+		}
+		
+		DumpFile($pooldir."/".$i, \%article};
+	}
 }
