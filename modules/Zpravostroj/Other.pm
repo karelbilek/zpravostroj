@@ -10,7 +10,7 @@ use File::Spec;
 use utf8;
 
 use base 'Exporter';
-our @EXPORT = qw(split_size all_subthemes is_word is_banned make_normal_word load_yaml_file read_option);
+our @EXPORT = qw(split_size all_subthemes is_word is_banned make_normal_word load_yaml_file read_option read_information);
 
 #workaround for weird split behaviour in scalar context - they say its not a bug, i think it is
 sub split_size{my $r=shift;my @ol=split (" |_", $r);return scalar @ol;}
@@ -30,9 +30,14 @@ my ($option_ref) = load_yaml_file("configure.yaml");
 
 sub read_option{
 	my $what = shift;
-	return $option_ref->$what;
+	exists $option_ref->{$what} or die "Option $what does not exists.";
+	return $option_ref->{$what};
 }
 
+sub read_information {
+	my $what = shift;
+	return load_yaml_file("informations/".$what.".yaml");
+}
 
 sub all_subthemes {
 	my $delimit=shift;
@@ -66,7 +71,7 @@ sub is_word {
 
 sub is_banned {
 	if (!$banned_read) {
-		my @array = @{load_yaml_file(read_option("banned_words_address"))};
+		my @array = @{read_information("banned_words")};
 		@banned{@array}=(1) x @array;
 		$banned_read=1;
 	}

@@ -53,6 +53,9 @@ sub just_first {
 
 sub count_themes {
 	
+	
+
+	
 	my $hash_ref = shift;
 	my %all_hash = %$hash_ref;
 	
@@ -74,8 +77,13 @@ sub count_themes {
 			$unused_forms=$unused_forms.($word->{form})."_";
 		} else {
 			
-			
 			my %word_copy = %$word;
+			
+			if ($corrections{$word->{form}}){
+				$word_copy{lemma} = $corrections{$word->{form}};
+				
+			}
+			
 			$word_copy{form}=$unused_forms.$word_copy{form};
 						#I will probably no longer need $word but who knows
 						
@@ -86,7 +94,7 @@ sub count_themes {
 			if (@last_words > $max_length) {
 				shift @last_words;
 			}
-
+			
 			my @last_words_copy = @last_words;
 			while (@last_words_copy) {
 				my $joined_lemma = join(" ", map($_->{lemma}, @last_words_copy));
