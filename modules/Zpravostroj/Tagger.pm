@@ -1,146 +1,119 @@
-package Zpravostroj::Counter;
+package Zpravostroj::Tagger;
+ 
 use 5.008;
 use strict;
 use warnings;
-
+ 
+ 
+use Encode;
+use utf8;
+ 
+use TectoMT::Scenario;
+use TectoMT::Document;
+ 
 use Zpravostroj::Other;
-
-
-
+ 
 use base 'Exporter';
-our @EXPORT = qw( count_themes);
+our @EXPORT = qw( tag_texts);
+ 
+my @wanted_named = @{read_option("tagger_wanted_named")};
 
-my $max_length=read_option("max_theme_length");						#10
-	#max. length of THEME in WORDS
-	#longer = more memory
-
-my $max_first_named = read_option("counter_first_named"); 			#30
-my $max_first_themes = read_option("counter_first_themes");			#15
-	#number of named entities/themes that get it to final keys
-	#BUT! this is BEFORE the subthemes cleaning!
-	#number of entities should be high - this is actually just a safety catch if the NE recogniser goes wild¨
-	#(which usually happens with longer texts in other than Czech language)
-	
-sub clean_subthemes {
-	
-	my $hash_ref = shift;
-
-	foreach my $theme (keys %$hash_ref) {
-			#keys are generated in the beginning, so it has to test existence again
-			#because I can come across something already deleted
-		if ($hash_ref->{$theme}) {
-			foreach(all_subthemes(" ",$theme)) {
-				delete $hash_ref->{$_};
-			}
-		}
-	}
-}
-
-sub just_first {
-	#take just first N stuff, based on score
-	my $themes_ref = shift;
-	my $n = shift;
-	
-	my @keys_to_delete = sort {$themes_ref->{$b}<=>$themes_ref->{$a}} keys %$themes_ref;
-	splice (@keys_to_delete, 0, $n);
-				#just n+1 and bigger are kept there
-	
-	map ((delete $themes_ref->{$_}), @keys_to_delete);
-	
-}
-
-
-
-sub count_themes {
-	
+my %corrections;
+{
 	my %read_corrections = %{read_information("corrections")};
-	my %corrections;
 
 	foreach my $correct_lemma (keys %read_corrections) {
 		foreach my $correct_form (@{$read_corrections{$correct_lemma}}) {
 			$corrections{$correct_form} = $correct_lemma;
 		}
 	}
-	
-	my $hash_ref = shift;
-	my %all_hash = %$hash_ref;
-	
-	
-	my %scores;
-		#hashes with scores of entites
-		#lemma=>score	
-			
-	my %joined_forms;
-		#hash, used to retrieve form from lemma	
-			
-	my @last_words;
-	
-	my $unused_forms="";
-	
-	foreach my $word (@{$hash_ref->{words}}) {
-		
-		if (is_banned($word->{lemma})) {
-			$unused_forms=$unused_forms.($word->{form})."_";
-		} else {
-			
-			my %word_copy = %$word;
-			
-			if ($corrections{$word->{form}}){
-				$word_copy{lemma} = $corrections{$word->{form}};
-			}
-			
-			$word_copy{form}=$unused_forms.$word_copy{form};
-						#I will probably no longer need $word but who knows
-						
-			$unused_forms="";
-			
-			push(@last_words, \%word_copy);
-			
-			if (@last_words > $max_length) {
-				shift @last_words;
-			}
-			
-			my @last_words_copy = @last_words;
-			while (@last_words_copy) {
-				my $joined_lemma = join(" ", map($_->{lemma}, @last_words_copy));
-				my $joined_form = join(" ", map($_->{form}, @last_words_copy)); 
-				$joined_forms{$joined_lemma} = $joined_form unless defined $joined_forms{$joined_lemma};
-			
-				my $length = split_size($joined_form);
-												#why this and NOT just scalar (@last wors)?
-												#because there can be "_" in $joined_form
-				$length = 1 unless $length;
-			
-				$scores{$joined_lemma}=0 if (!exists $scores{$joined_lemma});
-			
-				$scores{$joined_lemma}+=2-(1/$length);
-			
-				shift @last_words_copy;
-			}
-		}
-	
-	}
-	
-	my %named_scores;
-	
-	foreach my $entity (@{$hash_ref->{named}}) {
-		$named_scores{$entity} = 0 if (!exists $scores{$entity});
-		$named_scores{$entity}+=split_size($entity);
-			#again, here, it's not so important, it's just a safety-catch
-	}
-	
-	
-	
-	just_first(\%named_scores, $max_first_named);
-	
-	just_first(\%scores, $max_first_themes);
-    
-
-	my %superhash = (%scores, %named_scores);
-	clean_subthemes(\%superhash);
-	
-	my @res = map ({lemma=>$_, form=>($joined_forms{$_}?$joined_forms{$_}:$_), score=>($scores{$_}?$scores{$_}:0)}, keys %superhash);
-    return \@res;
 }
+		#this IS global - but it does make sense!!!!!!!!§§§!! really!!
+		#why would I read this thing every time again and again?
+		#on the other hand, I will 100% need it!
 
+
+ 
+sub create_new_document{
+	my $text = shift;
+ 
+	my $document = TectoMT::Document->new();
+	$document->set_attr("czech_source_text", $text);
+ 
+	return $document;
+}
+ 
+sub save_words {
+	my $words_ref = shift;	my $node = shift;
+ 
+	if (my $lemma = ($node->get_attr('lemma'))) {
+		if (my $lemma_better = (make_normal_word($lemma))) {
+			my $form = $node->get_attr('form');
+			push (@{$words_ref},{lemma=>($corrections{$form}?$corrections{$form}:$lemma_better), form=>$form});
+		}
+	}
+	foreach my $child ($node->get_children) {
+		save_words($words_ref, $child);
+	}
+}
+ 
+sub save_named {
+	my $named_ref = shift;
+	my $node = shift;
+ 
+	if ($node->get_deref_attr('m.rf')) {
+		#it is a named entity.
+		my $type;
+		if (($type=($node->get_attr('ne_type'))) and (length(my $name = $node->get_attr('normalized_name'))>=read_option("min_word_length")) and ($type =~ "/^".join("|", @wanted_named)."/")) {
+			$named_ref->{$name} = 1;
+		}
+	}
+ 
+	foreach my $child ($node->get_children) {
+		save_named($named_ref, $child);
+	}
+}
+ 
+sub doc_to_hash {
+	my $document = shift;
+	my @words;
+	my %named;
+	foreach my $bundle ( $document->get_bundles() ) {
+		save_words(\@words, $bundle->get_tree('SCzechM'));
+		save_named(\%named, $bundle->get_tree('SCzechN'));
+	}
+ 
+	my @arnamed = keys %named;
+ 
+	my %reshash = (words=>\@words, named=>\@arnamed);
+	return \%reshash;
+}
+ 
+my $scenario_initialized = 0;
+my $scenario;
+ 
+sub tag_texts {
+ 
+	open my $saveerr, ">&STDERR";
+	open STDERR, '>', "/dev/null";
+	unless ($scenario_initialized) {
+		$scenario = TectoMT::Scenario->new({'blocks'=> [ qw(SCzechW_to_SCzechM::Sentence_segmentation SCzechW_to_SCzechM::Tokenize  SCzechW_to_SCzechM::TagHajic SCzechM_to_SCzechN::Czech_named_ent_SVM_recognizer) ]});
+		$scenario_initialized = 1;
+	}
+ 
+	my @texts = @_;
+ 
+	my @documents = map(create_new_document($_), @texts);
+ 
+ 
+ 
+	$scenario->apply_on_tmt_documents(@documents);
+ 
+ 
+	open STDERR, ">&", $saveerr;
+ 
+	my @hashes = map (doc_to_hash($_), @documents);
+	return @hashes;
+}
+ 
 1;
