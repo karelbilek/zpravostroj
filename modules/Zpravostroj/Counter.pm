@@ -10,6 +10,23 @@ use Zpravostroj::Other;
 use base 'Exporter';
 our @EXPORT = qw( count_themes);
 
+
+my %corrections;
+{
+	my %read_corrections = %{read_information("corrections")};
+
+	foreach my $correct_lemma (keys %read_corrections) {
+		foreach my $correct_form (@{$read_corrections{$correct_lemma}}) {
+			$corrections{$correct_form} = $correct_lemma;
+		}
+	}
+}
+		#this IS global - but it does make sense!!!!!!!!§§§!! really!!
+		#why would I read this thing every time again and again?
+		#on the other hand, I will 100% need it!
+
+
+
 my $max_length=read_option("max_theme_length");						#10
 	#max. length of THEME in WORDS
 	#longer = more memory
@@ -54,7 +71,7 @@ sub just_first {
 sub count_themes {
 	
 	
-
+	my %corrected_names;
 	
 	my $hash_ref = shift;
 	my %all_hash = %$hash_ref;
@@ -79,6 +96,10 @@ sub count_themes {
 			
 			my %word_copy = %$word;
 			
+			if ($corrections{$word->{form}}) {
+				$word_copy->{lemma} = $corrections{$word->{form}};
+				$corrected_names{$word->{lemma}} = $corrections{$word->{form}};
+			}
 			
 			$word_copy{form}=$unused_forms.$word_copy{form};
 						#I will probably no longer need $word but who knows
@@ -115,8 +136,10 @@ sub count_themes {
 	my %named_scores;
 	
 	foreach my $entity (@{$hash_ref->{named}}) {
-		$named_scores{$entity} = 0 if (!exists $scores{$entity});
-		$named_scores{$entity}+=split_size($entity);
+		my $right_entity = join (" ", (map (($corrected_names{$_})?($corrected_names{$_}):$_ , (split (" ", $entity)))));
+		
+		$named_scores{$right_entity} = 0 if (!exists $scores{$right_entity});
+		$named_scores{$right_entity}+=split_size($right_entity);
 			#again, here, it's not so important, it's just a safety-catch
 	}
 	

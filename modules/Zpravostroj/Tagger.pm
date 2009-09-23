@@ -17,21 +17,7 @@ use base 'Exporter';
 our @EXPORT = qw( tag_texts);
  
 my @wanted_named = @{read_option("tagger_wanted_named")};
-
-my %corrections;
-{
-	my %read_corrections = %{read_information("corrections")};
-
-	foreach my $correct_lemma (keys %read_corrections) {
-		foreach my $correct_form (@{$read_corrections{$correct_lemma}}) {
-			$corrections{$correct_form} = $correct_lemma;
-		}
-	}
-}
-		#this IS global - but it does make sense!!!!!!!!§§§!! really!!
-		#why would I read this thing every time again and again?
-		#on the other hand, I will 100% need it!
-
+			#which types of named I do want
 
  
 sub create_new_document{
@@ -44,39 +30,28 @@ sub create_new_document{
 }
  
 sub save_words {
-	my $wrong_ref = shift;
-	my $words_ref = shift;	my $node = shift;
+	my $words_ref = shift;	
+	my $node = shift;
  
 	if (my $lemma = ($node->get_attr('lemma'))) {
 		if (my $lemma_better = (make_normal_word($lemma))) {
 			
 			my $form = $node->get_attr('form');
+			push (@{$words_ref},{lemma=>$lemma_better, form=>$form});
 			
-			if ($corrections{$form}) {
-				
-				push (@{$words_ref},{lemma=>$corrections{$form}, form=>$form});
-				$wrong_ref->{$lemma_better} = $corrections{$form};
-				
-			} else {
-				push (@{$words_ref},{lemma=>$lemma_better, form=>$form});
-			}
+				#THE LEMMA DOESN'T HAVE TO BE 100% CORRECT!
+				#why? because Tagger doesn't read corrections.yaml
+				#because corrections can change, but I want to run this module as little as possible
 			
 		}
 	}
 	foreach my $child ($node->get_children) {
-		save_words($wrong_ref,$words_ref, $child);
+		save_words($words_ref, $child);
 	}
 }
 
-sub right_named {
-	my $wrong_ref = shift;
-	my $what = shift;
-	my @arr = split (" ", $what);
-	return join (" ", (map (($wrong_ref->{$_})?($wrong_ref->{$_}):$_ , @arr)))
-}
  
 sub save_named {
-	my $wrong_ref = shift;
 	my $named_ref = shift;
 	my $node = shift;
  
@@ -84,12 +59,12 @@ sub save_named {
 		#it is a named entity.
 		my $type;
 		if (($type=($node->get_attr('ne_type'))) and (length(my $name = $node->get_attr('normalized_name'))>=read_option("min_word_length")) and ($type =~ "/^".join("|", @wanted_named)."/")) {
-			$named_ref->{right_named($wrong_ref, $name)} = 1;
+			$named_ref->{$name} = 1;
 		}
 	}
  
 	foreach my $child ($node->get_children) {
-		save_named($wrong_ref, $named_ref, $child);
+		save_named( $named_ref, $child);
 	}
 }
  
@@ -97,14 +72,13 @@ sub doc_to_hash {
 	my $document = shift;
 	my @words;
 	my %named;
-	my %wrong;
 	
 	foreach my $bundle ( $document->get_bundles() ) {
-		save_words(\%wrong, \@words, $bundle->get_tree('SCzechM'));
+		save_words(\@words, $bundle->get_tree('SCzechM'));
 	}
 	
 	foreach my $bundle ( $document->get_bundles() ) {
-		save_named(\%wrong, \%named, $bundle->get_tree('SCzechN'));
+		save_named( \%named, $bundle->get_tree('SCzechN'));
 	}
 	
 	
