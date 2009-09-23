@@ -20,3 +20,7 @@ tagger_wanted_named:
     - q
     - P
     - ps
+extractor_not_wanted_at_beginning:
+    - praha
+    - Praha
+    - PRAHA

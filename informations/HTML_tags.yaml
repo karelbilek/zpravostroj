@@ -13,7 +13,17 @@ wanted:
     - box_article_text
     - boxContent
     - content
+    - H1
 not_wanted:
+    - SCRIPT
+    - IMG 
+    - HEAD 
+    - TITLE 
+    - LINK
+    - BR
+    - UL
+    - FORM
+    - STYLE
     - equ-img
     - ad
     - time
