@@ -5,6 +5,7 @@ use warnings;
 
 use File::Slurp;
 use File::Touch;
+use Scalar::Util qw(looks_like_number);
 
 use YAML::XS qw(LoadFile DumpFile);
 
@@ -21,7 +22,7 @@ my %all_article_properties;
 @all_article_properties{@{read_option("all_article_properties")}}=();
 
 sub get_pool_count {
-	if (-d $pool_address) {
+	if (-d $pool_dir) {
 		if (-e  $count_file) {
 			my $count = read_file($count_file);
 			if (looks_like_number($count)) {
@@ -29,8 +30,9 @@ sub get_pool_count {
 			}
 		}
 	} else {
-		mkdir $pool_dir;
-		touch $count_file;
+		mkdir $database_dir or die "making directory $database_dir not succesful.";
+		mkdir $pool_dir or die "making directory $pool_dir not succesful.";
+		touch $count_file or die "touching $count_file not succesful.";
 		return 0;
 	}
 }
@@ -42,7 +44,7 @@ sub add_new_articles {
 		foreach (keys %$article_ref) {
 			(exists $all_article_properties{$_}) or die "forbidden article property $_";
 		}
-		DumpFile($pooldir."/".$i, $article_ref);
+		DumpFile($pool_dir."/".$i, $article_ref);
 		$i++;
 	}
 	write_file($count_file, $i);
@@ -53,7 +55,7 @@ sub read_articles {
 	$begin=0 if !$begin;
 	my @result;
 	foreach my $i ($begin..(get_pool_count-1)){
-		push (@result, LoadFile($pooldir."/".$i));
+		push (@result, LoadFile($pool_dir."/".$i));
 	}
 	return @result;
 }
@@ -65,7 +67,7 @@ sub update_articles {
 	foreach my $i ($begin..$begin+(scalar @input)){
 		($i<get_pool_count) or die "I can't update article no. $i when there are only ".get_pool_count." articles.";
 		
-		my %article = %{LoadFile($pooldir."/".$i)};
+		my %article = %{LoadFile($pool_dir."/".$i)};
 		my %updating = %{shift (@input)};
 		
 		foreach (keys %updating) {
@@ -73,6 +75,8 @@ sub update_articles {
 			$article{$_} = $updating{$_};
 		}
 		
-		DumpFile($pooldir."/".$i, \%article};
+		DumpFile($pool_dir."/".$i, \%article);
 	}
 }
+
+1;
