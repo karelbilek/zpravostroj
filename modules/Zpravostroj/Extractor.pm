@@ -8,7 +8,7 @@ use utf8;
 use Zpravostroj::Other;
 
 use base 'Exporter';
-our @EXPORT = qw(extract_text lolwtf);
+our @EXPORT = qw(extract_texts);
 
 
 my %not_wanted;
@@ -98,7 +98,7 @@ sub check_wanted{
 			
 			$result .= $addition;
 				#if its a text, write it.
-			
+				
 				#Praha as a first word/ word before - (as in "Praha -") = not a "regular" word
         }
     }    
@@ -117,4 +117,8 @@ sub extract_text {
 	$hash{"extracted"} = check_unknown($dom_tree);
 	$hash{"title"} = $dom_tree->getElementsByTagName('title')->[0]->text();
     return \%hash;
+}
+
+sub extract_texts {   
+   return (map (extract_text($_), @_));
 }

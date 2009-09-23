@@ -1,40 +1,79 @@
 ---
-- form: ODS
+- all_forms:
+  - ODS
+  - ODS
+  - ODS
+  - ODS
+  best_form: ODS
   lemma: ODS
   score: 4
-- form: u_Brna
+- all_forms:
+  - u_Brna
+  best_form: u_Brna
   lemma: Brno
-  score: 0
-- form: v_Hustopečích
+  score: NAMED
+- all_forms:
+  - v_Hustopečích
+  best_form: v_Hustopečích
   lemma: Hustopeče
-  score: 0
-- form: Ministr
+  score: NAMED
+- all_forms:
+  - Ministr
+  - Jako_ministr
+  - ministra
+  - v_němž_bylo_uvedeno_že_ministr
+  best_form: Ministr
   lemma: ministr
   score: 5.33333333333333
-- form: stojí_ČSSD
+- all_forms:
+  - stojí_ČSSD
+  best_form: stojí_ČSSD
   lemma: ČSSD
-  score: 0
-- form: Mirka Topolánka
+  score: NAMED
+- all_forms:
+  - Mirka Topolánka
+  - Mirek Topolánek
+  best_form: Mirka Topolánka
   lemma: Mirek Topolánek
-  score: 0
-- form: aby_bylo_stáhnuto trestní oznámení
+  score: NAMED
+- all_forms:
+  - aby_bylo_stáhnuto trestní oznámení
+  - bylo_stáhnuto trestní oznámení
+  - aby_stáhl trestní oznámení
+  best_form: aby_bylo_stáhnuto trestní oznámení
   lemma: stáhnout trestní oznámení
   score: 5.3
-- form: jsem_se_dozvěděla z_médií
+- all_forms:
+  - jsem_se_dozvěděla z_médií
+  - Dozvěděla jsem_se_to_až_z_médií
+  best_form: jsem_se_dozvěděla z_médií
   lemma: dozvědět médium
   score: 3.65714285714286
-- form: Martin Pecina
+- all_forms:
+  - Martin Pecina
+  best_form: Martin Pecina
   lemma: Martin Pecina
-  score: 0
-- form: Anežka Forstová
+  score: NAMED
+- all_forms:
+  - Anežka Forstová
+  best_form: Anežka Forstová
   lemma: Anežka Forstová
-  score: 0
-- form: Do_týdne má_být_jasno zda
+  score: NAMED
+- all_forms:
+  - Do_týdne má_být_jasno zda
+  - příštího_týdne by_mělo_být_jasno zda
+  best_form: Do_týdne má_být_jasno zda
   lemma: týden jasno zda
   score: 3.69047619047619
-- form: Klára Slámová
+- all_forms:
+  - Klára Slámová
+  - Klára Slámová
+  best_form: Klára Slámová
   lemma: Klára slámový
-  score: 0
-- form: v_tom_že_by_se_to_mělo_kvalifikovat jen_jako_přestupek
+  score: NAMED
+- all_forms:
+  - v_tom_že_by_se_to_mělo_kvalifikovat jen_jako_přestupek
+  - byl_kvalifikován jako_přestupek
+  best_form: v_tom_že_by_se_to_mělo_kvalifikovat jen_jako_přestupek
   lemma: kvalifikovat přestupek
   score: 3.65909090909091

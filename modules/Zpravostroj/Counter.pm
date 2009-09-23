@@ -68,7 +68,7 @@ sub just_first {
 
 
 
-sub count_themes {
+sub count_themes_document {
 	
 	
 	my %corrected_names;
@@ -116,7 +116,10 @@ sub count_themes {
 			while (@last_words_copy) {
 				my $joined_lemma = join(" ", map($_->{lemma}, @last_words_copy));
 				my $joined_form = join(" ", map($_->{form}, @last_words_copy)); 
-				$joined_forms{$joined_lemma} = $joined_form unless defined $joined_forms{$joined_lemma};
+				
+				
+				push (@{$joined_forms{$joined_lemma}}, $joined_form);
+					#example: joined_forms{"Petr Kalousek"} = ["Petra Kalouska", "Petra Kalouska", "s_Petrem Kalouskem"]
 			
 				my $length = split_size($joined_form);
 												#why this and NOT just scalar (@last wors)?
@@ -153,8 +156,28 @@ sub count_themes {
 	my %superhash = (%scores, %named_scores);
 	clean_subthemes(\%superhash);
 	
-	my @res = map ({lemma=>$_, form=>($joined_forms{$_}?$joined_forms{$_}:$_), score=>($scores{$_}?$scores{$_}:0)}, keys %superhash);
+	my @res;
+	
+	foreach my $lemma (keys %superhash) {
+		my $form;
+		my @all_forms;
+		if (@all_forms = @{$joined_forms{$lemma}}) {
+				#all forms for $lemma are "voting", who will be the FINAL one
+			my %forms;
+			map ($forms{$_}++, @all_forms);
+			$form = (sort {$forms{$b}<=>$forms{$a}} @all_forms)[0];
+		} else {
+			$form = $lemma;
+			@all_forms = ($form);
+		}
+		push (@res, {lemma=>$lemma, best_form=>$form, all_forms=>\@all_forms, score=>($scores{$lemma}?$scores{$lemma}:"NAMED")});
+	}
+	
     return \@res;
+}
+
+sub count_themes {
+	return map(count_themes_document($_), @_);
 }
 
 1;

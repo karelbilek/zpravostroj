@@ -479,6 +479,6 @@ Ads.bmone2([\'3.2.1.1\',\'3.2.5.36\',\'3.2.5.25\',\'3.2.9.37\',\'3.1.27.7\',\'3.
 </html><!--C 20:38:06 23.9.2009-->';
 
 
-my $res = extract_text($html);
+my ($res) = extract_texts($html);
 
 print Dump($res);
