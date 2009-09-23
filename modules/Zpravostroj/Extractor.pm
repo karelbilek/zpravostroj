@@ -16,7 +16,7 @@ my %wanted;
 {
 	my $read = read_information("HTML_tags");
 		
-	@wanted{@{$read->{wanted}} = ();
+	@wanted{@{$read->{wanted}}} = ();
 	@not_wanted{@{$read->{not_wanted}}} = ();	
 }
 	#again, its global, but it is needed all the time, but I have to read it just once
