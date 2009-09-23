@@ -9,4 +9,15 @@ RSS:
     - http://www.ceskenoviny.cz/sluzby/rss/index.php
     - http://www.financninoviny.cz/sluzby/rss/index.php
     - http://bleskove.aktualne.centrum.cz/export/rss-bleskove-hp.phtml
-data_address: ~/rocnik/data
+data_address: ../data
+banned_words_address: informations/banned_words.yaml
+min_word_length: 3
+max_theme_length: 10
+coutner_first_named: 30
+counter_first_themes: 15
+tagger_wanted_named:
+    - g
+    - m
+    - q
+    - P
+    - ps

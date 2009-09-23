@@ -16,7 +16,7 @@ use Zpravostroj::Other;
 use base 'Exporter';
 our @EXPORT = qw( tag_texts);
 
-my @wanted_named = qw(g m q P ps);
+my @wanted_named = @{read_option("tagger_wanted_named")};
 
 sub create_new_document{
 	my $text = shift;
@@ -47,7 +47,7 @@ sub save_named {
 	if ($node->get_deref_attr('m.rf')) {
 		#it is a named entity.
 		my $type;
-		if (($type=($node->get_attr('ne_type'))) and (length(my $name = $node->get_attr('normalized_name'))>3) and ($type =~ "/^".join("|", @wanted_named)."/")) {
+		if (($type=($node->get_attr('ne_type'))) and (length(my $name = $node->get_attr('normalized_name'))>=read_option("min_word_length")) and ($type =~ "/^".join("|", @wanted_named)."/")) {
 			$named_ref->{$name} = 1;
 		}
 	}

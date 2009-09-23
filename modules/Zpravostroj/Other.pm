@@ -3,24 +3,36 @@ package Zpravostroj::Other;
 use YAML::XS qw(LoadFile);
 
 use strict;
-use FindBin;
 use warnings;
 
+use File::Spec;
+
 use utf8;
-use Encode;
 
 use base 'Exporter';
-our @EXPORT = qw(split_size all_subthemes is_word is_banned make_normal_word);
+our @EXPORT = qw(split_size all_subthemes is_word is_banned make_normal_word load_yaml_file read_option);
 
 #workaround for weird split behaviour in scalar context - they say its not a bug, i think it is
 sub split_size{my $r=shift;my @ol=split (" |_", $r);return scalar @ol;}
-#sub split_size{my $r=shift;my @ol=split (" ", $r);return scalar @ol;}
 
-sub utf8_array_to_hash {
-	my @array = @_;
-	my %hash = map ((decode("utf8", $_)=>1), @array);
-	return %hash;
+
+sub load_yaml_file {
+	my $name = shift;
+	
+	my ($volume, $directory) = File::Spec->splitpath( $INC{'Zpravostroj/Other.pm'} );
+	my $config_file = File::Spec->catpath( $volume, $directory, '../../'.$name );
+
+	my $ref = LoadFile($config_file) or die "file $name does not exist.";
+	return $ref;
 }
+
+my ($option_ref) = load_yaml_file("configure.yaml");
+
+sub read_option{
+	my $what = shift;
+	return $option_ref->$what;
+}
+
 
 sub all_subthemes {
 	my $delimit=shift;
@@ -45,11 +57,7 @@ my $banned_read=0;
 my %banned=();
 my $czechs="ÁČĎĚÉÍŇÓŘŠŤÚŮÝŽáčďěéíňóřšťúůýž";
 
-sub load_yaml_file {
-	my $name = shift;
-	my $ref = LoadFile("$FindBin::Bin/../$name");
-	return $ref;
-}
+
 
 sub is_word {
 	my $what=shift;
@@ -58,12 +66,12 @@ sub is_word {
 
 sub is_banned {
 	if (!$banned_read) {
-		my @array = @{load_yaml_file("informations/banned_words.yaml")};
+		my @array = @{load_yaml_file(read_option("banned_words_address"))};
 		@banned{@array}=(1) x @array;
 		$banned_read=1;
 	}
 	my $what=shift;
-	return (($banned{lc($what)}) or (length ($what) < 3));
+	return (($banned{lc($what)}) or (length ($what) < read_option("min_word_length")));
 }
 
 sub make_normal_word {
