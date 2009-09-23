@@ -9,7 +9,7 @@ RSS:
     - http://www.ceskenoviny.cz/sluzby/rss/index.php
     - http://www.financninoviny.cz/sluzby/rss/index.php
     - http://bleskove.aktualne.centrum.cz/export/rss-bleskove-hp.phtml
-data_address: ../data
+data_address: /afs/ms/u/b/bilek7am/BIG/skola/rocnik/data/
 min_word_length: 3
 max_theme_length: 10
 counter_first_named: 30
@@ -24,3 +24,10 @@ extractor_not_wanted_at_beginning:
     - praha
     - Praha
     - PRAHA
+all_article_options:
+    - name
+    - title
+    - keys
+    - extracted
+    - html
+    - tagged
