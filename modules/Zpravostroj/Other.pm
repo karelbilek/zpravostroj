@@ -62,7 +62,7 @@ sub is_banned {
 		$banned_read=1;
 	}
 	my $what=shift;
-	return ($banned{lc($what)});
+	return (($banned{lc($what)}) or (length ($what) < 3));
 }
 
 sub make_normal_word {
@@ -73,11 +73,10 @@ sub make_normal_word {
     $text =~ s/^([A-Za-z$czechs ]*).*$/$1/;
         #remove all weird letters
     
-    $text =~ s/ *$//;
+    $text =~ s/ +$//;
         #remove final space(s)
 	
-    return $text if (((length ($text))>=3) and !(is_banned($text)));
-	"";
+    return $text;
 }
 
 1;

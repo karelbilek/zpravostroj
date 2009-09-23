@@ -28,23 +28,15 @@ sub create_new_document{
 }
 
 sub save_words {
-	my $words_ref = shift;
-	my $unused_forms_ref = shift;
-	my $node = shift;
+	my $words_ref = shift;	my $node = shift;
 	
 	if (my $lemma = ($node->get_attr('lemma'))) {
 		if (my $lemma_better = (make_normal_word($lemma))) {
-			push (@{$words_ref},{lemma=>$lemma_better, form=>${$unused_forms_ref}.($node->get_attr('form'))});
-			${$unused_forms_ref} = "";
-		} else {
-			if (is_word($node->get_attr('form'))) {
-				#"a", "nebo", "který" ...
-				${$unused_forms_ref}=${$unused_forms_ref}.$node->get_attr('form')."_";		
-			}
+			push (@{$words_ref},{lemma=>$lemma_better, form=>($node->get_attr('form'))});
 		}
 	}
 	foreach my $child ($node->get_children) {
-		save_words($words_ref, $unused_forms_ref, $child);
+		save_words($words_ref, $child);
 	}
 }
 
@@ -56,7 +48,7 @@ sub save_named {
 		#it is a named entity.
 		my $type;
 		if (($type=($node->get_attr('ne_type'))) and (length(my $name = $node->get_attr('normalized_name'))>3) and ($type =~ "/^".join("|", @wanted_named)."/")) {
-			push (@{$named_ref}, $name);
+			$named_ref->{$name} = 1;
 		}
 	}
 	
@@ -68,13 +60,15 @@ sub save_named {
 sub doc_to_hash {
 	my $document = shift;
 	my @words;
-	my @named;
-	my $unused_forms="";
+	my %named;
 	foreach my $bundle ( $document->get_bundles() ) {
-		save_words(\@words, \$unused_forms, $bundle->get_tree('SCzechM'));
-		save_named(\@named, $bundle->get_tree('SCzechN'));
+		save_words(\@words, $bundle->get_tree('SCzechM'));
+		save_named(\%named, $bundle->get_tree('SCzechN'));
 	}
-	my %reshash = (words=>\@words, named=>\@named);
+	
+	my @arnamed = keys %named;
+	
+	my %reshash = (words=>\@words, named=>\@arnamed);
 	return \%reshash;
 }
 

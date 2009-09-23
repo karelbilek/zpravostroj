@@ -66,29 +66,44 @@ sub count_themes {
 			
 	my @last_words;
 	
+	my $unused_forms="";
+	
 	foreach my $word (@{$hash_ref->{words}}) {
-		push(@last_words, $word);
 		
-		if (@last_words > $max_length) {
-			shift @last_words;
-		}
+		if (is_banned($word->{lemma})) {
+			$unused_forms=$unused_forms.($word->{form})."_";
+		} else {
+			
+			
+			my %word_copy = %$word;
+			$word_copy{form}=$unused_forms.$word_copy{form};
+						#I will probably no longer need $word but who knows
+						
+			$unused_forms="";
+			
+			push(@last_words, \%word_copy);
+			
+			if (@last_words > $max_length) {
+				shift @last_words;
+			}
 
-		my @last_words_copy = @last_words;
-		while (@last_words_copy) {
-			my $joined_lemma = join(" ", map($_->{lemma}, @last_words_copy));
-			my $joined_form = join(" ", map($_->{form}, @last_words_copy)); 
-			$joined_forms{$joined_lemma} = $joined_form unless defined $joined_forms{$joined_lemma};
+			my @last_words_copy = @last_words;
+			while (@last_words_copy) {
+				my $joined_lemma = join(" ", map($_->{lemma}, @last_words_copy));
+				my $joined_form = join(" ", map($_->{form}, @last_words_copy)); 
+				$joined_forms{$joined_lemma} = $joined_form unless defined $joined_forms{$joined_lemma};
 			
-			my $length = split_size($joined_form);
-											#why this and NOT just scalar (@last wors)?
-											#because there can be "_" in $joined_form
-			$length = 1 unless $length;
+				my $length = split_size($joined_form);
+												#why this and NOT just scalar (@last wors)?
+												#because there can be "_" in $joined_form
+				$length = 1 unless $length;
 			
-			$scores{$joined_lemma}=0 if (!exists $scores{$joined_lemma});
+				$scores{$joined_lemma}=0 if (!exists $scores{$joined_lemma});
 			
-			$scores{$joined_lemma}+=2-(1/$length);
+				$scores{$joined_lemma}+=2-(1/$length);
 			
-			shift @last_words_copy;
+				shift @last_words_copy;
+			}
 		}
 	
 	}
@@ -104,13 +119,14 @@ sub count_themes {
 	
 	
 	just_first(\%named_scores, $max_first_named);
+	
 	just_first(\%scores, $max_first_themes);
     
 
 	my %superhash = (%scores, %named_scores);
 	clean_subthemes(\%superhash);
 	
-	my @res = map ({lemma=>$_, form=>($joined_forms{$_}?($joined_forms{$_}):($_))}, keys %superhash);
+	my @res = map ({lemma=>$_, form=>($joined_forms{$_}?$joined_forms{$_}:$_), score=>($score{$_}?$score{$_}:0)}, keys %superhash);
     return \@res;
 }
 

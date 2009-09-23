@@ -1,29 +1,43 @@
 ---
 - form: ODS
   lemma: ODS
+  score: 4
 - form: u_Brna
   lemma: Brno
+  score: 1
 - form: v_Hustopečích
   lemma: Hustopeče
+  score: 1
 - form: Ministr
   lemma: ministr
+  score: 4
 - form: stojí_ČSSD
   lemma: ČSSD
+  score: 1
 - form: Mirek Topolánek
   lemma: Mirek Topolánky
+  score: 1
 - form: Mirka Topolánka
   lemma: Mirek Topolánek
+  score: 1
 - form: aby_bylo_stáhnuto trestní oznámení
   lemma: stáhnout trestní oznámení
+  score: 3
 - form: jsem_se_dozvěděla z_médií
   lemma: dozvědět médium
+  score: 2
 - form: Martin Pecina
   lemma: Martin Pecina
+  score: 1
 - form: Anežka Forstová
   lemma: Anežka Forstová
+  score: 1
 - form: Do_týdne má_být_jasno zda
   lemma: týden jasno zda
+  score: 2
 - form: Klára Slámová
   lemma: Klára slámový
+  score: 2
 - form: v_tom_že_by_se_to_mělo_kvalifikovat jen_jako_přestupek
   lemma: kvalifikovat přestupek
+  score: 2
