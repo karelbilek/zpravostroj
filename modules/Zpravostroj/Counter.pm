@@ -79,10 +79,6 @@ sub count_themes {
 			
 			my %word_copy = %$word;
 			
-			if ($corrections{$word->{form}}){
-				$word_copy{lemma} = $corrections{$word->{form}};
-				
-			}
 			
 			$word_copy{form}=$unused_forms.$word_copy{form};
 						#I will probably no longer need $word but who knows

@@ -44,20 +44,39 @@ sub create_new_document{
 }
  
 sub save_words {
+	my $wrong_ref = shift;
 	my $words_ref = shift;	my $node = shift;
  
 	if (my $lemma = ($node->get_attr('lemma'))) {
 		if (my $lemma_better = (make_normal_word($lemma))) {
+			
 			my $form = $node->get_attr('form');
-			push (@{$words_ref},{lemma=>($corrections{$form}?$corrections{$form}:$lemma_better), form=>$form});
+			
+			if ($corrections{$form}) {
+				
+				push (@{$words_ref},{lemma=>$corrections{$form}, form=>$form});
+				$wrong_ref->{$lemma_better} = $corrections{$form};
+				
+			} else {
+				push (@{$words_ref},{lemma=>$lemma_better, form=>$form});
+			}
+			
 		}
 	}
 	foreach my $child ($node->get_children) {
-		save_words($words_ref, $child);
+		save_words($wrong_ref,$words_ref, $child);
 	}
+}
+
+sub right_named {
+	my $wrong_ref = shift;
+	my $what = shift;
+	my @arr = split (" ", $what);
+	return join (" ", (map (($wrong_ref->{$_})?($wrong_ref->{$_}):$_ , @arr)))
 }
  
 sub save_named {
+	my $wrong_ref = shift;
 	my $named_ref = shift;
 	my $node = shift;
  
@@ -65,12 +84,12 @@ sub save_named {
 		#it is a named entity.
 		my $type;
 		if (($type=($node->get_attr('ne_type'))) and (length(my $name = $node->get_attr('normalized_name'))>=read_option("min_word_length")) and ($type =~ "/^".join("|", @wanted_named)."/")) {
-			$named_ref->{$name} = 1;
+			$named_ref->{right_named($wrong_ref, $name)} = 1;
 		}
 	}
  
 	foreach my $child ($node->get_children) {
-		save_named($named_ref, $child);
+		save_named($wrong_ref, $named_ref, $child);
 	}
 }
  
@@ -78,11 +97,17 @@ sub doc_to_hash {
 	my $document = shift;
 	my @words;
 	my %named;
+	my %wrong;
+	
 	foreach my $bundle ( $document->get_bundles() ) {
-		save_words(\@words, $bundle->get_tree('SCzechM'));
-		save_named(\%named, $bundle->get_tree('SCzechN'));
+		save_words(\%wrong, \@words, $bundle->get_tree('SCzechM'));
 	}
- 
+	
+	foreach my $bundle ( $document->get_bundles() ) {
+		save_named(\%wrong, \%named, $bundle->get_tree('SCzechN'));
+	}
+	
+	
 	my @arnamed = keys %named;
  
 	my %reshash = (words=>\@words, named=>\@arnamed);

@@ -226,7 +226,7 @@ words:
 - form: pan
   lemma: pan
 - form: Topolánek
-  lemma: Topolánky
+  lemma: Topolánek
 - form: trestní
   lemma: trestní
 - form: oznámení
@@ -282,7 +282,7 @@ words:
 - form: ODS
   lemma: ODS
 - form: Topolánka
-  lemma: Topolána
+  lemma: Topolánek
 - form: O
   lemma: o
 - form: zásahu
@@ -610,7 +610,7 @@ words:
 - form: po
   lemma: po
 - form: Topolánkovi
-  lemma: Topolánk
+  lemma: Topolánek
 - form: aby
   lemma: aby
 - form: stáhl
@@ -662,7 +662,7 @@ words:
 - form: Mirek
   lemma: Mirek
 - form: Topolánek
-  lemma: Topolánky
+  lemma: Topolánek
 - form: či
   lemma: či
 - form: někdo
