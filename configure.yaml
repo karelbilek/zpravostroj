@@ -24,7 +24,7 @@ extractor_not_wanted_at_beginning:
     - praha
     - Praha
     - PRAHA
-all_article_options:
+all_article_properties:
     - name
     - title
     - keys
