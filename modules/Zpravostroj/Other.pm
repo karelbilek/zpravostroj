@@ -58,8 +58,9 @@ sub all_subthemes {
 	return @res;
 }
 
-my $banned_read=0;
 my %banned=();
+@banned{@{read_information("banned_words")}}=();
+
 my $czechs="ÁČĎĚÉÍŇÓŘŠŤÚŮÝŽáčďěéíňóřšťúůýž";
 
 
@@ -70,13 +71,8 @@ sub is_word {
 }
 
 sub is_banned {
-	if (!$banned_read) {
-		my @array = @{read_information("banned_words")};
-		@banned{@array}=(1) x @array;
-		$banned_read=1;
-	}
 	my $what=shift;
-	return (($banned{lc($what)}) or (length ($what) < read_option("min_word_length")));
+	return ((exists $banned{lc($what)}) or (length ($what) < read_option("min_word_length")));
 }
 
 sub make_normal_word {

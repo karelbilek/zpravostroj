@@ -15,14 +15,9 @@ my %not_wanted;
 my %wanted;
 {
 	my $read = read_information("HTML_tags");
-	
-	my @wanted_arr = @{$read->{wanted}};
-	@wanted{@wanted_arr} = (1) x @wanted_arr;
-	$wanted{"opener"} or die "WTFSHIT";
-	
-	my @not_wanted_arr = @{$read->{not_wanted}};	
-	@not_wanted{@not_wanted_arr} = (1) x @not_wanted_arr;
-	
+		
+	@wanted{@{$read->{wanted}} = ();
+	@not_wanted{@{$read->{not_wanted}}} = ();	
 }
 	#again, its global, but it is needed all the time, but I have to read it just once
 
@@ -37,13 +32,13 @@ sub lolwtf {
 sub is_wanted {
 	my $who = shift;
 
-    return (($wanted{$who->tagName}) or ($wanted{$who->getAttribute('id')}) or ($wanted{$who->getAttribute('class')}) or ($wanted{$who->getAttribute('name')}));
+    return ((exists $wanted{$who->tagName}) or (exists $wanted{$who->getAttribute('id')}) or (exists $wanted{$who->getAttribute('class')}) or (exists $wanted{$who->getAttribute('name')}));
 }
 
 sub is_not_wanted{
     my $who=shift;
 
-    return (($not_wanted{$who->tagName}) or ($not_wanted{$who->getAttribute('id')}) or ($not_wanted{$who->getAttribute('class')}) or ($not_wanted{$who->getAttribute('name')}));
+    return ((exists $not_wanted{$who->tagName}) or (exists $not_wanted{$who->getAttribute('id')}) or (exists $not_wanted{$who->getAttribute('class')}) or (exists $not_wanted{$who->getAttribute('name')}));
 
 }
 
