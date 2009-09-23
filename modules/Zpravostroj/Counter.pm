@@ -126,7 +126,7 @@ sub count_themes {
 	my %superhash = (%scores, %named_scores);
 	clean_subthemes(\%superhash);
 	
-	my @res = map ({lemma=>$_, form=>($joined_forms{$_}?$joined_forms{$_}:$_), score=>($score{$_}?$score{$_}:0)}, keys %superhash);
+	my @res = map ({lemma=>$_, form=>($joined_forms{$_}?$joined_forms{$_}:$_), score=>($scores{$_}?$scores{$_}:0)}, keys %superhash);
     return \@res;
 }
 
