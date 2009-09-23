@@ -1,20 +1,22 @@
 ---
 named:
-- Mirek Topolánek
 - Klára
 - Martin
 - ODS
-- Martin Pecina
-- Anežka Forstová
-- Mirek
 - Brno
-- Pecina
 - Topolánek
 - Hustopeče
 - Anežka
-- slámový
-- Klára slámový
 - ČSSD
+- Mirek Topolánky
+- Mirek Topolánek
+- Martin Pecina
+- Anežka Forstová
+- Mirek
+- Pecina
+- Topolánky
+- Klára slámový
+- slámový
 - Forstová
 words:
 - form: Do
@@ -224,7 +226,7 @@ words:
 - form: pan
   lemma: pan
 - form: Topolánek
-  lemma: Topolánek
+  lemma: Topolánky
 - form: trestní
   lemma: trestní
 - form: oznámení
@@ -280,7 +282,7 @@ words:
 - form: ODS
   lemma: ODS
 - form: Topolánka
-  lemma: Topolánek
+  lemma: Topolána
 - form: O
   lemma: o
 - form: zásahu
@@ -608,7 +610,7 @@ words:
 - form: po
   lemma: po
 - form: Topolánkovi
-  lemma: Topolánek
+  lemma: Topolánk
 - form: aby
   lemma: aby
 - form: stáhl
@@ -660,7 +662,7 @@ words:
 - form: Mirek
   lemma: Mirek
 - form: Topolánek
-  lemma: Topolánek
+  lemma: Topolánky
 - form: či
   lemma: či
 - form: někdo

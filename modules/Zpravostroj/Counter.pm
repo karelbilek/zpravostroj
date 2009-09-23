@@ -97,7 +97,7 @@ sub count_themes {
 			my %word_copy = %$word;
 			
 			if ($corrections{$word->{form}}) {
-				$word_copy->{lemma} = $corrections{$word->{form}};
+				$word_copy{lemma} = $corrections{$word->{form}};
 				$corrected_names{$word->{lemma}} = $corrections{$word->{form}};
 			}
 			
