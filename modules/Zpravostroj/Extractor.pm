@@ -62,8 +62,7 @@ sub is_paragraph{
 
 sub check_unknown {
 	my $element = shift;
-	my $result = shift;
-	$result = "" unless defined $result;
+	my $result = "";
 	
 	foreach my $node ($element->childNodes) {
 		next unless ((ref $node) =~ /^HTML::DOM::Element/);
@@ -73,10 +72,10 @@ sub check_unknown {
 							#we are ignoring unwanted divs
 							
 		if (is_wanted($node)) {
-			$result = check_wanted ($node, $result);
+			$result .= check_wanted ($node);
 				#we know its wanted 
 		} else {
-			$result = check_unknown ($node, $result);
+			$result .= check_unknown ($node, $result);
 				#we know nothing	
 		}
 	}
@@ -85,11 +84,11 @@ sub check_unknown {
 
 sub check_wanted{
     my $element = shift;
-	my $result = shift;	
+	my $result="";	
 	
     foreach my $node ($element->childNodes) {
         if ((ref $node) =~ /^HTML::DOM::Element/) {
-			$result = check_wanted($node, $result) unless (is_not_wanted($node));
+			$result .= check_wanted($node) unless (is_not_wanted($node));
 				#EVEN within wanted, we can have unwanted part!
 				
         } else {
@@ -97,7 +96,7 @@ sub check_wanted{
 			$addition = ($node->data) if (($node->data) and (is_paragraph($node->data)));
 			$addition =~ s/([^.]*)($not_beginning) -/$1/;
 			
-			$result = $result.$addition;
+			$result .= $addition;
 				#if its a text, write it.
 			
 				#Praha as a first word/ word before - (as in "Praha -") = not a "regular" word
@@ -106,7 +105,7 @@ sub check_wanted{
 	return $result;
 }
 
-sub extract_text{   
+sub extract_text {   
     my $text = shift;
 	
 	
