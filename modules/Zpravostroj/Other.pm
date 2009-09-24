@@ -14,7 +14,7 @@ use LWP::UserAgent;
 use utf8;
 
 use base 'Exporter';
-our @EXPORT = qw(split_size all_subthemes is_word is_banned make_normal_word load_yaml_file read_option read_information read_from_web);
+our @EXPORT = qw(split_size all_subthemes is_word is_banned make_normal_word load_yaml_file read_option read_information read_from_web read_from_webs);
 
 	#!!!!!!!!!!!! ------ GLOBALS ------ !!!!!!!!!!!!
 my ($option_ref) = load_yaml_file("configure.yaml");
@@ -67,6 +67,10 @@ sub read_from_web {
 	
 	my $enco = encoding_from_http_message($resp);
 	return decode($enco => ($resp->content));
+}
+
+sub read_from_webs {
+	return map (read_from_web($_), @_);
 }
 
 sub read_information {

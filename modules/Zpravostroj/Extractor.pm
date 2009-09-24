@@ -109,8 +109,8 @@ sub extract_text {
 	$dom_tree->close();
     
     my %hash;
-	$hash{"extracted"} = check_unknown($dom_tree);
-	$hash{"title"} = $dom_tree->getElementsByTagName('title')->[0]->text();
+	$hash{extracted} = check_unknown($dom_tree);
+	$hash{title} = $dom_tree->getElementsByTagName('title')->[0]->text();
     return \%hash;
 }
 

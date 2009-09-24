@@ -73,18 +73,20 @@ sub update_articles {
 	my $begin = shift;
 	$begin=0 if !$begin;
 	my @input = @_;
-	foreach my $i ($begin..$begin+(scalar @input)){
-		($i<get_pool_count) or die "I can't update article no. $i when there are only ".get_pool_count()." articles.";
+	if (@input) {
+		foreach my $i ($begin..$begin+(scalar @input)-1){
+			($i<get_pool_count) or die "I can't update article no. $i when there are only ".get_pool_count()." articles.";
 		
-		my %article = %{LoadFile(get_filename($i))};
-		my %updating = %{shift (@input)};
+			my %article = %{LoadFile(get_filename($i))};
+			my %updating = %{shift (@input)};
 		
-		foreach (keys %updating) {
-			(exists $all_article_properties{$_}) or die "forbidden article property $_";
-			$article{$_} = $updating{$_};
+			foreach (keys %updating) {
+				(exists $all_article_properties{$_}) or die "forbidden article property $_";
+				$article{$_} = $updating{$_};
+			}
+		
+			DumpFile(get_filename($i), \%article);
 		}
-		
-		DumpFile(get_filename($i), \%article);
 	}
 }
 
