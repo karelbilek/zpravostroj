@@ -1,5 +1,5 @@
 ---
-RSS:
+RSS_sources:
     - http://www.blesk.cz/rss
     - http://servis.idnes.cz/rss.asp?c=zpravodaj
     - http://www.lidovky.cz/export/rss.asp
@@ -9,7 +9,9 @@ RSS:
     - http://www.ceskenoviny.cz/sluzby/rss/index.php
     - http://www.financninoviny.cz/sluzby/rss/index.php
     - http://bleskove.aktualne.centrum.cz/export/rss-bleskove-hp.phtml
-data_address: /afs/ms/u/b/bilek7am/BIG/skola/rocnik/data/
+articles_address: /afs/ms/u/b/bilek7am/BIG/skola/rocnik/data/articles
+RSS_address: /afs/ms/u/b/bilek7am/BIG/skola/rocnik/data/RSS
+RSS_kept: 200
 min_word_length: 3
 max_theme_length: 10
 counter_first_named: 30

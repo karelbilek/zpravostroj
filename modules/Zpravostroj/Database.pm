@@ -14,7 +14,7 @@ use Zpravostroj::Other;
 use base 'Exporter';
 our @EXPORT = qw( get_pool_count add_new_articles read_articles update_articles);
 
-my $database_dir = read_option("data_address")."/articles";
+my $database_dir = read_option("articles_address");
 my $pool_dir = $database_dir."/pool";
 my $count_file = $pool_dir."/count";
 
