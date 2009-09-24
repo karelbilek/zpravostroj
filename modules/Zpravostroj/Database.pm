@@ -36,7 +36,7 @@ sub get_pool_count {
 		if (looks_like_number($count)) {
 			return $count;
 		} else {
-			die "count doesn't look like number.";
+			return 0;
 		}
 	}
 }

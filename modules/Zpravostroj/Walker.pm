@@ -14,9 +14,11 @@ sub download_articles {
 	
 	my @links = get_all_links;
 	
-	my @articles = map ({url=>$_, html=>read_from_web($_)}, @links);
+	my @articles = map ({url=>$_}, @links);
 	
 	add_new_articles(@articles);
+	
+	update_articles($start, map ({html=>read_from_web($_)}, @links));
 	
 	return $start;
 }
