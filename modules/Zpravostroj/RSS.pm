@@ -46,6 +46,9 @@ sub get_new_links{
 		@visited_arr = splice (@visited_arr, -$RSS_kept);
 	}
 	
-	
-	
+}
+
+sub get_all_links {
+	my @RSS_sources = @{read_information("RSS_sources")};
+	return map(get_new_links($_), @RSS_sources); #,limit=>5);
 }
