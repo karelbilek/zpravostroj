@@ -7,6 +7,7 @@ use Zpravostroj::RSS;
 use Zpravostroj::Database;
 use Zpravostroj::Extractor;
 use Zpravostroj::Tagger;
+use Zpravostroj::Counter;
 
 use base 'Exporter';
 our @EXPORT = qw(download_articles);
