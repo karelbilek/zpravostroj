@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<tmt_document xmlns="http://ufal.mff.cuni.cz/pdt/pml/">
+ <head>
+  <schema href="tmt_schema.xml" />
+ </head>
+ <meta>
+  <czech_source_text>Tibor, který v soutěži vystoupil jako živá socha ukázal svou tvář. A Blesk.cz zjistil, že rodák z Plzně v součastnosti žije v Bratislavě a k svému převleku se inspiroval na dovolené v Itálii.</czech_source_text>
+ </meta>
+ <bundles>
+  <LM id="s1">
+   <czech_source_sentence>Tibor, který v soutěži vystoupil jako živá socha ukázal svou tvář.</czech_source_sentence>
+   <trees>
+    <SCzechM id="SCzechM-s1">
+     <children>
+      <LM id="SCzechM-s1-w1">
+       <form>Tibor</form>
+       <lemma>Tibor_;Y</lemma>
+       <tag>NNMS1-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s1-w2">
+       <form>,</form>
+       <lemma>,</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+      <LM id="SCzechM-s1-w3">
+       <form>který</form>
+       <lemma>který</lemma>
+       <tag>P4YS1----------</tag>
+      </LM>
+      <LM id="SCzechM-s1-w4">
+       <form>v</form>
+       <lemma>v-1</lemma>
+       <tag>RR--6----------</tag>
+      </LM>
+      <LM id="SCzechM-s1-w5">
+       <form>soutěži</form>
+       <lemma>soutěž</lemma>
+       <tag>NNFS6-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s1-w6">
+       <form>vystoupil</form>
+       <lemma>vystoupit_:W</lemma>
+       <tag>VpYS---XR-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s1-w7">
+       <form>jako</form>
+       <lemma>jako</lemma>
+       <tag>J,-------------</tag>
+      </LM>
+      <LM id="SCzechM-s1-w8">
+       <form>živá</form>
+       <lemma>živý</lemma>
+       <tag>AAFS1----1A----</tag>
+      </LM>
+      <LM id="SCzechM-s1-w9">
+       <form>socha</form>
+       <lemma>socha</lemma>
+       <tag>NNFS1-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s1-w10">
+       <form>ukázal</form>
+       <lemma>ukázat</lemma>
+       <tag>VpYS---XR-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s1-w11">
+       <form>svou</form>
+       <lemma>svůj-1_^(přivlast.)</lemma>
+       <tag>P8FS4---------1</tag>
+      </LM>
+      <LM id="SCzechM-s1-w12">
+       <form>tvář</form>
+       <lemma>tvář</lemma>
+       <tag>NNFS4-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s1-w13">
+       <form>.</form>
+       <lemma>.</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+     </children>
+    </SCzechM>
+    <SCzechN></SCzechN>
+   </trees>
+  </LM>
+  <LM id="s2">
+   <czech_source_sentence>A Blesk.</czech_source_sentence>
+   <trees>
+    <SCzechM id="SCzechM-s2">
+     <children>
+      <LM id="SCzechM-s2-w1">
+       <form>A</form>
+       <lemma>a-1</lemma>
+       <tag>J^-------------</tag>
+      </LM>
+      <LM id="SCzechM-s2-w2">
+       <form>Blesk</form>
+       <lemma>blesk</lemma>
+       <tag>NNIS1-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s2-w3">
+       <form>.</form>
+       <lemma>.</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+     </children>
+    </SCzechM>
+    <SCzechN></SCzechN>
+   </trees>
+  </LM>
+  <LM id="s3">
+   <czech_source_sentence>cz zjistil, že rodák z Plzně v součastnosti žije v Bratislavě a k svému převleku se inspiroval na dovolené v Itálii.</czech_source_sentence>
+   <trees>
+    <SCzechM id="SCzechM-s3">
+     <children>
+      <LM id="SCzechM-s3-w1">
+       <form>cz</form>
+       <lemma>cz</lemma>
+       <tag>NNIS1-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s3-w2">
+       <form>zjistil</form>
+       <lemma>zjistit_:W</lemma>
+       <tag>VpYS---XR-AA---</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s3-w3">
+       <form>,</form>
+       <lemma>,</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+      <LM id="SCzechM-s3-w4">
+       <form>že</form>
+       <lemma>že</lemma>
+       <tag>J,-------------</tag>
+      </LM>
+      <LM id="SCzechM-s3-w5">
+       <form>rodák</form>
+       <lemma>rodák</lemma>
+       <tag>NNMS1-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s3-w6">
+       <form>z</form>
+       <lemma>z-1</lemma>
+       <tag>RR--2----------</tag>
+      </LM>
+      <LM id="SCzechM-s3-w7">
+       <form>Plzně</form>
+       <lemma>Plzeň_;G</lemma>
+       <tag>NNFS2-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s3-w8">
+       <form>v</form>
+       <lemma>v-1</lemma>
+       <tag>RR--6----------</tag>
+      </LM>
+      <LM id="SCzechM-s3-w9">
+       <form>součastnosti</form>
+       <lemma>součastnost</lemma>
+       <tag>NNFS6-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s3-w10">
+       <form>žije</form>
+       <lemma>žít_:T</lemma>
+       <tag>VB-S---3P-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s3-w11">
+       <form>v</form>
+       <lemma>v-1</lemma>
+       <tag>RR--6----------</tag>
+      </LM>
+      <LM id="SCzechM-s3-w12">
+       <form>Bratislavě</form>
+       <lemma>Bratislava_;G</lemma>
+       <tag>NNFS6-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s3-w13">
+       <form>a</form>
+       <lemma>a-1</lemma>
+       <tag>J^-------------</tag>
+      </LM>
+      <LM id="SCzechM-s3-w14">
+       <form>k</form>
+       <lemma>k-1</lemma>
+       <tag>RR--3----------</tag>
+      </LM>
+      <LM id="SCzechM-s3-w15">
+       <form>svému</form>
+       <lemma>svůj-1_^(přivlast.)</lemma>
+       <tag>P8ZS3----------</tag>
+      </LM>
+      <LM id="SCzechM-s3-w16">
+       <form>převleku</form>
+       <lemma>převlek</lemma>
+       <tag>NNIS2-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s3-w17">
+       <form>se</form>
+       <lemma>se_^(zvr._zájmeno/částice)</lemma>
+       <tag>P7-X4----------</tag>
+      </LM>
+      <LM id="SCzechM-s3-w18">
+       <form>inspiroval</form>
+       <lemma>inspirovat_:T_:W</lemma>
+       <tag>VpYS---XR-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s3-w19">
+       <form>na</form>
+       <lemma>na-1</lemma>
+       <tag>RR--6----------</tag>
+      </LM>
+      <LM id="SCzechM-s3-w20">
+       <form>dovolené</form>
+       <lemma>dovolená_^(ze_zaměstnání)</lemma>
+       <tag>NNFS6-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s3-w21">
+       <form>v</form>
+       <lemma>v-1</lemma>
+       <tag>RR--6----------</tag>
+      </LM>
+      <LM id="SCzechM-s3-w22">
+       <form>Itálii</form>
+       <lemma>Itálie_;G</lemma>
+       <tag>NNFS6-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s3-w23">
+       <form>.</form>
+       <lemma>.</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+     </children>
+    </SCzechM>
+    <SCzechN>
+     <children>
+      <LM id="SCzechN-s3-w2">
+       <ne_type>gu</ne_type>
+       <normalized_name>Plzeň</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s3-w7</LM>
+       </m.rf>
+      </LM>
+      <LM id="SCzechN-s3-w3">
+       <ne_type>gu</ne_type>
+       <normalized_name>Bratislava</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s3-w12</LM>
+       </m.rf>
+      </LM>
+      <LM id="SCzechN-s3-w4">
+       <ne_type>gc</ne_type>
+       <normalized_name>Itálie</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s3-w22</LM>
+       </m.rf>
+      </LM>
+     </children>
+    </SCzechN>
+   </trees>
+  </LM>
+ </bundles>
+</tmt_document>

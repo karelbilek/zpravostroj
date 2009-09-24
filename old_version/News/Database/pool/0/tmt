@@ -1,0 +1,877 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<tmt_document xmlns="http://ufal.mff.cuni.cz/pdt/pml/">
+ <head>
+  <schema href="tmt_schema.xml" />
+ </head>
+ <meta>
+  <czech_source_text>V Mexiku bylo ve středuuneseno linkové letadlo směřující z rekreačního střediska Cancún do hlavního města.Oznámily to agentury. Nedlouho poté stroj přistál v metropoli Mexiku.Podle rozhlasových zpráv bylo letadlo společnosti Aeromexico uneseno vzápětí po startu. Pachatelé, kterými jsou zřejmě tři muži, hrozili odpálit výbušninu. Únosci požadovali, aby jim bylo umožněno mluvit s mexickým prezidentem Felipem Calderónem. Letadlo mezitím bezpečně přistálo v hlavním městě, kde mezitím panuje nejvyšší pohotovost, oznámil ministr dopravy Juan Molinar. Na letiště se stahují bezpečnostní síly, stroj zatím stojí na přistávací dráze. Podle médií jde o letoun Boeing 737, který vezl 104 cestující. Podle některých zdrojů se únoscům dosud nepodařilo proniknout do pilotní kabiny, hrozí proto z prostoru pro cestující.</czech_source_text>
+ </meta>
+ <bundles>
+  <LM id="s1">
+   <czech_source_sentence>V Mexiku bylo ve středuuneseno linkové letadlo směřující z rekreačního střediska Cancún do hlavního města.</czech_source_sentence>
+   <trees>
+    <SCzechM id="SCzechM-s1">
+     <children>
+      <LM id="SCzechM-s1-w1">
+       <form>V</form>
+       <lemma>v-1</lemma>
+       <tag>RR--6----------</tag>
+      </LM>
+      <LM id="SCzechM-s1-w2">
+       <form>Mexiku</form>
+       <lemma>Mexiko_;G</lemma>
+       <tag>NNNS6-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s1-w3">
+       <form>bylo</form>
+       <lemma>být</lemma>
+       <tag>VpNS---XR-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s1-w4">
+       <form>ve</form>
+       <lemma>v-1</lemma>
+       <tag>RV--4----------</tag>
+      </LM>
+      <LM id="SCzechM-s1-w5">
+       <form>středuuneseno</form>
+       <lemma>středuuneseno</lemma>
+       <tag>NNMS1-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s1-w6">
+       <form>linkové</form>
+       <lemma>linkový</lemma>
+       <tag>AANS1----1A----</tag>
+      </LM>
+      <LM id="SCzechM-s1-w7">
+       <form>letadlo</form>
+       <lemma>letadlo</lemma>
+       <tag>NNNS1-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s1-w8">
+       <form>směřující</form>
+       <lemma>směřující_^(*5ovat)</lemma>
+       <tag>AGIP1-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s1-w9">
+       <form>z</form>
+       <lemma>z-1</lemma>
+       <tag>RR--2----------</tag>
+      </LM>
+      <LM id="SCzechM-s1-w10">
+       <form>rekreačního</form>
+       <lemma>rekreační</lemma>
+       <tag>AANS2----1A----</tag>
+      </LM>
+      <LM id="SCzechM-s1-w11">
+       <form>střediska</form>
+       <lemma>středisko</lemma>
+       <tag>NNNS2-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s1-w12">
+       <form>Cancún</form>
+       <lemma>Cancún_;G</lemma>
+       <tag>NNIS1-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s1-w13">
+       <form>do</form>
+       <lemma>do-1</lemma>
+       <tag>RR--2----------</tag>
+      </LM>
+      <LM id="SCzechM-s1-w14">
+       <form>hlavního</form>
+       <lemma>hlavní</lemma>
+       <tag>AANS2----1A----</tag>
+      </LM>
+      <LM id="SCzechM-s1-w15">
+       <form>města</form>
+       <lemma>město</lemma>
+       <tag>NNNS2-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s1-w16">
+       <form>.</form>
+       <lemma>.</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+     </children>
+    </SCzechM>
+    <SCzechN>
+     <children>
+      <LM id="SCzechN-s1-w2">
+       <ne_type>gc</ne_type>
+       <normalized_name>Mexiko</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s1-w2</LM>
+       </m.rf>
+      </LM>
+      <LM id="SCzechN-s1-w3">
+       <ne_type>gu</ne_type>
+       <normalized_name>Cancún</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s1-w12</LM>
+       </m.rf>
+      </LM>
+     </children>
+    </SCzechN>
+   </trees>
+  </LM>
+  <LM id="s2">
+   <czech_source_sentence>Oznámily to agentury.</czech_source_sentence>
+   <trees>
+    <SCzechM id="SCzechM-s2">
+     <children>
+      <LM id="SCzechM-s2-w1">
+       <form>Oznámily</form>
+       <lemma>oznámit_:W</lemma>
+       <tag>VpTP---XR-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s2-w2">
+       <form>to</form>
+       <lemma>ten</lemma>
+       <tag>PDNS1----------</tag>
+      </LM>
+      <LM id="SCzechM-s2-w3">
+       <form>agentury</form>
+       <lemma>agentura</lemma>
+       <tag>NNFP1-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s2-w4">
+       <form>.</form>
+       <lemma>.</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+     </children>
+    </SCzechM>
+    <SCzechN></SCzechN>
+   </trees>
+  </LM>
+  <LM id="s3">
+   <czech_source_sentence>Nedlouho poté stroj přistál v metropoli Mexiku.</czech_source_sentence>
+   <trees>
+    <SCzechM id="SCzechM-s3">
+     <children>
+      <LM id="SCzechM-s3-w1">
+       <form>Nedlouho</form>
+       <lemma>dlouho_^(o_čase;_př._dlouhá_doba)</lemma>
+       <tag>Dg-------1N----</tag>
+      </LM>
+      <LM id="SCzechM-s3-w2">
+       <form>poté</form>
+       <lemma>poté</lemma>
+       <tag>Db-------------</tag>
+      </LM>
+      <LM id="SCzechM-s3-w3">
+       <form>stroj</form>
+       <lemma>stroj</lemma>
+       <tag>NNIS1-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s3-w4">
+       <form>přistál</form>
+       <lemma>přistát</lemma>
+       <tag>VpYS---XR-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s3-w5">
+       <form>v</form>
+       <lemma>v-1</lemma>
+       <tag>RR--6----------</tag>
+      </LM>
+      <LM id="SCzechM-s3-w6">
+       <form>metropoli</form>
+       <lemma>metropol</lemma>
+       <tag>NNFS6-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s3-w7">
+       <form>Mexiku</form>
+       <lemma>Mexiko_;G</lemma>
+       <tag>NNNS6-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s3-w8">
+       <form>.</form>
+       <lemma>.</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+     </children>
+    </SCzechM>
+    <SCzechN>
+     <children>
+      <LM id="SCzechN-s3-w2">
+       <ne_type>gc</ne_type>
+       <normalized_name>Mexiko</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s3-w7</LM>
+       </m.rf>
+      </LM>
+     </children>
+    </SCzechN>
+   </trees>
+  </LM>
+  <LM id="s4">
+   <czech_source_sentence>Podle rozhlasových zpráv bylo letadlo společnosti Aeromexico uneseno vzápětí po startu.</czech_source_sentence>
+   <trees>
+    <SCzechM id="SCzechM-s4">
+     <children>
+      <LM id="SCzechM-s4-w1">
+       <form>Podle</form>
+       <lemma>podle-2</lemma>
+       <tag>RR--2----------</tag>
+      </LM>
+      <LM id="SCzechM-s4-w2">
+       <form>rozhlasových</form>
+       <lemma>rozhlasový</lemma>
+       <tag>AAFP2----1A----</tag>
+      </LM>
+      <LM id="SCzechM-s4-w3">
+       <form>zpráv</form>
+       <lemma>zpráva</lemma>
+       <tag>NNFP2-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s4-w4">
+       <form>bylo</form>
+       <lemma>být</lemma>
+       <tag>VpNS---XR-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s4-w5">
+       <form>letadlo</form>
+       <lemma>letadlo</lemma>
+       <tag>NNNS1-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s4-w6">
+       <form>společnosti</form>
+       <lemma>společnost_^(*3ý)</lemma>
+       <tag>NNFS2-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s4-w7">
+       <form>Aeromexico</form>
+       <lemma>Aeromexico</lemma>
+       <tag>NNNS1-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s4-w8">
+       <form>uneseno</form>
+       <lemma>unést</lemma>
+       <tag>VsNS---XX-AP---</tag>
+      </LM>
+      <LM id="SCzechM-s4-w9">
+       <form>vzápětí</form>
+       <lemma>vzápětí</lemma>
+       <tag>Db-------------</tag>
+      </LM>
+      <LM id="SCzechM-s4-w10">
+       <form>po</form>
+       <lemma>po-1</lemma>
+       <tag>RR--6----------</tag>
+      </LM>
+      <LM id="SCzechM-s4-w11">
+       <form>startu</form>
+       <lemma>start</lemma>
+       <tag>NNIS6-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s4-w12">
+       <form>.</form>
+       <lemma>.</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+     </children>
+    </SCzechM>
+    <SCzechN>
+     <children>
+      <LM id="SCzechN-s4-w2">
+       <ne_type>om</ne_type>
+       <normalized_name>zpráva</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s4-w3</LM>
+       </m.rf>
+      </LM>
+     </children>
+    </SCzechN>
+   </trees>
+  </LM>
+  <LM id="s5">
+   <czech_source_sentence>Pachatelé, kterými jsou zřejmě tři muži, hrozili odpálit výbušninu.</czech_source_sentence>
+   <trees>
+    <SCzechM id="SCzechM-s5">
+     <children>
+      <LM id="SCzechM-s5-w1">
+       <form>Pachatelé</form>
+       <lemma>pachatel</lemma>
+       <tag>NNMP1-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s5-w2">
+       <form>,</form>
+       <lemma>,</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+      <LM id="SCzechM-s5-w3">
+       <form>kterými</form>
+       <lemma>který</lemma>
+       <tag>P4XP7----------</tag>
+      </LM>
+      <LM id="SCzechM-s5-w4">
+       <form>jsou</form>
+       <lemma>být</lemma>
+       <tag>VB-P---3P-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s5-w5">
+       <form>zřejmě</form>
+       <lemma>zřejmě_^(*1ý)</lemma>
+       <tag>Dg-------1A----</tag>
+      </LM>
+      <LM id="SCzechM-s5-w6">
+       <form>tři</form>
+       <lemma>tři`3</lemma>
+       <tag>ClXP1----------</tag>
+      </LM>
+      <LM id="SCzechM-s5-w7">
+       <form>muži</form>
+       <lemma>muž</lemma>
+       <tag>NNMP1-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s5-w8">
+       <form>,</form>
+       <lemma>,</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+      <LM id="SCzechM-s5-w9">
+       <form>hrozili</form>
+       <lemma>hrozit_:T</lemma>
+       <tag>VpMP---XR-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s5-w10">
+       <form>odpálit</form>
+       <lemma>odpálit_:W</lemma>
+       <tag>Vf--------A----</tag>
+      </LM>
+      <LM id="SCzechM-s5-w11">
+       <form>výbušninu</form>
+       <lemma>výbušnina</lemma>
+       <tag>NNFS4-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s5-w12">
+       <form>.</form>
+       <lemma>.</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+     </children>
+    </SCzechM>
+    <SCzechN></SCzechN>
+   </trees>
+  </LM>
+  <LM id="s6">
+   <czech_source_sentence>Únosci požadovali, aby jim bylo umožněno mluvit s mexickým prezidentem Felipem Calderónem.</czech_source_sentence>
+   <trees>
+    <SCzechM id="SCzechM-s6">
+     <children>
+      <LM id="SCzechM-s6-w1">
+       <form>Únosci</form>
+       <lemma>únosce</lemma>
+       <tag>NNMP1-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s6-w2">
+       <form>požadovali</form>
+       <lemma>požadovat_:T</lemma>
+       <tag>VpMP---XR-AA---</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s6-w3">
+       <form>,</form>
+       <lemma>,</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+      <LM id="SCzechM-s6-w4">
+       <form>aby</form>
+       <lemma>aby</lemma>
+       <tag>J,-------------</tag>
+      </LM>
+      <LM id="SCzechM-s6-w5">
+       <form>jim</form>
+       <lemma>on-1</lemma>
+       <tag>PPXP3--3-------</tag>
+      </LM>
+      <LM id="SCzechM-s6-w6">
+       <form>bylo</form>
+       <lemma>být</lemma>
+       <tag>VpNS---XR-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s6-w7">
+       <form>umožněno</form>
+       <lemma>umožnit</lemma>
+       <tag>VsNS---XX-AP---</tag>
+      </LM>
+      <LM id="SCzechM-s6-w8">
+       <form>mluvit</form>
+       <lemma>mluvit_:T</lemma>
+       <tag>Vf--------A----</tag>
+      </LM>
+      <LM id="SCzechM-s6-w9">
+       <form>s</form>
+       <lemma>s-1</lemma>
+       <tag>RR--7----------</tag>
+      </LM>
+      <LM id="SCzechM-s6-w10">
+       <form>mexickým</form>
+       <lemma>mexický</lemma>
+       <tag>AAMS7----1A----</tag>
+      </LM>
+      <LM id="SCzechM-s6-w11">
+       <form>prezidentem</form>
+       <lemma>prezident</lemma>
+       <tag>NNMS7-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s6-w12">
+       <form>Felipem</form>
+       <lemma>Felip</lemma>
+       <tag>NNMS7-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s6-w13">
+       <form>Calderónem</form>
+       <lemma>Calderón_;S</lemma>
+       <tag>NNMS7-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s6-w14">
+       <form>.</form>
+       <lemma>.</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+     </children>
+    </SCzechM>
+    <SCzechN>
+     <children>
+      <LM id="SCzechN-s6-w2">
+       <ne_type>pf</ne_type>
+       <normalized_name>Felip</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s6-w12</LM>
+       </m.rf>
+      </LM>
+      <LM id="SCzechN-s6-w3">
+       <ne_type>P</ne_type>
+       <normalized_name>Felip Calderón</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s6-w12</LM>
+        <LM>SCzechM-s6-w13</LM>
+       </m.rf>
+      </LM>
+      <LM id="SCzechN-s6-w4">
+       <ne_type>ps</ne_type>
+       <normalized_name>Calderón</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s6-w13</LM>
+       </m.rf>
+      </LM>
+     </children>
+    </SCzechN>
+   </trees>
+  </LM>
+  <LM id="s7">
+   <czech_source_sentence>Letadlo mezitím bezpečně přistálo v hlavním městě, kde mezitím panuje nejvyšší pohotovost, oznámil ministr dopravy Juan Molinar.</czech_source_sentence>
+   <trees>
+    <SCzechM id="SCzechM-s7">
+     <children>
+      <LM id="SCzechM-s7-w1">
+       <form>Letadlo</form>
+       <lemma>letadlo</lemma>
+       <tag>NNNS1-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s7-w2">
+       <form>mezitím</form>
+       <lemma>mezitím</lemma>
+       <tag>Db-------------</tag>
+      </LM>
+      <LM id="SCzechM-s7-w3">
+       <form>bezpečně</form>
+       <lemma>bezpečně-1_^(*3ý-1)</lemma>
+       <tag>Dg-------1A----</tag>
+      </LM>
+      <LM id="SCzechM-s7-w4">
+       <form>přistálo</form>
+       <lemma>přistát</lemma>
+       <tag>VpNS---XR-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s7-w5">
+       <form>v</form>
+       <lemma>v-1</lemma>
+       <tag>RR--6----------</tag>
+      </LM>
+      <LM id="SCzechM-s7-w6">
+       <form>hlavním</form>
+       <lemma>hlavní</lemma>
+       <tag>AANS6----1A----</tag>
+      </LM>
+      <LM id="SCzechM-s7-w7">
+       <form>městě</form>
+       <lemma>město</lemma>
+       <tag>NNNS6-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s7-w8">
+       <form>,</form>
+       <lemma>,</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+      <LM id="SCzechM-s7-w9">
+       <form>kde</form>
+       <lemma>kde</lemma>
+       <tag>Db-------------</tag>
+      </LM>
+      <LM id="SCzechM-s7-w10">
+       <form>mezitím</form>
+       <lemma>mezitím</lemma>
+       <tag>Db-------------</tag>
+      </LM>
+      <LM id="SCzechM-s7-w11">
+       <form>panuje</form>
+       <lemma>panovat_:T</lemma>
+       <tag>VB-S---3P-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s7-w12">
+       <form>nejvyšší</form>
+       <lemma>vysoký</lemma>
+       <tag>AAFS4----3A----</tag>
+      </LM>
+      <LM id="SCzechM-s7-w13">
+       <form>pohotovost</form>
+       <lemma>pohotovost_^(*3ý)</lemma>
+       <tag>NNFS4-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s7-w14">
+       <form>,</form>
+       <lemma>,</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+      <LM id="SCzechM-s7-w15">
+       <form>oznámil</form>
+       <lemma>oznámit_:W</lemma>
+       <tag>VpYS---XR-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s7-w16">
+       <form>ministr</form>
+       <lemma>ministr</lemma>
+       <tag>NNMS1-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s7-w17">
+       <form>dopravy</form>
+       <lemma>doprava</lemma>
+       <tag>NNFS2-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s7-w18">
+       <form>Juan</form>
+       <lemma>Juan_;Y</lemma>
+       <tag>NNMS1-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s7-w19">
+       <form>Molinar</form>
+       <lemma>Molinar</lemma>
+       <tag>NNMS1-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s7-w20">
+       <form>.</form>
+       <lemma>.</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+     </children>
+    </SCzechM>
+    <SCzechN>
+     <children>
+      <LM id="SCzechN-s7-w2">
+       <ne_type>pf</ne_type>
+       <normalized_name>Juan</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s7-w18</LM>
+       </m.rf>
+      </LM>
+      <LM id="SCzechN-s7-w3">
+       <ne_type>P</ne_type>
+       <normalized_name>Juan Molinar</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s7-w18</LM>
+        <LM>SCzechM-s7-w19</LM>
+       </m.rf>
+      </LM>
+      <LM id="SCzechN-s7-w4">
+       <ne_type>ps</ne_type>
+       <normalized_name>Molinar</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s7-w19</LM>
+       </m.rf>
+      </LM>
+     </children>
+    </SCzechN>
+   </trees>
+  </LM>
+  <LM id="s8">
+   <czech_source_sentence>Na letiště se stahují bezpečnostní síly, stroj zatím stojí na přistávací dráze.</czech_source_sentence>
+   <trees>
+    <SCzechM id="SCzechM-s8">
+     <children>
+      <LM id="SCzechM-s8-w1">
+       <form>Na</form>
+       <lemma>na-1</lemma>
+       <tag>RR--4----------</tag>
+      </LM>
+      <LM id="SCzechM-s8-w2">
+       <form>letiště</form>
+       <lemma>letiště</lemma>
+       <tag>NNNS4-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s8-w3">
+       <form>se</form>
+       <lemma>se_^(zvr._zájmeno/částice)</lemma>
+       <tag>P7-X4----------</tag>
+      </LM>
+      <LM id="SCzechM-s8-w4">
+       <form>stahují</form>
+       <lemma>stahovat_:T</lemma>
+       <tag>VB-P---3P-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s8-w5">
+       <form>bezpečnostní</form>
+       <lemma>bezpečnostní</lemma>
+       <tag>AAFP1----1A----</tag>
+      </LM>
+      <LM id="SCzechM-s8-w6">
+       <form>síly</form>
+       <lemma>síla_^(fyzická,_vojenská;_moc)</lemma>
+       <tag>NNFP1-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s8-w7">
+       <form>,</form>
+       <lemma>,</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+      <LM id="SCzechM-s8-w8">
+       <form>stroj</form>
+       <lemma>stroj</lemma>
+       <tag>NNIS1-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s8-w9">
+       <form>zatím</form>
+       <lemma>zatím</lemma>
+       <tag>Db-------------</tag>
+      </LM>
+      <LM id="SCzechM-s8-w10">
+       <form>stojí</form>
+       <lemma>stát-3_^(někdo/něco_stojí,_např._na_nohou)</lemma>
+       <tag>VB-P---3P-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s8-w11">
+       <form>na</form>
+       <lemma>na-1</lemma>
+       <tag>RR--6----------</tag>
+      </LM>
+      <LM id="SCzechM-s8-w12">
+       <form>přistávací</form>
+       <lemma>přistávací_^(^IC**přistát)</lemma>
+       <tag>AAFS6----1A----</tag>
+      </LM>
+      <LM id="SCzechM-s8-w13">
+       <form>dráze</form>
+       <lemma>dráha</lemma>
+       <tag>NNFS6-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s8-w14">
+       <form>.</form>
+       <lemma>.</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+     </children>
+    </SCzechM>
+    <SCzechN></SCzechN>
+   </trees>
+  </LM>
+  <LM id="s9">
+   <czech_source_sentence>Podle médií jde o letoun Boeing 737, který vezl 104 cestující.</czech_source_sentence>
+   <trees>
+    <SCzechM id="SCzechM-s9">
+     <children>
+      <LM id="SCzechM-s9-w1">
+       <form>Podle</form>
+       <lemma>podle-2</lemma>
+       <tag>RR--2----------</tag>
+      </LM>
+      <LM id="SCzechM-s9-w2">
+       <form>médií</form>
+       <lemma>médium</lemma>
+       <tag>NNNP2-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s9-w3">
+       <form>jde</form>
+       <lemma>jít</lemma>
+       <tag>VB-S---3P-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s9-w4">
+       <form>o</form>
+       <lemma>o-1</lemma>
+       <tag>RR--4----------</tag>
+      </LM>
+      <LM id="SCzechM-s9-w5">
+       <form>letoun</form>
+       <lemma>letoun</lemma>
+       <tag>NNIS4-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s9-w6">
+       <form>Boeing</form>
+       <lemma>Boeing-1_;K_^(Boeing_Co.)</lemma>
+       <tag>NNIS1-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s9-w7">
+       <form>737</form>
+       <lemma>737</lemma>
+       <tag>C=-------------</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s9-w8">
+       <form>,</form>
+       <lemma>,</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+      <LM id="SCzechM-s9-w9">
+       <form>který</form>
+       <lemma>který</lemma>
+       <tag>P4YS1----------</tag>
+      </LM>
+      <LM id="SCzechM-s9-w10">
+       <form>vezl</form>
+       <lemma>vézt_^(něco/někoho_autem,_vlakem,...)</lemma>
+       <tag>VpYS---XR-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s9-w11">
+       <form>104</form>
+       <lemma>104</lemma>
+       <tag>C=-------------</tag>
+      </LM>
+      <LM id="SCzechM-s9-w12">
+       <form>cestující</form>
+       <lemma>cestující_^(*5ovat)</lemma>
+       <tag>NNFS1-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s9-w13">
+       <form>.</form>
+       <lemma>.</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+     </children>
+    </SCzechM>
+    <SCzechN></SCzechN>
+   </trees>
+  </LM>
+  <LM id="s10">
+   <czech_source_sentence>Podle některých zdrojů se únoscům dosud nepodařilo proniknout do pilotní kabiny, hrozí proto z prostoru pro cestující.</czech_source_sentence>
+   <trees>
+    <SCzechM id="SCzechM-s10">
+     <children>
+      <LM id="SCzechM-s10-w1">
+       <form>Podle</form>
+       <lemma>podle-2</lemma>
+       <tag>RR--2----------</tag>
+      </LM>
+      <LM id="SCzechM-s10-w2">
+       <form>některých</form>
+       <lemma>některý</lemma>
+       <tag>PZXP2----------</tag>
+      </LM>
+      <LM id="SCzechM-s10-w3">
+       <form>zdrojů</form>
+       <lemma>zdroj</lemma>
+       <tag>NNIP2-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s10-w4">
+       <form>se</form>
+       <lemma>se_^(zvr._zájmeno/částice)</lemma>
+       <tag>P7-X4----------</tag>
+      </LM>
+      <LM id="SCzechM-s10-w5">
+       <form>únoscům</form>
+       <lemma>únosce</lemma>
+       <tag>NNMP3-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s10-w6">
+       <form>dosud</form>
+       <lemma>dosud</lemma>
+       <tag>Db-------------</tag>
+      </LM>
+      <LM id="SCzechM-s10-w7">
+       <form>nepodařilo</form>
+       <lemma>podařit_:W</lemma>
+       <tag>VpNS---XR-NA---</tag>
+      </LM>
+      <LM id="SCzechM-s10-w8">
+       <form>proniknout</form>
+       <lemma>proniknout_:W</lemma>
+       <tag>Vf--------A----</tag>
+      </LM>
+      <LM id="SCzechM-s10-w9">
+       <form>do</form>
+       <lemma>do-1</lemma>
+       <tag>RR--2----------</tag>
+      </LM>
+      <LM id="SCzechM-s10-w10">
+       <form>pilotní</form>
+       <lemma>pilotní</lemma>
+       <tag>AAFS2----1A----</tag>
+      </LM>
+      <LM id="SCzechM-s10-w11">
+       <form>kabiny</form>
+       <lemma>kabina</lemma>
+       <tag>NNFS2-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s10-w12">
+       <form>,</form>
+       <lemma>,</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+      <LM id="SCzechM-s10-w13">
+       <form>hrozí</form>
+       <lemma>hrozit_:T</lemma>
+       <tag>VB-S---3P-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s10-w14">
+       <form>proto</form>
+       <lemma>proto-1_^(proto;_a_proto,_ale_proto,...)</lemma>
+       <tag>J^-------------</tag>
+      </LM>
+      <LM id="SCzechM-s10-w15">
+       <form>z</form>
+       <lemma>z-1</lemma>
+       <tag>RR--2----------</tag>
+      </LM>
+      <LM id="SCzechM-s10-w16">
+       <form>prostoru</form>
+       <lemma>prostor</lemma>
+       <tag>NNIS2-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s10-w17">
+       <form>pro</form>
+       <lemma>pro-1</lemma>
+       <tag>RR--4----------</tag>
+      </LM>
+      <LM id="SCzechM-s10-w18">
+       <form>cestující</form>
+       <lemma>cestující_^(*5ovat)</lemma>
+       <tag>AGFS4-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s10-w19">
+       <form>.</form>
+       <lemma>.</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+     </children>
+    </SCzechM>
+    <SCzechN></SCzechN>
+   </trees>
+  </LM>
+ </bundles>
+</tmt_document>

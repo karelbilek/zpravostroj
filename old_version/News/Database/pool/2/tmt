@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<tmt_document xmlns="http://ufal.mff.cuni.cz/pdt/pml/">
+ <head>
+  <schema href="tmt_schema.xml" />
+ </head>
+ <meta>
+  <czech_source_text>Poslanci dnes (ve středu) rozhodli o ročním odkladu státních maturit. Nejsou podle nich připravené. Novelu školského zákona musí ještě podepsat prezident Václav Klaus. </czech_source_text>
+ </meta>
+ <bundles>
+  <LM id="s1">
+   <czech_source_sentence>Poslanci dnes (ve středu) rozhodli o ročním odkladu státních maturit.</czech_source_sentence>
+   <trees>
+    <SCzechM id="SCzechM-s1">
+     <children>
+      <LM id="SCzechM-s1-w1">
+       <form>Poslanci</form>
+       <lemma>poslanec</lemma>
+       <tag>NNMP1-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s1-w2">
+       <form>dnes</form>
+       <lemma>dnes</lemma>
+       <tag>Db-------------</tag>
+      </LM>
+      <LM id="SCzechM-s1-w3">
+       <form>(</form>
+       <lemma>(</lemma>
+       <tag>Z:-------------</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s1-w4">
+       <form>ve</form>
+       <lemma>v-1</lemma>
+       <tag>RV--4----------</tag>
+      </LM>
+      <LM id="SCzechM-s1-w5">
+       <form>středu</form>
+       <lemma>středa</lemma>
+       <tag>NNFS4-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s1-w6">
+       <form>)</form>
+       <lemma>)</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+      <LM id="SCzechM-s1-w7">
+       <form>rozhodli</form>
+       <lemma>rozhodnout_:W</lemma>
+       <tag>VpMP---XR-AA--1</tag>
+      </LM>
+      <LM id="SCzechM-s1-w8">
+       <form>o</form>
+       <lemma>o-1</lemma>
+       <tag>RR--6----------</tag>
+      </LM>
+      <LM id="SCzechM-s1-w9">
+       <form>ročním</form>
+       <lemma>roční</lemma>
+       <tag>AAIS6----1A----</tag>
+      </LM>
+      <LM id="SCzechM-s1-w10">
+       <form>odkladu</form>
+       <lemma>odklad</lemma>
+       <tag>NNIS6-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s1-w11">
+       <form>státních</form>
+       <lemma>státní</lemma>
+       <tag>AAFP2----1A----</tag>
+      </LM>
+      <LM id="SCzechM-s1-w12">
+       <form>maturit</form>
+       <lemma>maturita</lemma>
+       <tag>NNFP2-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s1-w13">
+       <form>.</form>
+       <lemma>.</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+     </children>
+    </SCzechM>
+    <SCzechN></SCzechN>
+   </trees>
+  </LM>
+  <LM id="s2">
+   <czech_source_sentence>Nejsou podle nich připravené.</czech_source_sentence>
+   <trees>
+    <SCzechM id="SCzechM-s2">
+     <children>
+      <LM id="SCzechM-s2-w1">
+       <form>Nejsou</form>
+       <lemma>být</lemma>
+       <tag>VB-P---3P-NA---</tag>
+      </LM>
+      <LM id="SCzechM-s2-w2">
+       <form>podle</form>
+       <lemma>podle-2</lemma>
+       <tag>RR--2----------</tag>
+      </LM>
+      <LM id="SCzechM-s2-w3">
+       <form>nich</form>
+       <lemma>on-1</lemma>
+       <tag>P5XP2--3-------</tag>
+      </LM>
+      <LM id="SCzechM-s2-w4">
+       <form>připravené</form>
+       <lemma>připravený_^(*3it)</lemma>
+       <tag>AAFP1----1A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s2-w5">
+       <form>.</form>
+       <lemma>.</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+     </children>
+    </SCzechM>
+    <SCzechN></SCzechN>
+   </trees>
+  </LM>
+  <LM id="s3">
+   <czech_source_sentence>Novelu školského zákona musí ještě podepsat prezident Václav Klaus.</czech_source_sentence>
+   <trees>
+    <SCzechM id="SCzechM-s3">
+     <children>
+      <LM id="SCzechM-s3-w1">
+       <form>Novelu</form>
+       <lemma>novela</lemma>
+       <tag>NNFS4-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s3-w2">
+       <form>školského</form>
+       <lemma>školský</lemma>
+       <tag>AAIS2----1A----</tag>
+      </LM>
+      <LM id="SCzechM-s3-w3">
+       <form>zákona</form>
+       <lemma>zákon</lemma>
+       <tag>NNIS2-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s3-w4">
+       <form>musí</form>
+       <lemma>muset</lemma>
+       <tag>VB-S---3P-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s3-w5">
+       <form>ještě</form>
+       <lemma>ještě</lemma>
+       <tag>Db-------------</tag>
+      </LM>
+      <LM id="SCzechM-s3-w6">
+       <form>podepsat</form>
+       <lemma>podepsat</lemma>
+       <tag>Vf--------A----</tag>
+      </LM>
+      <LM id="SCzechM-s3-w7">
+       <form>prezident</form>
+       <lemma>prezident</lemma>
+       <tag>NNMS1-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s3-w8">
+       <form>Václav</form>
+       <lemma>Václav_;Y</lemma>
+       <tag>NNMS1-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s3-w9">
+       <form>Klaus</form>
+       <lemma>Klaus_;S</lemma>
+       <tag>NNMS1-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s3-w10">
+       <form>.</form>
+       <lemma>.</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+     </children>
+    </SCzechM>
+    <SCzechN>
+     <children>
+      <LM id="SCzechN-s3-w2">
+       <ne_type>pf</ne_type>
+       <normalized_name>Václav</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s3-w8</LM>
+       </m.rf>
+      </LM>
+      <LM id="SCzechN-s3-w3">
+       <ne_type>P</ne_type>
+       <normalized_name>Václav Klaus</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s3-w8</LM>
+        <LM>SCzechM-s3-w9</LM>
+       </m.rf>
+      </LM>
+      <LM id="SCzechN-s3-w4">
+       <ne_type>ps</ne_type>
+       <normalized_name>Klaus</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s3-w9</LM>
+       </m.rf>
+      </LM>
+     </children>
+    </SCzechN>
+   </trees>
+  </LM>
+ </bundles>
+</tmt_document>

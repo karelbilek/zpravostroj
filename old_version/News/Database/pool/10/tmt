@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<tmt_document xmlns="http://ufal.mff.cuni.cz/pdt/pml/">
+ <head>
+  <schema href="tmt_schema.xml" />
+ </head>
+ <meta>
+  <czech_source_text>Na kasting dorazil i pracovník informací autobusového nádraží v Praze na Florenci. Jeho falešný zpěv trhal uši, porotu však zaujal něčím jiným - perfektní znalostí odjezdů a příjezdů autobusů.</czech_source_text>
+ </meta>
+ <bundles>
+  <LM id="s1">
+   <czech_source_sentence>Na kasting dorazil i pracovník informací autobusového nádraží v Praze na Florenci.</czech_source_sentence>
+   <trees>
+    <SCzechM id="SCzechM-s1">
+     <children>
+      <LM id="SCzechM-s1-w1">
+       <form>Na</form>
+       <lemma>na-1</lemma>
+       <tag>RR--6----------</tag>
+      </LM>
+      <LM id="SCzechM-s1-w2">
+       <form>kasting</form>
+       <lemma>kasting</lemma>
+       <tag>NNMXX-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s1-w3">
+       <form>dorazil</form>
+       <lemma>dorazit_:W</lemma>
+       <tag>VpYS---XR-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s1-w4">
+       <form>i</form>
+       <lemma>i-1</lemma>
+       <tag>J^-------------</tag>
+      </LM>
+      <LM id="SCzechM-s1-w5">
+       <form>pracovník</form>
+       <lemma>pracovník</lemma>
+       <tag>NNMS1-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s1-w6">
+       <form>informací</form>
+       <lemma>informace</lemma>
+       <tag>NNFP2-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s1-w7">
+       <form>autobusového</form>
+       <lemma>autobusový</lemma>
+       <tag>AANS2----1A----</tag>
+      </LM>
+      <LM id="SCzechM-s1-w8">
+       <form>nádraží</form>
+       <lemma>nádraží</lemma>
+       <tag>NNNS2-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s1-w9">
+       <form>v</form>
+       <lemma>v-1</lemma>
+       <tag>RR--6----------</tag>
+      </LM>
+      <LM id="SCzechM-s1-w10">
+       <form>Praze</form>
+       <lemma>Praga_;K</lemma>
+       <tag>NNFS6-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s1-w11">
+       <form>na</form>
+       <lemma>na-1</lemma>
+       <tag>RR--6----------</tag>
+      </LM>
+      <LM id="SCzechM-s1-w12">
+       <form>Florenci</form>
+       <lemma>Florenc_;G</lemma>
+       <tag>NNFS6-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s1-w13">
+       <form>.</form>
+       <lemma>.</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+     </children>
+    </SCzechM>
+    <SCzechN>
+     <children>
+      <LM id="SCzechN-s1-w2">
+       <ne_type>gu</ne_type>
+       <normalized_name>Praga</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s1-w10</LM>
+       </m.rf>
+      </LM>
+     </children>
+    </SCzechN>
+   </trees>
+  </LM>
+  <LM id="s2">
+   <czech_source_sentence>Jeho falešný zpěv trhal uši, porotu však zaujal něčím jiným - perfektní znalostí odjezdů a příjezdů autobusů.</czech_source_sentence>
+   <trees>
+    <SCzechM id="SCzechM-s2">
+     <children>
+      <LM id="SCzechM-s2-w1">
+       <form>Jeho</form>
+       <lemma>jeho_^(přivlast.)</lemma>
+       <tag>PSXXXZS3-------</tag>
+      </LM>
+      <LM id="SCzechM-s2-w2">
+       <form>falešný</form>
+       <lemma>falešný</lemma>
+       <tag>AAIS1----1A----</tag>
+      </LM>
+      <LM id="SCzechM-s2-w3">
+       <form>zpěv</form>
+       <lemma>zpěv</lemma>
+       <tag>NNIS1-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s2-w4">
+       <form>trhal</form>
+       <lemma>trhat_:T</lemma>
+       <tag>VpYS---XR-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s2-w5">
+       <form>uši</form>
+       <lemma>ucho</lemma>
+       <tag>NNFP1-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s2-w6">
+       <form>,</form>
+       <lemma>,</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+      <LM id="SCzechM-s2-w7">
+       <form>porotu</form>
+       <lemma>porota</lemma>
+       <tag>NNFS4-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s2-w8">
+       <form>však</form>
+       <lemma>však</lemma>
+       <tag>J^-------------</tag>
+      </LM>
+      <LM id="SCzechM-s2-w9">
+       <form>zaujal</form>
+       <lemma>zaujmout_^(upoutat_pozornost)</lemma>
+       <tag>VpYS---XR-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s2-w10">
+       <form>něčím</form>
+       <lemma>něco</lemma>
+       <tag>PZ--7----------</tag>
+      </LM>
+      <LM id="SCzechM-s2-w11">
+       <form>jiným</form>
+       <lemma>jiný</lemma>
+       <tag>AANS7----1A----</tag>
+      </LM>
+      <LM id="SCzechM-s2-w12">
+       <form>-</form>
+       <lemma>-</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+      <LM id="SCzechM-s2-w13">
+       <form>perfektní</form>
+       <lemma>perfektní</lemma>
+       <tag>AAFS7----1A----</tag>
+      </LM>
+      <LM id="SCzechM-s2-w14">
+       <form>znalostí</form>
+       <lemma>znalost_^(*3ý)</lemma>
+       <tag>NNFS7-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s2-w15">
+       <form>odjezdů</form>
+       <lemma>odjezd</lemma>
+       <tag>NNIP2-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s2-w16">
+       <form>a</form>
+       <lemma>a-1</lemma>
+       <tag>J^-------------</tag>
+      </LM>
+      <LM id="SCzechM-s2-w17">
+       <form>příjezdů</form>
+       <lemma>příjezd</lemma>
+       <tag>NNIP2-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s2-w18">
+       <form>autobusů</form>
+       <lemma>autobus</lemma>
+       <tag>NNIP2-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s2-w19">
+       <form>.</form>
+       <lemma>.</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+     </children>
+    </SCzechM>
+    <SCzechN></SCzechN>
+   </trees>
+  </LM>
+ </bundles>
+</tmt_document>

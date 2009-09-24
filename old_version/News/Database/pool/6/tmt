@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<tmt_document xmlns="http://ufal.mff.cuni.cz/pdt/pml/">
+ <head>
+  <schema href="tmt_schema.xml" />
+ </head>
+ <meta>
+  <czech_source_text>Ministerstvo financí v čele s ministrem Janotou si na nás přichystalo balíček úsporných opatření, který by měl zabránit dalšímu růstu českého bilionového státního dluhu. Podívejte se, koho všeho se mají týkat škrty v rozpočtu, který chce vláda předložit poslancům.</czech_source_text>
+ </meta>
+ <bundles>
+  <LM id="s1">
+   <czech_source_sentence>Ministerstvo financí v čele s ministrem Janotou si na nás přichystalo balíček úsporných opatření, který by měl zabránit dalšímu růstu českého bilionového státního dluhu.</czech_source_sentence>
+   <trees>
+    <SCzechM id="SCzechM-s1">
+     <children>
+      <LM id="SCzechM-s1-w1">
+       <form>Ministerstvo</form>
+       <lemma>ministerstvo</lemma>
+       <tag>NNNS1-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s1-w2">
+       <form>financí</form>
+       <lemma>finance</lemma>
+       <tag>NNFP2-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s1-w3">
+       <form>v</form>
+       <lemma>v-1</lemma>
+       <tag>RR--6----------</tag>
+      </LM>
+      <LM id="SCzechM-s1-w4">
+       <form>čele</form>
+       <lemma>čelo-1_^(lidské)</lemma>
+       <tag>NNNS6-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s1-w5">
+       <form>s</form>
+       <lemma>s-1</lemma>
+       <tag>RR--7----------</tag>
+      </LM>
+      <LM id="SCzechM-s1-w6">
+       <form>ministrem</form>
+       <lemma>ministr</lemma>
+       <tag>NNMS7-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s1-w7">
+       <form>Janotou</form>
+       <lemma>Janota_;S</lemma>
+       <tag>NNMS7-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s1-w8">
+       <form>si</form>
+       <lemma>se_^(zvr._zájmeno/částice)</lemma>
+       <tag>P7-X3----------</tag>
+      </LM>
+      <LM id="SCzechM-s1-w9">
+       <form>na</form>
+       <lemma>na-1</lemma>
+       <tag>RR--4----------</tag>
+      </LM>
+      <LM id="SCzechM-s1-w10">
+       <form>nás</form>
+       <lemma>já</lemma>
+       <tag>PP-P4--1-------</tag>
+      </LM>
+      <LM id="SCzechM-s1-w11">
+       <form>přichystalo</form>
+       <lemma>přichystat_:W</lemma>
+       <tag>VpNS---XR-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s1-w12">
+       <form>balíček</form>
+       <lemma>balíček</lemma>
+       <tag>NNIS4-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s1-w13">
+       <form>úsporných</form>
+       <lemma>úsporný</lemma>
+       <tag>AANP2----1A----</tag>
+      </LM>
+      <LM id="SCzechM-s1-w14">
+       <form>opatření</form>
+       <lemma>opatření_^(*3it)</lemma>
+       <tag>NNNP1-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s1-w15">
+       <form>,</form>
+       <lemma>,</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+      <LM id="SCzechM-s1-w16">
+       <form>který</form>
+       <lemma>který</lemma>
+       <tag>P4YS1----------</tag>
+      </LM>
+      <LM id="SCzechM-s1-w17">
+       <form>by</form>
+       <lemma>být</lemma>
+       <tag>Vc-------------</tag>
+      </LM>
+      <LM id="SCzechM-s1-w18">
+       <form>měl</form>
+       <lemma>mít</lemma>
+       <tag>VpYS---XR-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s1-w19">
+       <form>zabránit</form>
+       <lemma>zabránit_:W_^(někomu_v_něčem)</lemma>
+       <tag>Vf--------A----</tag>
+      </LM>
+      <LM id="SCzechM-s1-w20">
+       <form>dalšímu</form>
+       <lemma>další</lemma>
+       <tag>AAIS3----1A----</tag>
+      </LM>
+      <LM id="SCzechM-s1-w21">
+       <form>růstu</form>
+       <lemma>růst-1</lemma>
+       <tag>NNIS3-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s1-w22">
+       <form>českého</form>
+       <lemma>český</lemma>
+       <tag>AAIS2----1A----</tag>
+      </LM>
+      <LM id="SCzechM-s1-w23">
+       <form>bilionového</form>
+       <lemma>bilionový`1000000000000</lemma>
+       <tag>CrIS2----------</tag>
+      </LM>
+      <LM id="SCzechM-s1-w24">
+       <form>státního</form>
+       <lemma>státní</lemma>
+       <tag>AAIS2----1A----</tag>
+      </LM>
+      <LM id="SCzechM-s1-w25">
+       <form>dluhu</form>
+       <lemma>dluh</lemma>
+       <tag>NNIS2-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s1-w26">
+       <form>.</form>
+       <lemma>.</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+     </children>
+    </SCzechM>
+    <SCzechN>
+     <children>
+      <LM id="SCzechN-s1-w2">
+       <ne_type>ic</ne_type>
+       <normalized_name>ministerstvo finance v</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s1-w1</LM>
+        <LM>SCzechM-s1-w2</LM>
+        <LM>SCzechM-s1-w3</LM>
+       </m.rf>
+      </LM>
+      <LM id="SCzechN-s1-w3">
+       <ne_type>ps</ne_type>
+       <normalized_name>Janota</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s1-w7</LM>
+       </m.rf>
+      </LM>
+     </children>
+    </SCzechN>
+   </trees>
+  </LM>
+  <LM id="s2">
+   <czech_source_sentence>Podívejte se, koho všeho se mají týkat škrty v rozpočtu, který chce vláda předložit poslancům.</czech_source_sentence>
+   <trees>
+    <SCzechM id="SCzechM-s2">
+     <children>
+      <LM id="SCzechM-s2-w1">
+       <form>Podívejte</form>
+       <lemma>podívat_:W</lemma>
+       <tag>Vi-P---2--A----</tag>
+      </LM>
+      <LM id="SCzechM-s2-w2">
+       <form>se</form>
+       <lemma>se_^(zvr._zájmeno/částice)</lemma>
+       <tag>P7-X4----------</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s2-w3">
+       <form>,</form>
+       <lemma>,</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+      <LM id="SCzechM-s2-w4">
+       <form>koho</form>
+       <lemma>kdo</lemma>
+       <tag>PKM-4----------</tag>
+      </LM>
+      <LM id="SCzechM-s2-w5">
+       <form>všeho</form>
+       <lemma>všechen</lemma>
+       <tag>PLZS2----------</tag>
+      </LM>
+      <LM id="SCzechM-s2-w6">
+       <form>se</form>
+       <lemma>se_^(zvr._zájmeno/částice)</lemma>
+       <tag>P7-X4----------</tag>
+      </LM>
+      <LM id="SCzechM-s2-w7">
+       <form>mají</form>
+       <lemma>mít</lemma>
+       <tag>VB-P---3P-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s2-w8">
+       <form>týkat</form>
+       <lemma>týkat_:T</lemma>
+       <tag>Vf--------A----</tag>
+      </LM>
+      <LM id="SCzechM-s2-w9">
+       <form>škrty</form>
+       <lemma>škrt</lemma>
+       <tag>NNIP4-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s2-w10">
+       <form>v</form>
+       <lemma>v-1</lemma>
+       <tag>RR--6----------</tag>
+      </LM>
+      <LM id="SCzechM-s2-w11">
+       <form>rozpočtu</form>
+       <lemma>rozpočet</lemma>
+       <tag>NNIS6-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s2-w12">
+       <form>,</form>
+       <lemma>,</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+      <LM id="SCzechM-s2-w13">
+       <form>který</form>
+       <lemma>který</lemma>
+       <tag>P4IS4----------</tag>
+      </LM>
+      <LM id="SCzechM-s2-w14">
+       <form>chce</form>
+       <lemma>chtít</lemma>
+       <tag>VB-S---3P-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s2-w15">
+       <form>vláda</form>
+       <lemma>vláda</lemma>
+       <tag>NNFS1-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s2-w16">
+       <form>předložit</form>
+       <lemma>předložit_:W</lemma>
+       <tag>Vf--------A----</tag>
+      </LM>
+      <LM id="SCzechM-s2-w17">
+       <form>poslancům</form>
+       <lemma>poslanec</lemma>
+       <tag>NNMP3-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s2-w18">
+       <form>.</form>
+       <lemma>.</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+     </children>
+    </SCzechM>
+    <SCzechN></SCzechN>
+   </trees>
+  </LM>
+ </bundles>
+</tmt_document>

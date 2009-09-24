@@ -1,0 +1,1432 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<tmt_document xmlns="http://ufal.mff.cuni.cz/pdt/pml/">
+ <head>
+  <schema href="tmt_schema.xml" />
+ </head>
+ <meta>
+  <czech_source_text>J. X. Doležal si nechal jméno své vyvolené vytetovat na ruku!J. X. Doležal: Jméno snoubenky si nechal vytetovat!VIDEO: Jiří X. Doležal si jméno své nastávající nechal vytetovat na ruku! Svatba se blíží, přípravy finišují."Když jsem si nechal na hřbet ruky vytetovat „Alex“ a k tomu odpovídající čárový kód, pochopila moje milá, že je to nafurt, a zvážněla," píše kontroverzní novinář na stránkách Reflex.cz. ) vysokoškolačkou Alex. Má Doležal z velkého kroku strach? Alex si domluvila sex se ženou! Čtěte ZDE!"Ano, mám strach. Mám strach říct ANO, a nenaznačuji tím, že mám v úmyslu to ANO neříct, ale chci jen přiblížit úzkost, která na mne pokaždé, když si uvědomím, jak se ten okamžik blíží, sedne," říká Doležal. Vše o svatbě J. X. D. a Alex najdete ZDE! Těšíte se na svatbu J.X.D a svůdné Alex! Uvidíte ji za pár dnů v přímém přenosu!</czech_source_text>
+ </meta>
+ <bundles>
+  <LM id="s1">
+   <czech_source_sentence>J.</czech_source_sentence>
+   <trees>
+    <SCzechM id="SCzechM-s1">
+     <children>
+      <LM id="SCzechM-s1-w1">
+       <form>J</form>
+       <lemma>J-1`joul_:B_^(joul,_Joule)</lemma>
+       <tag>NNIXX-----A---8</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s1-w2">
+       <form>.</form>
+       <lemma>.</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+     </children>
+    </SCzechM>
+    <SCzechN>
+     <children>
+      <LM id="SCzechN-s1-w2">
+       <ne_type>pf</ne_type>
+       <normalized_name>J .</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s1-w1</LM>
+        <LM>SCzechM-s1-w2</LM>
+       </m.rf>
+      </LM>
+     </children>
+    </SCzechN>
+   </trees>
+  </LM>
+  <LM id="s2">
+   <czech_source_sentence>X.</czech_source_sentence>
+   <trees>
+    <SCzechM id="SCzechM-s2">
+     <children>
+      <LM id="SCzechM-s2-w1">
+       <form>X</form>
+       <lemma>X-0_:B_;Y</lemma>
+       <tag>NNMXX-----A---8</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s2-w2">
+       <form>.</form>
+       <lemma>.</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+     </children>
+    </SCzechM>
+    <SCzechN>
+     <children>
+      <LM id="SCzechN-s2-w2">
+       <ne_type>pf</ne_type>
+       <normalized_name>X .</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s2-w1</LM>
+        <LM>SCzechM-s2-w2</LM>
+       </m.rf>
+      </LM>
+     </children>
+    </SCzechN>
+   </trees>
+  </LM>
+  <LM id="s3">
+   <czech_source_sentence>Doležal si nechal jméno své vyvolené vytetovat na ruku!J.</czech_source_sentence>
+   <trees>
+    <SCzechM id="SCzechM-s3">
+     <children>
+      <LM id="SCzechM-s3-w1">
+       <form>Doležal</form>
+       <lemma>Doležal_;S</lemma>
+       <tag>NNMS1-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s3-w2">
+       <form>si</form>
+       <lemma>se_^(zvr._zájmeno/částice)</lemma>
+       <tag>P7-X3----------</tag>
+      </LM>
+      <LM id="SCzechM-s3-w3">
+       <form>nechal</form>
+       <lemma>nechat_:T</lemma>
+       <tag>VpYS---XR-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s3-w4">
+       <form>jméno</form>
+       <lemma>jméno</lemma>
+       <tag>NNNS4-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s3-w5">
+       <form>své</form>
+       <lemma>svůj-1_^(přivlast.)</lemma>
+       <tag>P8FS2---------1</tag>
+      </LM>
+      <LM id="SCzechM-s3-w6">
+       <form>vyvolené</form>
+       <lemma>vyvolený_^(*3it)</lemma>
+       <tag>AAFS2----1A----</tag>
+      </LM>
+      <LM id="SCzechM-s3-w7">
+       <form>vytetovat</form>
+       <lemma>vytetovat_:W</lemma>
+       <tag>Vf--------A----</tag>
+      </LM>
+      <LM id="SCzechM-s3-w8">
+       <form>na</form>
+       <lemma>na-1</lemma>
+       <tag>RR--4----------</tag>
+      </LM>
+      <LM id="SCzechM-s3-w9">
+       <form>ruku</form>
+       <lemma>ruka</lemma>
+       <tag>NNFS4-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s3-w10">
+       <form>!</form>
+       <lemma>!</lemma>
+       <tag>Z:-------------</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s3-w11">
+       <form>J</form>
+       <lemma>J-1`joul_:B_^(joul,_Joule)</lemma>
+       <tag>NNIXX-----A---8</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s3-w12">
+       <form>.</form>
+       <lemma>.</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+     </children>
+    </SCzechM>
+    <SCzechN>
+     <children>
+      <LM id="SCzechN-s3-w2">
+       <ne_type>ps</ne_type>
+       <normalized_name>Doležal</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s3-w1</LM>
+       </m.rf>
+      </LM>
+      <LM id="SCzechN-s3-w3">
+       <ne_type>pf</ne_type>
+       <normalized_name>J .</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s3-w11</LM>
+        <LM>SCzechM-s3-w12</LM>
+       </m.rf>
+      </LM>
+     </children>
+    </SCzechN>
+   </trees>
+  </LM>
+  <LM id="s4">
+   <czech_source_sentence>X.</czech_source_sentence>
+   <trees>
+    <SCzechM id="SCzechM-s4">
+     <children>
+      <LM id="SCzechM-s4-w1">
+       <form>X</form>
+       <lemma>X-0_:B_;Y</lemma>
+       <tag>NNMXX-----A---8</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s4-w2">
+       <form>.</form>
+       <lemma>.</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+     </children>
+    </SCzechM>
+    <SCzechN>
+     <children>
+      <LM id="SCzechN-s4-w2">
+       <ne_type>pf</ne_type>
+       <normalized_name>X .</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s4-w1</LM>
+        <LM>SCzechM-s4-w2</LM>
+       </m.rf>
+      </LM>
+     </children>
+    </SCzechN>
+   </trees>
+  </LM>
+  <LM id="s5">
+   <czech_source_sentence>Doležal: Jméno snoubenky si nechal vytetovat!VIDEO: Jiří X.</czech_source_sentence>
+   <trees>
+    <SCzechM id="SCzechM-s5">
+     <children>
+      <LM id="SCzechM-s5-w1">
+       <form>Doležal</form>
+       <lemma>Doležal_;S</lemma>
+       <tag>NNMS1-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s5-w2">
+       <form>:</form>
+       <lemma>:</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+      <LM id="SCzechM-s5-w3">
+       <form>Jméno</form>
+       <lemma>jméno</lemma>
+       <tag>NNNS1-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s5-w4">
+       <form>snoubenky</form>
+       <lemma>snoubenka</lemma>
+       <tag>NNFS2-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s5-w5">
+       <form>si</form>
+       <lemma>se_^(zvr._zájmeno/částice)</lemma>
+       <tag>P7-X3----------</tag>
+      </LM>
+      <LM id="SCzechM-s5-w6">
+       <form>nechal</form>
+       <lemma>nechat_:T</lemma>
+       <tag>VpYS---XR-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s5-w7">
+       <form>vytetovat</form>
+       <lemma>vytetovat_:W</lemma>
+       <tag>Vf--------A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s5-w8">
+       <form>!</form>
+       <lemma>!</lemma>
+       <tag>Z:-------------</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s5-w9">
+       <form>VIDEO</form>
+       <lemma>video-1</lemma>
+       <tag>NNNS1-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s5-w10">
+       <form>:</form>
+       <lemma>:</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+      <LM id="SCzechM-s5-w11">
+       <form>Jiří</form>
+       <lemma>Jiří_;Y</lemma>
+       <tag>NNMS1-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s5-w12">
+       <form>X</form>
+       <lemma>X-0_:B_;Y</lemma>
+       <tag>NNMXX-----A---8</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s5-w13">
+       <form>.</form>
+       <lemma>.</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+     </children>
+    </SCzechM>
+    <SCzechN>
+     <children>
+      <LM id="SCzechN-s5-w2">
+       <ne_type>ps</ne_type>
+       <normalized_name>Doležal</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s5-w1</LM>
+       </m.rf>
+      </LM>
+      <LM id="SCzechN-s5-w3">
+       <ne_type>pf</ne_type>
+       <normalized_name>Jiří</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s5-w11</LM>
+       </m.rf>
+      </LM>
+      <LM id="SCzechN-s5-w4">
+       <ne_type>P</ne_type>
+       <normalized_name>Jiří X</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s5-w11</LM>
+        <LM>SCzechM-s5-w12</LM>
+       </m.rf>
+      </LM>
+      <LM id="SCzechN-s5-w5">
+       <ne_type>ps</ne_type>
+       <normalized_name>X</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s5-w12</LM>
+       </m.rf>
+      </LM>
+      <LM id="SCzechN-s5-w6">
+       <ne_type>pf</ne_type>
+       <normalized_name>X .</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s5-w12</LM>
+        <LM>SCzechM-s5-w13</LM>
+       </m.rf>
+      </LM>
+     </children>
+    </SCzechN>
+   </trees>
+  </LM>
+  <LM id="s6">
+   <czech_source_sentence>Doležal si jméno své nastávající nechal vytetovat na ruku! Svatba se blíží, přípravy finišují.</czech_source_sentence>
+   <trees>
+    <SCzechM id="SCzechM-s6">
+     <children>
+      <LM id="SCzechM-s6-w1">
+       <form>Doležal</form>
+       <lemma>Doležal_;S</lemma>
+       <tag>NNMS1-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s6-w2">
+       <form>si</form>
+       <lemma>se_^(zvr._zájmeno/částice)</lemma>
+       <tag>P7-X3----------</tag>
+      </LM>
+      <LM id="SCzechM-s6-w3">
+       <form>jméno</form>
+       <lemma>jméno</lemma>
+       <tag>NNNS1-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s6-w4">
+       <form>své</form>
+       <lemma>svůj-1_^(přivlast.)</lemma>
+       <tag>P8FP4---------1</tag>
+      </LM>
+      <LM id="SCzechM-s6-w5">
+       <form>nastávající</form>
+       <lemma>nastávající_^(*7at)</lemma>
+       <tag>AGMP4-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s6-w6">
+       <form>nechal</form>
+       <lemma>nechat_:T</lemma>
+       <tag>VpYS---XR-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s6-w7">
+       <form>vytetovat</form>
+       <lemma>vytetovat_:W</lemma>
+       <tag>Vf--------A----</tag>
+      </LM>
+      <LM id="SCzechM-s6-w8">
+       <form>na</form>
+       <lemma>na-1</lemma>
+       <tag>RR--4----------</tag>
+      </LM>
+      <LM id="SCzechM-s6-w9">
+       <form>ruku</form>
+       <lemma>ruka</lemma>
+       <tag>NNFS4-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s6-w10">
+       <form>!</form>
+       <lemma>!</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+      <LM id="SCzechM-s6-w11">
+       <form>Svatba</form>
+       <lemma>svatba</lemma>
+       <tag>NNFS1-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s6-w12">
+       <form>se</form>
+       <lemma>se_^(zvr._zájmeno/částice)</lemma>
+       <tag>P7-X4----------</tag>
+      </LM>
+      <LM id="SCzechM-s6-w13">
+       <form>blíží</form>
+       <lemma>blížit_:T</lemma>
+       <tag>VB-S---3P-AA---</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s6-w14">
+       <form>,</form>
+       <lemma>,</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+      <LM id="SCzechM-s6-w15">
+       <form>přípravy</form>
+       <lemma>příprava</lemma>
+       <tag>NNFP1-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s6-w16">
+       <form>finišují</form>
+       <lemma>finišovat_:T</lemma>
+       <tag>VB-P---3P-AA---</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s6-w17">
+       <form>.</form>
+       <lemma>.</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+     </children>
+    </SCzechM>
+    <SCzechN>
+     <children>
+      <LM id="SCzechN-s6-w2">
+       <ne_type>ps</ne_type>
+       <normalized_name>Doležal</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s6-w1</LM>
+       </m.rf>
+      </LM>
+     </children>
+    </SCzechN>
+   </trees>
+  </LM>
+  <LM id="s7">
+   <czech_source_sentence>"Když jsem si nechal na hřbet ruky vytetovat „Alex“ a k tomu odpovídající čárový kód, pochopila moje milá, že je to nafurt, a zvážněla," píše kontroverzní novinář na stránkách Reflex.</czech_source_sentence>
+   <trees>
+    <SCzechM id="SCzechM-s7">
+     <children>
+      <LM id="SCzechM-s7-w1">
+       <form>"</form>
+       <lemma>"</lemma>
+       <tag>Z:-------------</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s7-w2">
+       <form>Když</form>
+       <lemma>když</lemma>
+       <tag>J,-------------</tag>
+      </LM>
+      <LM id="SCzechM-s7-w3">
+       <form>jsem</form>
+       <lemma>být</lemma>
+       <tag>VB-S---1P-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s7-w4">
+       <form>si</form>
+       <lemma>se_^(zvr._zájmeno/částice)</lemma>
+       <tag>P7-X3----------</tag>
+      </LM>
+      <LM id="SCzechM-s7-w5">
+       <form>nechal</form>
+       <lemma>nechat_:T</lemma>
+       <tag>VpYS---XR-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s7-w6">
+       <form>na</form>
+       <lemma>na-1</lemma>
+       <tag>RR--4----------</tag>
+      </LM>
+      <LM id="SCzechM-s7-w7">
+       <form>hřbet</form>
+       <lemma>hřbet</lemma>
+       <tag>NNIS4-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s7-w8">
+       <form>ruky</form>
+       <lemma>ruka</lemma>
+       <tag>NNFS2-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s7-w9">
+       <form>vytetovat</form>
+       <lemma>vytetovat_:W</lemma>
+       <tag>Vf--------A----</tag>
+      </LM>
+      <LM id="SCzechM-s7-w10">
+       <form>„</form>
+       <lemma>"</lemma>
+       <tag>Z:-------------</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s7-w11">
+       <form>Alex</form>
+       <lemma>Alex_;Y</lemma>
+       <tag>NNMS1-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s7-w12">
+       <form>“</form>
+       <lemma>"</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+      <LM id="SCzechM-s7-w13">
+       <form>a</form>
+       <lemma>a-1</lemma>
+       <tag>J^-------------</tag>
+      </LM>
+      <LM id="SCzechM-s7-w14">
+       <form>k</form>
+       <lemma>k-1</lemma>
+       <tag>RR--3----------</tag>
+      </LM>
+      <LM id="SCzechM-s7-w15">
+       <form>tomu</form>
+       <lemma>ten</lemma>
+       <tag>PDZS3----------</tag>
+      </LM>
+      <LM id="SCzechM-s7-w16">
+       <form>odpovídající</form>
+       <lemma>odpovídající_^(*4t)</lemma>
+       <tag>AGIS1-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s7-w17">
+       <form>čárový</form>
+       <lemma>čárový</lemma>
+       <tag>AAIS4----1A----</tag>
+      </LM>
+      <LM id="SCzechM-s7-w18">
+       <form>kód</form>
+       <lemma>kód</lemma>
+       <tag>NNIS4-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s7-w19">
+       <form>,</form>
+       <lemma>,</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+      <LM id="SCzechM-s7-w20">
+       <form>pochopila</form>
+       <lemma>pochopit_:W</lemma>
+       <tag>VpQW---XR-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s7-w21">
+       <form>moje</form>
+       <lemma>můj_^(přivlast.)</lemma>
+       <tag>PSHS1-S1-------</tag>
+      </LM>
+      <LM id="SCzechM-s7-w22">
+       <form>milá</form>
+       <lemma>milá-2_^(osoba;_př._můj_milý_na_mě_čeká)_(*3ý-2)</lemma>
+       <tag>NNFS1-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s7-w23">
+       <form>,</form>
+       <lemma>,</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+      <LM id="SCzechM-s7-w24">
+       <form>že</form>
+       <lemma>že</lemma>
+       <tag>J,-------------</tag>
+      </LM>
+      <LM id="SCzechM-s7-w25">
+       <form>je</form>
+       <lemma>být</lemma>
+       <tag>VB-S---3P-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s7-w26">
+       <form>to</form>
+       <lemma>ten</lemma>
+       <tag>PDNS1----------</tag>
+      </LM>
+      <LM id="SCzechM-s7-w27">
+       <form>nafurt</form>
+       <lemma>nafurt_,h</lemma>
+       <tag>Db-------------</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s7-w28">
+       <form>,</form>
+       <lemma>,</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+      <LM id="SCzechM-s7-w29">
+       <form>a</form>
+       <lemma>a-1</lemma>
+       <tag>J^-------------</tag>
+      </LM>
+      <LM id="SCzechM-s7-w30">
+       <form>zvážněla</form>
+       <lemma>zvážnět_:W</lemma>
+       <tag>VpQW---XR-AA---</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s7-w31">
+       <form>,</form>
+       <lemma>,</lemma>
+       <tag>Z:-------------</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s7-w32">
+       <form>"</form>
+       <lemma>"</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+      <LM id="SCzechM-s7-w33">
+       <form>píše</form>
+       <lemma>psát_:T</lemma>
+       <tag>VB-S---3P-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s7-w34">
+       <form>kontroverzní</form>
+       <lemma>kontroverzní</lemma>
+       <tag>AAMS1----1A----</tag>
+      </LM>
+      <LM id="SCzechM-s7-w35">
+       <form>novinář</form>
+       <lemma>novinář</lemma>
+       <tag>NNMS1-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s7-w36">
+       <form>na</form>
+       <lemma>na-1</lemma>
+       <tag>RR--6----------</tag>
+      </LM>
+      <LM id="SCzechM-s7-w37">
+       <form>stránkách</form>
+       <lemma>stránka</lemma>
+       <tag>NNFP6-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s7-w38">
+       <form>Reflex</form>
+       <lemma>reflex</lemma>
+       <tag>NNIS1-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s7-w39">
+       <form>.</form>
+       <lemma>.</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+     </children>
+    </SCzechM>
+    <SCzechN>
+     <children>
+      <LM id="SCzechN-s7-w2">
+       <ne_type>pf</ne_type>
+       <normalized_name>Alex</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s7-w11</LM>
+       </m.rf>
+      </LM>
+     </children>
+    </SCzechN>
+   </trees>
+  </LM>
+  <LM id="s8">
+   <czech_source_sentence>cz.</czech_source_sentence>
+   <trees>
+    <SCzechM id="SCzechM-s8">
+     <children>
+      <LM id="SCzechM-s8-w1">
+       <form>cz</form>
+       <lemma>cz</lemma>
+       <tag>NNMS1-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s8-w2">
+       <form>.</form>
+       <lemma>.</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+     </children>
+    </SCzechM>
+    <SCzechN></SCzechN>
+   </trees>
+  </LM>
+  <LM id="s9">
+   <czech_source_sentence>) vysokoškolačkou Alex.</czech_source_sentence>
+   <trees>
+    <SCzechM id="SCzechM-s9">
+     <children>
+      <LM id="SCzechM-s9-w1">
+       <form>)</form>
+       <lemma>)</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+      <LM id="SCzechM-s9-w2">
+       <form>vysokoškolačkou</form>
+       <lemma>vysokoškolačka</lemma>
+       <tag>NNFS7-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s9-w3">
+       <form>Alex</form>
+       <lemma>Alex_;Y</lemma>
+       <tag>NNMS1-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s9-w4">
+       <form>.</form>
+       <lemma>.</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+     </children>
+    </SCzechM>
+    <SCzechN>
+     <children>
+      <LM id="SCzechN-s9-w2">
+       <ne_type>pf</ne_type>
+       <normalized_name>Alex</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s9-w3</LM>
+       </m.rf>
+      </LM>
+     </children>
+    </SCzechN>
+   </trees>
+  </LM>
+  <LM id="s10">
+   <czech_source_sentence>Má Doležal z velkého kroku strach? Alex si domluvila sex se ženou! Čtěte ZDE!"Ano, mám strach.</czech_source_sentence>
+   <trees>
+    <SCzechM id="SCzechM-s10">
+     <children>
+      <LM id="SCzechM-s10-w1">
+       <form>Má</form>
+       <lemma>mít</lemma>
+       <tag>VB-S---3P-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s10-w2">
+       <form>Doležal</form>
+       <lemma>Doležal_;S</lemma>
+       <tag>NNMS1-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s10-w3">
+       <form>z</form>
+       <lemma>z-1</lemma>
+       <tag>RR--2----------</tag>
+      </LM>
+      <LM id="SCzechM-s10-w4">
+       <form>velkého</form>
+       <lemma>velký</lemma>
+       <tag>AAIS2----1A----</tag>
+      </LM>
+      <LM id="SCzechM-s10-w5">
+       <form>kroku</form>
+       <lemma>krok</lemma>
+       <tag>NNIS2-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s10-w6">
+       <form>strach</form>
+       <lemma>strach</lemma>
+       <tag>NNIS1-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s10-w7">
+       <form>?</form>
+       <lemma>?</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+      <LM id="SCzechM-s10-w8">
+       <form>Alex</form>
+       <lemma>Alex_;Y</lemma>
+       <tag>NNMS1-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s10-w9">
+       <form>si</form>
+       <lemma>se_^(zvr._zájmeno/částice)</lemma>
+       <tag>P7-X3----------</tag>
+      </LM>
+      <LM id="SCzechM-s10-w10">
+       <form>domluvila</form>
+       <lemma>domluvit_:W</lemma>
+       <tag>VpQW---XR-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s10-w11">
+       <form>sex</form>
+       <lemma>sex</lemma>
+       <tag>NNIS4-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s10-w12">
+       <form>se</form>
+       <lemma>se_^(zvr._zájmeno/částice)</lemma>
+       <tag>P7-X4----------</tag>
+      </LM>
+      <LM id="SCzechM-s10-w13">
+       <form>ženou</form>
+       <lemma>hnát-1_^(tvar_slovesa;_[utíkat])</lemma>
+       <tag>VB-P---3P-AA---</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s10-w14">
+       <form>!</form>
+       <lemma>!</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+      <LM id="SCzechM-s10-w15">
+       <form>Čtěte</form>
+       <lemma>číst</lemma>
+       <tag>Vi-P---2--A----</tag>
+      </LM>
+      <LM id="SCzechM-s10-w16">
+       <form>ZDE</form>
+       <lemma>zde</lemma>
+       <tag>Db-------------</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s10-w17">
+       <form>!</form>
+       <lemma>!</lemma>
+       <tag>Z:-------------</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s10-w18">
+       <form>"</form>
+       <lemma>"</lemma>
+       <tag>Z:-------------</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s10-w19">
+       <form>Ano</form>
+       <lemma>ano</lemma>
+       <tag>TT-------------</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s10-w20">
+       <form>,</form>
+       <lemma>,</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+      <LM id="SCzechM-s10-w21">
+       <form>mám</form>
+       <lemma>mít</lemma>
+       <tag>VB-S---1P-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s10-w22">
+       <form>strach</form>
+       <lemma>strach</lemma>
+       <tag>NNIS4-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s10-w23">
+       <form>.</form>
+       <lemma>.</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+     </children>
+    </SCzechM>
+    <SCzechN>
+     <children>
+      <LM id="SCzechN-s10-w2">
+       <ne_type>ps</ne_type>
+       <normalized_name>Doležal</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s10-w2</LM>
+       </m.rf>
+      </LM>
+      <LM id="SCzechN-s10-w3">
+       <ne_type>pf</ne_type>
+       <normalized_name>Alex</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s10-w8</LM>
+       </m.rf>
+      </LM>
+     </children>
+    </SCzechN>
+   </trees>
+  </LM>
+  <LM id="s11">
+   <czech_source_sentence>Mám strach říct ANO, a nenaznačuji tím, že mám v úmyslu to ANO neříct, ale chci jen přiblížit úzkost, která na mne pokaždé, když si uvědomím, jak se ten okamžik blíží, sedne," říká Doležal.</czech_source_sentence>
+   <trees>
+    <SCzechM id="SCzechM-s11">
+     <children>
+      <LM id="SCzechM-s11-w1">
+       <form>Mám</form>
+       <lemma>mít</lemma>
+       <tag>VB-S---1P-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s11-w2">
+       <form>strach</form>
+       <lemma>strach</lemma>
+       <tag>NNIS4-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s11-w3">
+       <form>říct</form>
+       <lemma>říci</lemma>
+       <tag>Vf--------A---1</tag>
+      </LM>
+      <LM id="SCzechM-s11-w4">
+       <form>ANO</form>
+       <lemma>ano</lemma>
+       <tag>TT-------------</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s11-w5">
+       <form>,</form>
+       <lemma>,</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+      <LM id="SCzechM-s11-w6">
+       <form>a</form>
+       <lemma>a-1</lemma>
+       <tag>J^-------------</tag>
+      </LM>
+      <LM id="SCzechM-s11-w7">
+       <form>nenaznačuji</form>
+       <lemma>naznačovat_:T</lemma>
+       <tag>VB-S---1P-NA--1</tag>
+      </LM>
+      <LM id="SCzechM-s11-w8">
+       <form>tím</form>
+       <lemma>ten</lemma>
+       <tag>PDZS7----------</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s11-w9">
+       <form>,</form>
+       <lemma>,</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+      <LM id="SCzechM-s11-w10">
+       <form>že</form>
+       <lemma>že</lemma>
+       <tag>J,-------------</tag>
+      </LM>
+      <LM id="SCzechM-s11-w11">
+       <form>mám</form>
+       <lemma>mít</lemma>
+       <tag>VB-S---1P-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s11-w12">
+       <form>v</form>
+       <lemma>v-1</lemma>
+       <tag>RR--6----------</tag>
+      </LM>
+      <LM id="SCzechM-s11-w13">
+       <form>úmyslu</form>
+       <lemma>úmysl</lemma>
+       <tag>NNIS6-----A---1</tag>
+      </LM>
+      <LM id="SCzechM-s11-w14">
+       <form>to</form>
+       <lemma>ten</lemma>
+       <tag>PDNS1----------</tag>
+      </LM>
+      <LM id="SCzechM-s11-w15">
+       <form>ANO</form>
+       <lemma>ano</lemma>
+       <tag>TT-------------</tag>
+      </LM>
+      <LM id="SCzechM-s11-w16">
+       <form>neříct</form>
+       <lemma>říci</lemma>
+       <tag>Vf--------N---1</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s11-w17">
+       <form>,</form>
+       <lemma>,</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+      <LM id="SCzechM-s11-w18">
+       <form>ale</form>
+       <lemma>ale</lemma>
+       <tag>J^-------------</tag>
+      </LM>
+      <LM id="SCzechM-s11-w19">
+       <form>chci</form>
+       <lemma>chtít</lemma>
+       <tag>VB-S---1P-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s11-w20">
+       <form>jen</form>
+       <lemma>jen-1_^(pouze)</lemma>
+       <tag>TT-------------</tag>
+      </LM>
+      <LM id="SCzechM-s11-w21">
+       <form>přiblížit</form>
+       <lemma>přiblížit_:W</lemma>
+       <tag>Vf--------A----</tag>
+      </LM>
+      <LM id="SCzechM-s11-w22">
+       <form>úzkost</form>
+       <lemma>úzkost_^(*3ý)</lemma>
+       <tag>NNFS4-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s11-w23">
+       <form>,</form>
+       <lemma>,</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+      <LM id="SCzechM-s11-w24">
+       <form>která</form>
+       <lemma>který</lemma>
+       <tag>P4FS1----------</tag>
+      </LM>
+      <LM id="SCzechM-s11-w25">
+       <form>na</form>
+       <lemma>na-1</lemma>
+       <tag>RR--4----------</tag>
+      </LM>
+      <LM id="SCzechM-s11-w26">
+       <form>mne</form>
+       <lemma>já_^(2./4.pád)</lemma>
+       <tag>PP-S4--1-------</tag>
+      </LM>
+      <LM id="SCzechM-s11-w27">
+       <form>pokaždé</form>
+       <lemma>pokaždé</lemma>
+       <tag>Db-------------</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s11-w28">
+       <form>,</form>
+       <lemma>,</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+      <LM id="SCzechM-s11-w29">
+       <form>když</form>
+       <lemma>když</lemma>
+       <tag>J,-------------</tag>
+      </LM>
+      <LM id="SCzechM-s11-w30">
+       <form>si</form>
+       <lemma>se_^(zvr._zájmeno/částice)</lemma>
+       <tag>P7-X3----------</tag>
+      </LM>
+      <LM id="SCzechM-s11-w31">
+       <form>uvědomím</form>
+       <lemma>uvědomit_:W</lemma>
+       <tag>VB-S---1P-AA---</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s11-w32">
+       <form>,</form>
+       <lemma>,</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+      <LM id="SCzechM-s11-w33">
+       <form>jak</form>
+       <lemma>jak-3</lemma>
+       <tag>Db-------------</tag>
+      </LM>
+      <LM id="SCzechM-s11-w34">
+       <form>se</form>
+       <lemma>se_^(zvr._zájmeno/částice)</lemma>
+       <tag>P7-X4----------</tag>
+      </LM>
+      <LM id="SCzechM-s11-w35">
+       <form>ten</form>
+       <lemma>ten</lemma>
+       <tag>PDIS4----------</tag>
+      </LM>
+      <LM id="SCzechM-s11-w36">
+       <form>okamžik</form>
+       <lemma>okamžik</lemma>
+       <tag>NNIS4-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s11-w37">
+       <form>blíží</form>
+       <lemma>blížit_:T</lemma>
+       <tag>VB-S---3P-AA---</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s11-w38">
+       <form>,</form>
+       <lemma>,</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+      <LM id="SCzechM-s11-w39">
+       <form>sedne</form>
+       <lemma>sednout_:W</lemma>
+       <tag>VB-S---3P-AA---</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s11-w40">
+       <form>,</form>
+       <lemma>,</lemma>
+       <tag>Z:-------------</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s11-w41">
+       <form>"</form>
+       <lemma>"</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+      <LM id="SCzechM-s11-w42">
+       <form>říká</form>
+       <lemma>říkat_:T</lemma>
+       <tag>VB-S---3P-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s11-w43">
+       <form>Doležal</form>
+       <lemma>Doležal_;S</lemma>
+       <tag>NNMS1-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s11-w44">
+       <form>.</form>
+       <lemma>.</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+     </children>
+    </SCzechM>
+    <SCzechN>
+     <children>
+      <LM id="SCzechN-s11-w2">
+       <ne_type>ps</ne_type>
+       <normalized_name>Doležal</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s11-w43</LM>
+       </m.rf>
+      </LM>
+     </children>
+    </SCzechN>
+   </trees>
+  </LM>
+  <LM id="s12">
+   <czech_source_sentence>Vše o svatbě J.</czech_source_sentence>
+   <trees>
+    <SCzechM id="SCzechM-s12">
+     <children>
+      <LM id="SCzechM-s12-w1">
+       <form>Vše</form>
+       <lemma>všechen</lemma>
+       <tag>PLNS1---------1</tag>
+      </LM>
+      <LM id="SCzechM-s12-w2">
+       <form>o</form>
+       <lemma>o-1</lemma>
+       <tag>RR--6----------</tag>
+      </LM>
+      <LM id="SCzechM-s12-w3">
+       <form>svatbě</form>
+       <lemma>svatba</lemma>
+       <tag>NNFS6-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s12-w4">
+       <form>J</form>
+       <lemma>J-0_:B_;Y</lemma>
+       <tag>NNFXX-----A---8</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s12-w5">
+       <form>.</form>
+       <lemma>.</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+     </children>
+    </SCzechM>
+    <SCzechN>
+     <children>
+      <LM id="SCzechN-s12-w2">
+       <ne_type>pf</ne_type>
+       <normalized_name>J .</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s12-w4</LM>
+        <LM>SCzechM-s12-w5</LM>
+       </m.rf>
+      </LM>
+     </children>
+    </SCzechN>
+   </trees>
+  </LM>
+  <LM id="s13">
+   <czech_source_sentence>X.</czech_source_sentence>
+   <trees>
+    <SCzechM id="SCzechM-s13">
+     <children>
+      <LM id="SCzechM-s13-w1">
+       <form>X</form>
+       <lemma>X-0_:B_;Y</lemma>
+       <tag>NNMXX-----A---8</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s13-w2">
+       <form>.</form>
+       <lemma>.</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+     </children>
+    </SCzechM>
+    <SCzechN>
+     <children>
+      <LM id="SCzechN-s13-w2">
+       <ne_type>pf</ne_type>
+       <normalized_name>X .</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s13-w1</LM>
+        <LM>SCzechM-s13-w2</LM>
+       </m.rf>
+      </LM>
+     </children>
+    </SCzechN>
+   </trees>
+  </LM>
+  <LM id="s14">
+   <czech_source_sentence>D.</czech_source_sentence>
+   <trees>
+    <SCzechM id="SCzechM-s14">
+     <children>
+      <LM id="SCzechM-s14-w1">
+       <form>D</form>
+       <lemma>D-0_:B_;Y</lemma>
+       <tag>NNMXX-----A---8</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s14-w2">
+       <form>.</form>
+       <lemma>.</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+     </children>
+    </SCzechM>
+    <SCzechN>
+     <children>
+      <LM id="SCzechN-s14-w2">
+       <ne_type>pf</ne_type>
+       <normalized_name>D .</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s14-w1</LM>
+        <LM>SCzechM-s14-w2</LM>
+       </m.rf>
+      </LM>
+     </children>
+    </SCzechN>
+   </trees>
+  </LM>
+  <LM id="s15">
+   <czech_source_sentence>a Alex najdete ZDE! Těšíte se na svatbu J.</czech_source_sentence>
+   <trees>
+    <SCzechM id="SCzechM-s15">
+     <children>
+      <LM id="SCzechM-s15-w1">
+       <form>a</form>
+       <lemma>a-1</lemma>
+       <tag>J^-------------</tag>
+      </LM>
+      <LM id="SCzechM-s15-w2">
+       <form>Alex</form>
+       <lemma>Alex_;Y</lemma>
+       <tag>NNMS1-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s15-w3">
+       <form>najdete</form>
+       <lemma>najít</lemma>
+       <tag>VB-P---2P-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s15-w4">
+       <form>ZDE</form>
+       <lemma>zde</lemma>
+       <tag>Db-------------</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s15-w5">
+       <form>!</form>
+       <lemma>!</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+      <LM id="SCzechM-s15-w6">
+       <form>Těšíte</form>
+       <lemma>těšit_:T</lemma>
+       <tag>VB-P---2P-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s15-w7">
+       <form>se</form>
+       <lemma>se_^(zvr._zájmeno/částice)</lemma>
+       <tag>P7-X4----------</tag>
+      </LM>
+      <LM id="SCzechM-s15-w8">
+       <form>na</form>
+       <lemma>na-1</lemma>
+       <tag>RR--4----------</tag>
+      </LM>
+      <LM id="SCzechM-s15-w9">
+       <form>svatbu</form>
+       <lemma>svatba</lemma>
+       <tag>NNFS4-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s15-w10">
+       <form>J</form>
+       <lemma>J-0_:B_;Y</lemma>
+       <tag>NNXXX-----A---8</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s15-w11">
+       <form>.</form>
+       <lemma>.</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+     </children>
+    </SCzechM>
+    <SCzechN>
+     <children>
+      <LM id="SCzechN-s15-w2">
+       <ne_type>pf</ne_type>
+       <normalized_name>Alex</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s15-w2</LM>
+       </m.rf>
+      </LM>
+      <LM id="SCzechN-s15-w3">
+       <ne_type>pf</ne_type>
+       <normalized_name>J .</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s15-w10</LM>
+        <LM>SCzechM-s15-w11</LM>
+       </m.rf>
+      </LM>
+     </children>
+    </SCzechN>
+   </trees>
+  </LM>
+  <LM id="s16">
+   <czech_source_sentence>X.</czech_source_sentence>
+   <trees>
+    <SCzechM id="SCzechM-s16">
+     <children>
+      <LM id="SCzechM-s16-w1">
+       <form>X</form>
+       <lemma>X-0_:B_;Y</lemma>
+       <tag>NNMXX-----A---8</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s16-w2">
+       <form>.</form>
+       <lemma>.</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+     </children>
+    </SCzechM>
+    <SCzechN>
+     <children>
+      <LM id="SCzechN-s16-w2">
+       <ne_type>pf</ne_type>
+       <normalized_name>X .</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s16-w1</LM>
+        <LM>SCzechM-s16-w2</LM>
+       </m.rf>
+      </LM>
+     </children>
+    </SCzechN>
+   </trees>
+  </LM>
+  <LM id="s17">
+   <czech_source_sentence>D a svůdné Alex! Uvidíte ji za pár dnů v přímém přenosu!</czech_source_sentence>
+   <trees>
+    <SCzechM id="SCzechM-s17">
+     <children>
+      <LM id="SCzechM-s17-w1">
+       <form>D</form>
+       <lemma>d-3_^(označení_pomocí_písmene)</lemma>
+       <tag>NNNXX-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s17-w2">
+       <form>a</form>
+       <lemma>a-1</lemma>
+       <tag>J^-------------</tag>
+      </LM>
+      <LM id="SCzechM-s17-w3">
+       <form>svůdné</form>
+       <lemma>svůdný</lemma>
+       <tag>AANS1----1A----</tag>
+      </LM>
+      <LM id="SCzechM-s17-w4">
+       <form>Alex</form>
+       <lemma>Alex_;Y</lemma>
+       <tag>NNMS1-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s17-w5">
+       <form>!</form>
+       <lemma>!</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+      <LM id="SCzechM-s17-w6">
+       <form>Uvidíte</form>
+       <lemma>uvidět</lemma>
+       <tag>VB-P---2P-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s17-w7">
+       <form>ji</form>
+       <lemma>on-1</lemma>
+       <tag>PPFS4--3-------</tag>
+      </LM>
+      <LM id="SCzechM-s17-w8">
+       <form>za</form>
+       <lemma>za-1</lemma>
+       <tag>RR--4----------</tag>
+      </LM>
+      <LM id="SCzechM-s17-w9">
+       <form>pár</form>
+       <lemma>pár-2</lemma>
+       <tag>NNIS4-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s17-w10">
+       <form>dnů</form>
+       <lemma>den_^(jednotka_času)</lemma>
+       <tag>NNIP2-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s17-w11">
+       <form>v</form>
+       <lemma>v-1</lemma>
+       <tag>RR--6----------</tag>
+      </LM>
+      <LM id="SCzechM-s17-w12">
+       <form>přímém</form>
+       <lemma>přímý</lemma>
+       <tag>AAIS6----1A----</tag>
+      </LM>
+      <LM id="SCzechM-s17-w13">
+       <form>přenosu</form>
+       <lemma>přenos</lemma>
+       <tag>NNIS6-----A---1</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s17-w14">
+       <form>!</form>
+       <lemma>!</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+     </children>
+    </SCzechM>
+    <SCzechN>
+     <children>
+      <LM id="SCzechN-s17-w2">
+       <ne_type>pf</ne_type>
+       <normalized_name>Alex</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s17-w4</LM>
+       </m.rf>
+      </LM>
+     </children>
+    </SCzechN>
+   </trees>
+  </LM>
+ </bundles>
+</tmt_document>

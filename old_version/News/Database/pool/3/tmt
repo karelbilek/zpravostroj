@@ -1,0 +1,723 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<tmt_document xmlns="http://ufal.mff.cuni.cz/pdt/pml/">
+ <head>
+  <schema href="tmt_schema.xml" />
+ </head>
+ <meta>
+  <czech_source_text>AKTUALIZOVÁNO: V obci Husí Lhota nedaleko Mladé Boleslavi odpoledne zahradní sekačka na trávu vážně poranila dvouletého chlapce. Podle našich informací došlo k amputaci ruky!Tragédie se stala, když otec dítěte sekal trávu u domu. Po zranění zpanikařil, naložil dítě do auta a sám ho vezl do mladoboleslavské nemocnice. Teprve cestou volal na tísňovou linku záchranné služby, která pro dítě okamžitě vyslala vrtulník. Ten zraněného chlapečka transportoval do nemocnice v pražském Motole.Záchranka ani policie v této chvíli ještě nechce sdělovat podrobnosti případu. "Můžeme potvrdit, že došlo ke zranění dvouletého dítěte," uvedla zatím pouze mluvčí středočeské záchranky Tereza Janečková.</czech_source_text>
+ </meta>
+ <bundles>
+  <LM id="s1">
+   <czech_source_sentence>AKTUALIZOVÁNO: V obci Husí Lhota nedaleko Mladé Boleslavi odpoledne zahradní sekačka na trávu vážně poranila dvouletého chlapce.</czech_source_sentence>
+   <trees>
+    <SCzechM id="SCzechM-s1">
+     <children>
+      <LM id="SCzechM-s1-w1">
+       <form>AKTUALIZOVÁNO</form>
+       <lemma>aktualizovat_:T_:W</lemma>
+       <tag>VsNS---XX-AP---</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s1-w2">
+       <form>:</form>
+       <lemma>:</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+      <LM id="SCzechM-s1-w3">
+       <form>V</form>
+       <lemma>v-1</lemma>
+       <tag>RR--6----------</tag>
+      </LM>
+      <LM id="SCzechM-s1-w4">
+       <form>obci</form>
+       <lemma>obec</lemma>
+       <tag>NNFS6-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s1-w5">
+       <form>Husí</form>
+       <lemma>husí</lemma>
+       <tag>AAFS1----1A----</tag>
+      </LM>
+      <LM id="SCzechM-s1-w6">
+       <form>Lhota</form>
+       <lemma>Lhota-2_;G</lemma>
+       <tag>NNFS1-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s1-w7">
+       <form>nedaleko</form>
+       <lemma>daleko-1</lemma>
+       <tag>Dg-------1N----</tag>
+      </LM>
+      <LM id="SCzechM-s1-w8">
+       <form>Mladé</form>
+       <lemma>mladý</lemma>
+       <tag>AAFS2----1A----</tag>
+      </LM>
+      <LM id="SCzechM-s1-w9">
+       <form>Boleslavi</form>
+       <lemma>Boleslav-2_;G</lemma>
+       <tag>NNFS2-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s1-w10">
+       <form>odpoledne</form>
+       <lemma>odpoledne-1</lemma>
+       <tag>Db-------------</tag>
+      </LM>
+      <LM id="SCzechM-s1-w11">
+       <form>zahradní</form>
+       <lemma>zahradní_,a</lemma>
+       <tag>AAFS1----1A----</tag>
+      </LM>
+      <LM id="SCzechM-s1-w12">
+       <form>sekačka</form>
+       <lemma>sekačka</lemma>
+       <tag>NNFS1-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s1-w13">
+       <form>na</form>
+       <lemma>na-1</lemma>
+       <tag>RR--4----------</tag>
+      </LM>
+      <LM id="SCzechM-s1-w14">
+       <form>trávu</form>
+       <lemma>tráva</lemma>
+       <tag>NNFS4-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s1-w15">
+       <form>vážně</form>
+       <lemma>vážně_^(*1ý)</lemma>
+       <tag>Dg-------1A----</tag>
+      </LM>
+      <LM id="SCzechM-s1-w16">
+       <form>poranila</form>
+       <lemma>poranit_:W</lemma>
+       <tag>VpQW---XR-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s1-w17">
+       <form>dvouletého</form>
+       <lemma>dvouletý</lemma>
+       <tag>AAMS4----1A----</tag>
+      </LM>
+      <LM id="SCzechM-s1-w18">
+       <form>chlapce</form>
+       <lemma>chlapec</lemma>
+       <tag>NNMS4-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s1-w19">
+       <form>.</form>
+       <lemma>.</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+     </children>
+    </SCzechM>
+    <SCzechN>
+     <children>
+      <LM id="SCzechN-s1-w2">
+       <ne_type>gu</ne_type>
+       <normalized_name>husí Lhota</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s1-w5</LM>
+        <LM>SCzechM-s1-w6</LM>
+       </m.rf>
+      </LM>
+      <LM id="SCzechN-s1-w3">
+       <ne_type>gu</ne_type>
+       <normalized_name>mladý Boleslav</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s1-w8</LM>
+        <LM>SCzechM-s1-w9</LM>
+       </m.rf>
+      </LM>
+     </children>
+    </SCzechN>
+   </trees>
+  </LM>
+  <LM id="s2">
+   <czech_source_sentence>Podle našich informací došlo k amputaci ruky!Tragédie se stala, když otec dítěte sekal trávu u domu.</czech_source_sentence>
+   <trees>
+    <SCzechM id="SCzechM-s2">
+     <children>
+      <LM id="SCzechM-s2-w1">
+       <form>Podle</form>
+       <lemma>podle-2</lemma>
+       <tag>RR--2----------</tag>
+      </LM>
+      <LM id="SCzechM-s2-w2">
+       <form>našich</form>
+       <lemma>můj_^(přivlast.)</lemma>
+       <tag>PSXP2-P1-------</tag>
+      </LM>
+      <LM id="SCzechM-s2-w3">
+       <form>informací</form>
+       <lemma>informace</lemma>
+       <tag>NNFP2-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s2-w4">
+       <form>došlo</form>
+       <lemma>dojít</lemma>
+       <tag>VpNS---XR-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s2-w5">
+       <form>k</form>
+       <lemma>k-1</lemma>
+       <tag>RR--3----------</tag>
+      </LM>
+      <LM id="SCzechM-s2-w6">
+       <form>amputaci</form>
+       <lemma>amputace</lemma>
+       <tag>NNFS3-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s2-w7">
+       <form>ruky</form>
+       <lemma>ruka</lemma>
+       <tag>NNFS2-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s2-w8">
+       <form>!</form>
+       <lemma>!</lemma>
+       <tag>Z:-------------</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s2-w9">
+       <form>Tragédie</form>
+       <lemma>tragedie</lemma>
+       <tag>NNFS2-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s2-w10">
+       <form>se</form>
+       <lemma>se_^(zvr._zájmeno/částice)</lemma>
+       <tag>P7-X4----------</tag>
+      </LM>
+      <LM id="SCzechM-s2-w11">
+       <form>stala</form>
+       <lemma>stát-2_^(něco_se_přihodilo)</lemma>
+       <tag>VpQW---XR-AA---</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s2-w12">
+       <form>,</form>
+       <lemma>,</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+      <LM id="SCzechM-s2-w13">
+       <form>když</form>
+       <lemma>když</lemma>
+       <tag>J,-------------</tag>
+      </LM>
+      <LM id="SCzechM-s2-w14">
+       <form>otec</form>
+       <lemma>otec</lemma>
+       <tag>NNMS1-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s2-w15">
+       <form>dítěte</form>
+       <lemma>dítě</lemma>
+       <tag>NNNS2-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s2-w16">
+       <form>sekal</form>
+       <lemma>sekat_:T</lemma>
+       <tag>VpYS---XR-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s2-w17">
+       <form>trávu</form>
+       <lemma>tráva</lemma>
+       <tag>NNFS4-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s2-w18">
+       <form>u</form>
+       <lemma>u-1</lemma>
+       <tag>RR--2----------</tag>
+      </LM>
+      <LM id="SCzechM-s2-w19">
+       <form>domu</form>
+       <lemma>dům</lemma>
+       <tag>NNIS2-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s2-w20">
+       <form>.</form>
+       <lemma>.</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+     </children>
+    </SCzechM>
+    <SCzechN></SCzechN>
+   </trees>
+  </LM>
+  <LM id="s3">
+   <czech_source_sentence>Po zranění zpanikařil, naložil dítě do auta a sám ho vezl do mladoboleslavské nemocnice.</czech_source_sentence>
+   <trees>
+    <SCzechM id="SCzechM-s3">
+     <children>
+      <LM id="SCzechM-s3-w1">
+       <form>Po</form>
+       <lemma>po-1</lemma>
+       <tag>RR--6----------</tag>
+      </LM>
+      <LM id="SCzechM-s3-w2">
+       <form>zranění</form>
+       <lemma>zranění_^(*3it)</lemma>
+       <tag>NNNS6-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s3-w3">
+       <form>zpanikařil</form>
+       <lemma>zpanikařit_:W</lemma>
+       <tag>VpYS---XR-AA---</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s3-w4">
+       <form>,</form>
+       <lemma>,</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+      <LM id="SCzechM-s3-w5">
+       <form>naložil</form>
+       <lemma>naložit_:W</lemma>
+       <tag>VpYS---XR-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s3-w6">
+       <form>dítě</form>
+       <lemma>dítě</lemma>
+       <tag>NNNS4-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s3-w7">
+       <form>do</form>
+       <lemma>do-1</lemma>
+       <tag>RR--2----------</tag>
+      </LM>
+      <LM id="SCzechM-s3-w8">
+       <form>auta</form>
+       <lemma>auto</lemma>
+       <tag>NNNS2-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s3-w9">
+       <form>a</form>
+       <lemma>a-1</lemma>
+       <tag>J^-------------</tag>
+      </LM>
+      <LM id="SCzechM-s3-w10">
+       <form>sám</form>
+       <lemma>sám_^(samotný)</lemma>
+       <tag>PLYS1----------</tag>
+      </LM>
+      <LM id="SCzechM-s3-w11">
+       <form>ho</form>
+       <lemma>on-1</lemma>
+       <tag>PHZS4--3-------</tag>
+      </LM>
+      <LM id="SCzechM-s3-w12">
+       <form>vezl</form>
+       <lemma>vézt_^(něco/někoho_autem,_vlakem,...)</lemma>
+       <tag>VpYS---XR-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s3-w13">
+       <form>do</form>
+       <lemma>do-1</lemma>
+       <tag>RR--2----------</tag>
+      </LM>
+      <LM id="SCzechM-s3-w14">
+       <form>mladoboleslavské</form>
+       <lemma>mladoboleslavský</lemma>
+       <tag>AAFS2----1A----</tag>
+      </LM>
+      <LM id="SCzechM-s3-w15">
+       <form>nemocnice</form>
+       <lemma>nemocnice</lemma>
+       <tag>NNFS2-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s3-w16">
+       <form>.</form>
+       <lemma>.</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+     </children>
+    </SCzechM>
+    <SCzechN></SCzechN>
+   </trees>
+  </LM>
+  <LM id="s4">
+   <czech_source_sentence>Teprve cestou volal na tísňovou linku záchranné služby, která pro dítě okamžitě vyslala vrtulník.</czech_source_sentence>
+   <trees>
+    <SCzechM id="SCzechM-s4">
+     <children>
+      <LM id="SCzechM-s4-w1">
+       <form>Teprve</form>
+       <lemma>teprve</lemma>
+       <tag>Db-------------</tag>
+      </LM>
+      <LM id="SCzechM-s4-w2">
+       <form>cestou</form>
+       <lemma>cesta_^(konkrétní_i_abstr.;_i_'soudní_cestou')</lemma>
+       <tag>NNFS7-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s4-w3">
+       <form>volal</form>
+       <lemma>volat_:T</lemma>
+       <tag>VpYS---XR-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s4-w4">
+       <form>na</form>
+       <lemma>na-1</lemma>
+       <tag>RR--4----------</tag>
+      </LM>
+      <LM id="SCzechM-s4-w5">
+       <form>tísňovou</form>
+       <lemma>tísňový</lemma>
+       <tag>AAFS4----1A----</tag>
+      </LM>
+      <LM id="SCzechM-s4-w6">
+       <form>linku</form>
+       <lemma>linka</lemma>
+       <tag>NNFS4-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s4-w7">
+       <form>záchranné</form>
+       <lemma>záchranný</lemma>
+       <tag>AAFS2----1A----</tag>
+      </LM>
+      <LM id="SCzechM-s4-w8">
+       <form>služby</form>
+       <lemma>služba</lemma>
+       <tag>NNFS2-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s4-w9">
+       <form>,</form>
+       <lemma>,</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+      <LM id="SCzechM-s4-w10">
+       <form>která</form>
+       <lemma>který</lemma>
+       <tag>P4FS1----------</tag>
+      </LM>
+      <LM id="SCzechM-s4-w11">
+       <form>pro</form>
+       <lemma>pro-1</lemma>
+       <tag>RR--4----------</tag>
+      </LM>
+      <LM id="SCzechM-s4-w12">
+       <form>dítě</form>
+       <lemma>dítě</lemma>
+       <tag>NNNS4-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s4-w13">
+       <form>okamžitě</form>
+       <lemma>okamžitě_^(*1ý)</lemma>
+       <tag>Dg-------1A----</tag>
+      </LM>
+      <LM id="SCzechM-s4-w14">
+       <form>vyslala</form>
+       <lemma>vyslat</lemma>
+       <tag>VpQW---XR-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s4-w15">
+       <form>vrtulník</form>
+       <lemma>vrtulník</lemma>
+       <tag>NNIS4-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s4-w16">
+       <form>.</form>
+       <lemma>.</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+     </children>
+    </SCzechM>
+    <SCzechN></SCzechN>
+   </trees>
+  </LM>
+  <LM id="s5">
+   <czech_source_sentence>Ten zraněného chlapečka transportoval do nemocnice v pražském Motole.</czech_source_sentence>
+   <trees>
+    <SCzechM id="SCzechM-s5">
+     <children>
+      <LM id="SCzechM-s5-w1">
+       <form>Ten</form>
+       <lemma>ten</lemma>
+       <tag>PDYS1----------</tag>
+      </LM>
+      <LM id="SCzechM-s5-w2">
+       <form>zraněného</form>
+       <lemma>zraněný_^(*3it)</lemma>
+       <tag>AAMS2----1A----</tag>
+      </LM>
+      <LM id="SCzechM-s5-w3">
+       <form>chlapečka</form>
+       <lemma>chlapeček</lemma>
+       <tag>NNMS2-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s5-w4">
+       <form>transportoval</form>
+       <lemma>transportovat_:T_:W</lemma>
+       <tag>VpYS---XR-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s5-w5">
+       <form>do</form>
+       <lemma>do-1</lemma>
+       <tag>RR--2----------</tag>
+      </LM>
+      <LM id="SCzechM-s5-w6">
+       <form>nemocnice</form>
+       <lemma>nemocnice</lemma>
+       <tag>NNFS2-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s5-w7">
+       <form>v</form>
+       <lemma>v-1</lemma>
+       <tag>RR--6----------</tag>
+      </LM>
+      <LM id="SCzechM-s5-w8">
+       <form>pražském</form>
+       <lemma>pražský</lemma>
+       <tag>AAIS6----1A----</tag>
+      </LM>
+      <LM id="SCzechM-s5-w9">
+       <form>Motole</form>
+       <lemma>Motol_;G</lemma>
+       <tag>NNIS6-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s5-w10">
+       <form>.</form>
+       <lemma>.</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+     </children>
+    </SCzechM>
+    <SCzechN>
+     <children>
+      <LM id="SCzechN-s5-w2">
+       <ne_type>gu</ne_type>
+       <normalized_name>Motol</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s5-w9</LM>
+       </m.rf>
+      </LM>
+     </children>
+    </SCzechN>
+   </trees>
+  </LM>
+  <LM id="s6">
+   <czech_source_sentence>Záchranka ani policie v této chvíli ještě nechce sdělovat podrobnosti případu.</czech_source_sentence>
+   <trees>
+    <SCzechM id="SCzechM-s6">
+     <children>
+      <LM id="SCzechM-s6-w1">
+       <form>Záchranka</form>
+       <lemma>záchranka</lemma>
+       <tag>NNFS1-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s6-w2">
+       <form>ani</form>
+       <lemma>ani</lemma>
+       <tag>J^-------------</tag>
+      </LM>
+      <LM id="SCzechM-s6-w3">
+       <form>policie</form>
+       <lemma>policie</lemma>
+       <tag>NNFS1-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s6-w4">
+       <form>v</form>
+       <lemma>v-1</lemma>
+       <tag>RR--6----------</tag>
+      </LM>
+      <LM id="SCzechM-s6-w5">
+       <form>této</form>
+       <lemma>tento</lemma>
+       <tag>PDFS6----------</tag>
+      </LM>
+      <LM id="SCzechM-s6-w6">
+       <form>chvíli</form>
+       <lemma>chvíle</lemma>
+       <tag>NNFS6-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s6-w7">
+       <form>ještě</form>
+       <lemma>ještě</lemma>
+       <tag>Db-------------</tag>
+      </LM>
+      <LM id="SCzechM-s6-w8">
+       <form>nechce</form>
+       <lemma>chtít</lemma>
+       <tag>VB-S---3P-NA---</tag>
+      </LM>
+      <LM id="SCzechM-s6-w9">
+       <form>sdělovat</form>
+       <lemma>sdělovat_:T</lemma>
+       <tag>Vf--------A----</tag>
+      </LM>
+      <LM id="SCzechM-s6-w10">
+       <form>podrobnosti</form>
+       <lemma>podrobnost_^(*3ý)</lemma>
+       <tag>NNFP4-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s6-w11">
+       <form>případu</form>
+       <lemma>případ</lemma>
+       <tag>NNIS2-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s6-w12">
+       <form>.</form>
+       <lemma>.</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+     </children>
+    </SCzechM>
+    <SCzechN></SCzechN>
+   </trees>
+  </LM>
+  <LM id="s7">
+   <czech_source_sentence>"Můžeme potvrdit, že došlo ke zranění dvouletého dítěte," uvedla zatím pouze mluvčí středočeské záchranky Tereza Janečková.</czech_source_sentence>
+   <trees>
+    <SCzechM id="SCzechM-s7">
+     <children>
+      <LM id="SCzechM-s7-w1">
+       <form>"</form>
+       <lemma>"</lemma>
+       <tag>Z:-------------</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s7-w2">
+       <form>Můžeme</form>
+       <lemma>moci_^(mít_možnost_[něco_dělat])</lemma>
+       <tag>VB-P---1P-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s7-w3">
+       <form>potvrdit</form>
+       <lemma>potvrdit_:W</lemma>
+       <tag>Vf--------A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s7-w4">
+       <form>,</form>
+       <lemma>,</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+      <LM id="SCzechM-s7-w5">
+       <form>že</form>
+       <lemma>že</lemma>
+       <tag>J,-------------</tag>
+      </LM>
+      <LM id="SCzechM-s7-w6">
+       <form>došlo</form>
+       <lemma>dojít</lemma>
+       <tag>VpNS---XR-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s7-w7">
+       <form>ke</form>
+       <lemma>k-1</lemma>
+       <tag>RV--3----------</tag>
+      </LM>
+      <LM id="SCzechM-s7-w8">
+       <form>zranění</form>
+       <lemma>zranění_^(*3it)</lemma>
+       <tag>NNNS3-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s7-w9">
+       <form>dvouletého</form>
+       <lemma>dvouletý</lemma>
+       <tag>AANS2----1A----</tag>
+      </LM>
+      <LM id="SCzechM-s7-w10">
+       <form>dítěte</form>
+       <lemma>dítě</lemma>
+       <tag>NNNS2-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s7-w11">
+       <form>,</form>
+       <lemma>,</lemma>
+       <tag>Z:-------------</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s7-w12">
+       <form>"</form>
+       <lemma>"</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+      <LM id="SCzechM-s7-w13">
+       <form>uvedla</form>
+       <lemma>uvést</lemma>
+       <tag>VpQW---XR-AA---</tag>
+      </LM>
+      <LM id="SCzechM-s7-w14">
+       <form>zatím</form>
+       <lemma>zatím</lemma>
+       <tag>Db-------------</tag>
+      </LM>
+      <LM id="SCzechM-s7-w15">
+       <form>pouze</form>
+       <lemma>pouze</lemma>
+       <tag>Db-------------</tag>
+      </LM>
+      <LM id="SCzechM-s7-w16">
+       <form>mluvčí</form>
+       <lemma>mluvčí</lemma>
+       <tag>NNMS1-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s7-w17">
+       <form>středočeské</form>
+       <lemma>středočeský</lemma>
+       <tag>AAFS2----1A----</tag>
+      </LM>
+      <LM id="SCzechM-s7-w18">
+       <form>záchranky</form>
+       <lemma>záchranka</lemma>
+       <tag>NNFS2-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s7-w19">
+       <form>Tereza</form>
+       <lemma>Tereza_;Y</lemma>
+       <tag>NNFS1-----A----</tag>
+      </LM>
+      <LM id="SCzechM-s7-w20">
+       <form>Janečková</form>
+       <lemma>Janečková_;S</lemma>
+       <tag>NNFS1-----A----</tag>
+       <no_space_after>1</no_space_after>
+      </LM>
+      <LM id="SCzechM-s7-w21">
+       <form>.</form>
+       <lemma>.</lemma>
+       <tag>Z:-------------</tag>
+      </LM>
+     </children>
+    </SCzechM>
+    <SCzechN>
+     <children>
+      <LM id="SCzechN-s7-w2">
+       <ne_type>pf</ne_type>
+       <normalized_name>Tereza</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s7-w19</LM>
+       </m.rf>
+      </LM>
+      <LM id="SCzechN-s7-w3">
+       <ne_type>P</ne_type>
+       <normalized_name>Tereza Janečková</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s7-w19</LM>
+        <LM>SCzechM-s7-w20</LM>
+       </m.rf>
+      </LM>
+      <LM id="SCzechN-s7-w4">
+       <ne_type>ps</ne_type>
+       <normalized_name>Janečková</normalized_name>
+       <m.rf>
+        <LM>SCzechM-s7-w20</LM>
+       </m.rf>
+      </LM>
+     </children>
+    </SCzechN>
+   </trees>
+  </LM>
+ </bundles>
+</tmt_document>
