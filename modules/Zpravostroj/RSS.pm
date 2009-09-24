@@ -9,10 +9,10 @@ use YAML::XS;
 use Zpravostroj::Other;
 
 use base 'Exporter';
-our @EXPORT = qw();
+our @EXPORT = qw(get_all_links);
 
-my $RSS_address=read_information("RSS_address");
-my $RSS_kept = read_information("RSS_kept");
+my $RSS_address=read_option("RSS_address");
+my $RSS_kept = read_option("RSS_kept");
 
 sub get_filename {
 	my $source_name = shift;
@@ -31,14 +31,15 @@ sub get_new_links{
 	
 	my @visited_arr = @{LoadFile(get_filename())};
 	my %visited_hash;
-	@visited{@visited_arr}=();
+	@visited_hash{@visited_arr}=();
 	
-	my @result;
+	my @results;
+	my $count;
 	
 	foreach my $item (@{$rai->items}) {
 		last if (($options{"limit"}) and ($count>=$options{"limit"}));
 		$count++;
-		push (@results, $item->link()) unless (exists $visited{$item->link()});
+		push (@results, $item->link()) unless (exists $visited_hash{$item->link()});
 	}
 	
 	push (@visited_arr, @results);
@@ -46,9 +47,11 @@ sub get_new_links{
 		@visited_arr = splice (@visited_arr, -$RSS_kept);
 	}
 	
+	return @results;
+	
 }
 
 sub get_all_links {
 	my @RSS_sources = @{read_information("RSS_sources")};
-	return map(get_new_links($_), @RSS_sources); #,limit=>5);
+	return map(get_new_links($_, limit=>2), @RSS_sources); #,limit=>5)
 }
