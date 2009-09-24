@@ -1,0 +1,48 @@
+\select@language {czech}
+\contentsline {section}{\tocsection {}{1}{\IeC {\'U}vod}}{2}
+\contentsline {section}{\tocsection {}{2}{St\IeC {\'a}vaj\IeC {\'\i }c\IeC {\'\i } syst\IeC {\'e}my}}{2}
+\contentsline {subsection}{\tocsubsection {}{2.1}{Google News}}{2}
+\contentsline {section}{\tocsection {}{3}{Z\IeC {\'a}kladn\IeC {\'\i } syst\IeC {\'e}mov\IeC {\'e} po\IeC {\v z}adavky}}{3}
+\contentsline {section}{\tocsection {}{4}{Velmi hrub\IeC {\'y} popis}}{3}
+\contentsline {subsection}{\tocsubsection {}{4.1}{Hlavn\IeC {\'\i } sou\IeC {\v c}\IeC {\'a}sti programu}}{3}
+\contentsline {subsection}{\tocsubsection {}{4.2}{Interakce s~u\IeC {\v z}ivatelem}}{3}
+\contentsline {section}{\tocsection {}{5}{Definice}}{3}
+\contentsline {subsection}{\tocsubsection {}{5.1}{T\IeC {\'e}ma \IeC {\v c}l\IeC {\'a}nku}}{3}
+\contentsline {subsubsection}{\tocsubsubsection {}{5.1.1}{Mno\IeC {\v z}ina slov}}{4}
+\contentsline {subsubsection}{\tocsubsubsection {}{5.1.2}{Mno\IeC {\v z}ina v\IeC {\v s}ech t\IeC {\'e}mat}}{4}
+\contentsline {subsubsection}{\tocsubsubsection {}{5.1.3}{Nadt\IeC {\'e}ma}}{4}
+\contentsline {subsubsection}{\tocsubsubsection {}{5.1.4}{Svaz t\IeC {\'e}mat}}{4}
+\contentsline {subsubsection}{\tocsubsubsection {}{5.1.5}{Maxim\IeC {\'a}ln\IeC {\'\i } t\IeC {\'e}mata v mno\IeC {\v z}in\IeC {\v e}}}{4}
+\contentsline {subsection}{\tocsubsection {}{5.2}{Stopslovo}}{4}
+\contentsline {section}{\tocsection {}{6}{Hrub\IeC {\'y} popis}}{5}
+\contentsline {subsection}{\tocsubsection {}{6.1}{Pou\IeC {\v z}it\IeC {\'a} technologie}}{5}
+\contentsline {subsection}{\tocsubsection {}{6.2}{\IeC {\v C}\IeC {\'a}sti programu}}{5}
+\contentsline {section}{\tocsection {}{7}{Co p\IeC {\v r}esn\IeC {\v e} chceme?}}{5}
+\contentsline {section}{\tocsection {}{8}{RSS \IeC {\v c}te\IeC {\v c}ka}}{5}
+\contentsline {section}{\tocsection {}{9}{Extraktor textu}}{6}
+\contentsline {subsection}{\tocsubsection {}{9.1}{St\IeC {\'a}vaj\IeC {\'\i }c\IeC {\'\i } \IeC {\v r}e\IeC {\v s}en\IeC {\'\i }}}{6}
+\contentsline {subsection}{\tocsubsection {}{9.2}{Jin\IeC {\'e} \IeC {\v r}e\IeC {\v s}en\IeC {\'\i }}}{7}
+\contentsline {section}{\tocsection {}{10}{Analyz\IeC {\'e}r t\IeC {\'e}mat}}{7}
+\contentsline {subsection}{\tocsubsection {}{10.1}{Pozorov\IeC {\'a}n\IeC {\'\i }}}{7}
+\contentsline {subsection}{\tocsubsection {}{10.2}{Algoritmus}}{7}
+\contentsline {subsection}{\tocsubsection {}{10.3}{N\IeC {\'a}pady na zlep\IeC {\v s}en\IeC {\'\i }}}{8}
+\contentsline {section}{\tocsection {}{11}{Ukl\IeC {\'a}d\IeC {\'a}n\IeC {\'\i } v\IeC {\'y}sledk\IeC {\r u}}}{9}
+\contentsline {subsection}{\tocsubsection {}{11.1}{Co ukl\IeC {\'a}dat}}{9}
+\contentsline {subsection}{\tocsubsection {}{11.2}{Kr\IeC {\'a}tkodob\IeC {\'e} / dlouhodob\IeC {\'e} v\IeC {\'y}sledky}}{9}
+\contentsline {subsection}{\tocsubsection {}{11.3}{Mo\IeC {\v z}nosti ukl\IeC {\'a}d\IeC {\'a}n\IeC {\'\i }}}{10}
+\contentsline {subsection}{\tocsubsection {}{11.4}{Co chci po syst\IeC {\'e}mu?}}{10}
+\contentsline {subsection}{\tocsubsection {}{11.5}{Ukl\IeC {\'a}d\IeC {\'a}n\IeC {\'\i } jednotliv\IeC {\'y}ch \IeC {\v c}l\IeC {\'a}nk\IeC {\r u}}}{11}
+\contentsline {subsection}{\tocsubsection {}{11.6}{Pomocn\IeC {\'e} soubory}}{11}
+\contentsline {subsection}{\tocsubsection {}{11.7}{Do\IeC {\v c}asn\IeC {\'y} \IeC {\v z}eb\IeC {\v r}\IeC {\'\i }\IeC {\v c}ek}}{11}
+\contentsline {subsection}{\tocsubsection {}{11.8}{Trval\IeC {\'e} v\IeC {\'y}sledky}}{11}
+\contentsline {subsection}{\tocsubsection {}{11.9}{Historie t\IeC {\'e}mat}}{12}
+\contentsline {subsection}{\tocsubsection {}{11.10}{\IeC {\v Z}eb\IeC {\v r}\IeC {\'\i }\IeC {\v c}ky pro periody}}{12}
+\contentsline {subsection}{\tocsubsection {}{11.11}{\IeC {\'U}vaha nad cel\IeC {\'y}m ukl\IeC {\'a}dac\IeC {\'\i }m syst\IeC {\'e}mem}}{12}
+\contentsline {section}{\tocsection {}{12}{Vytv\IeC {\'a}\IeC {\v r}en\IeC {\'\i } \IeC {\v z}eb\IeC {\v r}\IeC {\'\i }\IeC {\v c}k\IeC {\r u}}}{12}
+\contentsline {section}{\tocsection {}{13}{V\IeC {\'y}stup}}{13}
+\contentsline {subsection}{\tocsubsection {}{13.1}{Str\IeC {\'a}nka o~\IeC {\v c}l\IeC {\'a}nku}}{13}
+\contentsline {subsection}{\tocsubsection {}{13.2}{Str\IeC {\'a}nka o~t\IeC {\'e}matu pro konkr\IeC {\'e}tn\IeC {\'\i } den}}{13}
+\contentsline {subsection}{\tocsubsection {}{13.3}{Str\IeC {\'a}nka o~t\IeC {\'e}matu pro jin\IeC {\'y} \IeC {\'u}sek?}}{13}
+\contentsline {subsection}{\tocsubsection {}{13.4}{Str\IeC {\'a}nka o~cel\IeC {\'e} historii t\IeC {\'e}matu}}{13}
+\contentsline {subsection}{\tocsubsection {}{13.5}{Str\IeC {\'a}nka s~\IeC {\v z}eb\IeC {\v r}\IeC {\'\i }\IeC {\v c}ky}}{13}
+\contentsline {section}{\tocsection {}{14}{Z\IeC {\'a}v\IeC {\v e}r}}{13}

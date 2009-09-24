@@ -13,7 +13,7 @@ use base 'Exporter';
 our @EXPORT = qw(get_all_links);
 
 my $RSS_address=read_option("RSS_address");
-my $RSS_kept = read_option("RSS_kept");
+my $RSS_kept =  read_option("RSS_kept");
 
 sub get_filename {
 	my $source_name = shift;
@@ -48,9 +48,9 @@ sub get_new_links{
 		push (@results, $item->link()) unless (exists $visited_hash{$item->link()});
 	}
 	
-	push (@visited_arr, @results);
+	unshift (@visited_arr, @results);
 	if (scalar @visited_arr > $RSS_kept) {
-		@visited_arr = splice (@visited_arr, -$RSS_kept);
+		splice (@visited_arr, $RSS_kept);
 	}
 	
 	DumpFile(get_filename($source_name), \@visited_arr);
@@ -61,5 +61,5 @@ sub get_new_links{
 
 sub get_all_links {
 	my @RSS_sources = @{read_option("RSS_sources")};
-	return map(get_new_links($_, limit=>2), @RSS_sources); #,limit=>5)
+	return map(get_new_links($_), @RSS_sources); #,limit=>5)
 }
