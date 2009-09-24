@@ -161,7 +161,9 @@ sub count_themes_document {
 	foreach my $lemma (keys %superhash) {
 		my $form;
 		my @all_forms;
-		if (@all_forms = @{$joined_forms{$lemma}}) {
+		if (my $all_forms_ref = $joined_forms{$lemma}) {
+			my @all_forms = @$all_forms_ref;
+			
 				#all forms for $lemma are "voting", who will be the FINAL one
 			my %forms;
 			map ($forms{$_}++, @all_forms);
