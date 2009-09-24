@@ -1,10 +1,11 @@
 udělat co nejdřív
 - zjistit, do kdy má být Bc zadána
-- zadat si formální zadání bakalářky
+- zadat si formální zadání bakalářky (je to potřeba?)
 
-- zajistit si automatické spouštění přes Cron (zatím jsem s panem Semerádem mluvil, nevypadá to úplně nadějně :()
-- v návaznosti na to začít dlouhodobě archivovat
-- k tomu bude potřeba nějak implementovat zip/gzip...
+- implementovat IO::Compress::GZip
+- trvalý proces (včetně klogu, problém s uloženým heslem)
+
+
 
 - nějak se blížit ke konkrétnímu html výstupu
 
