@@ -22,19 +22,28 @@ my %all_article_properties;
 @all_article_properties{@{read_option("all_article_properties")}}=();
 
 sub get_pool_count {
-	if (-d $pool_dir) {
-		if (-e  $count_file) {
-			my $count = read_file($count_file);
-			if (looks_like_number($count)) {
-				return $count;
+	if (!-e  $count_file) {
+		if (!-d $pool_dir) {
+			if (!-d $database_dir) {
+				mkdir $database_dir or die "making directory $database_dir not succesful.";
 			}
+			mkdir $pool_dir or die "making directory $pool_dir not succesful.";
 		}
-	} else {
-		mkdir $database_dir or die "making directory $database_dir not succesful.";
-		mkdir $pool_dir or die "making directory $pool_dir not succesful.";
 		touch $count_file or die "touching $count_file not succesful.";
 		return 0;
+	} else {
+		my $count = read_file($count_file);
+		if (looks_like_number($count)) {
+			return $count;
+		} else {
+			die "count doesn't look like number.";
+		}
 	}
+}
+
+sub get_filename {
+	my $i = shift;
+	return $pool_dir."/".$i.".yaml";
 }
 
 sub add_new_articles {
@@ -44,7 +53,7 @@ sub add_new_articles {
 		foreach (keys %$article_ref) {
 			(exists $all_article_properties{$_}) or die "forbidden article property $_";
 		}
-		DumpFile($pool_dir."/".$i, $article_ref);
+		DumpFile(get_filename($i), $article_ref);
 		$i++;
 	}
 	write_file($count_file, $i);
@@ -54,8 +63,8 @@ sub read_articles {
 	my $begin = shift;
 	$begin=0 if !$begin;
 	my @result;
-	foreach my $i ($begin..(get_pool_count-1)){
-		push (@result, LoadFile($pool_dir."/".$i));
+	foreach my $i ($begin..(get_pool_count()-1)){
+		push (@result, LoadFile(get_filename($i)));
 	}
 	return @result;
 }
@@ -65,9 +74,9 @@ sub update_articles {
 	$begin=0 if !$begin;
 	my @input = @_;
 	foreach my $i ($begin..$begin+(scalar @input)){
-		($i<get_pool_count) or die "I can't update article no. $i when there are only ".get_pool_count." articles.";
+		($i<get_pool_count) or die "I can't update article no. $i when there are only ".get_pool_count()." articles.";
 		
-		my %article = %{LoadFile($pool_dir."/".$i)};
+		my %article = %{LoadFile(get_filename($i))};
 		my %updating = %{shift (@input)};
 		
 		foreach (keys %updating) {
@@ -75,7 +84,7 @@ sub update_articles {
 			$article{$_} = $updating{$_};
 		}
 		
-		DumpFile($pool_dir."/".$i, \%article);
+		DumpFile(get_filename($i), \%article);
 	}
 }
 
