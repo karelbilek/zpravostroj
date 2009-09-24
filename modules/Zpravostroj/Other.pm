@@ -14,7 +14,7 @@ use LWP::UserAgent;
 use utf8;
 
 use base 'Exporter';
-our @EXPORT = qw(split_size all_subthemes is_word is_banned make_normal_word load_yaml_file read_option read_information);
+our @EXPORT = qw(split_size all_subthemes is_word is_banned make_normal_word load_yaml_file read_option read_information read_from_web);
 
 	#!!!!!!!!!!!! ------ GLOBALS ------ !!!!!!!!!!!!
 my ($option_ref) = load_yaml_file("configure.yaml");
@@ -94,7 +94,7 @@ sub all_subthemes {
 }
 
 sub is_word {
-	my $what=shift;
+	my $what = shift;
 	return ($what =~ /^[A-Za-z0-9$czechs]+$/);
 }
 

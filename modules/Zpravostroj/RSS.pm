@@ -4,7 +4,8 @@ use warnings;
 use strict;
 use XML::RAI;
 use Encode;
-use YAML::XS;
+use YAML::XS qw(LoadFile DumpFile);
+use File::Touch;
 
 use Zpravostroj::Other;
 
@@ -16,25 +17,30 @@ my $RSS_kept = read_option("RSS_kept");
 
 sub get_filename {
 	my $source_name = shift;
-	return $RSS_address."/".$source_name."yaml";
+	my $result = $RSS_address."/".$source_name.".yaml";
+	return $result;
 }
 
 sub get_new_links{
 	my $source=shift;
 	my %options = @_; #if there is a limit (just for testing)
-	my $content = read_from_web $source;
+	my $content = read_from_web ($source);
 	my $rai = XML::RAI->parse_string(encode("utf8",$content));
 		#this might be a bug in XML::RAI...I don't really know why RAI expects utf8 but it does
 		
 	my $source_name = lc $source;
 	$source_name =~ s/^http:\/\/([^\.]*\.)*([^\.]*)\.cz.*$/$+/;	
 	
-	my @visited_arr = @{LoadFile(get_filename())};
+	my @visited_arr;
+	if (-e (my $filename = get_filename($source_name))) {
+		@visited_arr = @{LoadFile($filename)};
+	}
+	
 	my %visited_hash;
 	@visited_hash{@visited_arr}=();
 	
 	my @results;
-	my $count;
+	my $count=0;
 	
 	foreach my $item (@{$rai->items}) {
 		last if (($options{"limit"}) and ($count>=$options{"limit"}));
@@ -47,11 +53,13 @@ sub get_new_links{
 		@visited_arr = splice (@visited_arr, -$RSS_kept);
 	}
 	
+	DumpFile(get_filename($source_name), \@visited_arr);
+	
 	return @results;
 	
 }
 
 sub get_all_links {
-	my @RSS_sources = @{read_information("RSS_sources")};
+	my @RSS_sources = @{read_option("RSS_sources")};
 	return map(get_new_links($_, limit=>2), @RSS_sources); #,limit=>5)
 }
