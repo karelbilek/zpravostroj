@@ -43,7 +43,7 @@ sub get_pool_count {
 
 sub get_filename {
 	my $i = shift;
-	return $pool_dir."/".$i.".yaml";
+	return $pool_dir."/".$i.".yaml.gz";
 }
 
 sub add_new_articles {
@@ -61,10 +61,15 @@ sub add_new_articles {
 
 sub load_article {
 	my $i = shift;
-	open INP, "<".get_filename($i);
+	
+	use IO::Uncompress::Gunzip;
+	
+	#open INP, "<".get_filename($i);
+	my $z = new IO::Uncompress::Gunzip;
+	
 	my $all="";
-	while (<INP>) {$all .= $_;}
-	close INP;
+	while (<$z) {$all .= $_;}
+	close $z;
 	return Load($all);
 }
 
@@ -72,8 +77,15 @@ sub load_article {
 sub dump_article {
 	my $i = shift;
 	my $what = shift;
-	open OUTP, ">".get_filename($i);
-	print OUTP Dump($what);
+	
+	use IO::Compress::Gzip;
+	
+	my $z = new IO::Compress::Gzip(get_filename($i));
+	
+#	open OUTP, ">".get_filename($i);
+
+	print $z Dump($what);
+	close $z;
 }
 
 sub read_articles {
