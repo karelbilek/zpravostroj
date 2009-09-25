@@ -33,4 +33,6 @@ all_article_properties: #dont remove anything that is in more files
     - keys
     - extracted
     - html
-    - tagged
+    - all_words
+    - all_named
+

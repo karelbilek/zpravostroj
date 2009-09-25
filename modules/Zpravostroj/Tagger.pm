@@ -22,7 +22,7 @@ my @wanted_named = @{read_option("tagger_wanted_named")};
  
 sub create_new_document{
 	my $text = shift;
- 
+	
 	my $document = TectoMT::Document->new();
 	$document->set_attr("czech_source_text", $text);
  
@@ -69,6 +69,9 @@ sub save_named {
 }
  
 sub doc_to_hash {
+	
+	my $article = shift;
+	
 	my $document = shift;
 	my @words;
 	my %named;
@@ -83,9 +86,25 @@ sub doc_to_hash {
 	
 	
 	my @arnamed = keys %named;
- 
-	my %reshash = (words=>\@words, named=>\@arnamed);
-	return \%reshash;
+	
+	$article{all_words}=\@words;
+	$article{all_named}=\@arnamed;
+}
+
+sub silently {
+	my $what = shift;
+	my @options = @_;
+	
+	#open my $saveerr, ">&STDERR";
+	#open STDERR, '>', "/dev/null";
+	
+	my $result = &$what(@options);
+			#WARNING!!!!WARNING!!!
+			#this works only when what is scalar context! (which is it, INCIDENTALLY, in this file, so I let it like that)
+	
+	#open STDERR, ">&", $saveerr;
+	
+	return $result;
 }
  
 my $scenario_initialized = 0;
@@ -93,26 +112,25 @@ my $scenario;
  
 sub tag_texts {
  
-	open my $saveerr, ">&STDERR";
-	open STDERR, '>', "/dev/null";
+	
 	unless ($scenario_initialized) {
-		$scenario = TectoMT::Scenario->new({'blocks'=> [ qw(SCzechW_to_SCzechM::Sentence_segmentation SCzechW_to_SCzechM::Tokenize  SCzechW_to_SCzechM::TagHajic SCzechM_to_SCzechN::Czech_named_ent_SVM_recognizer) ]});
+		$scenario = silently (\(TectoMT::Scenario->new), ({'blocks'=> [ qw(SCzechW_to_SCzechM::Sentence_segmentation SCzechW_to_SCzechM::Tokenize  SCzechW_to_SCzechM::TagHajic SCzechM_to_SCzechN::Czech_named_ent_SVM_recognizer) ]}));
 		$scenario_initialized = 1;
 	}
+	
  
-	my @texts = @_;
+	my @articles = @_;
+	my %documents_hash;
+	
+	
+	map ($documents_hash{$_}=create_new_document($_->{extracted}), @articles);
  
-	my @documents = map(create_new_document($_), @texts);
- 
- 
- 
-	$scenario->apply_on_tmt_documents(@documents);
- 
- 
-	open STDERR, ">&", $saveerr;
- 
-	my @hashes = map (doc_to_hash($_), @documents);
-	return @hashes;
+	
+	silently (\($scenario->apply_on_tmt_documents), @documents_hash{@articles});
+	
+	map (doc_to_hash($_, $document_hash{$_}), @articles);
+	
+ 	return @articles;
 }
  
 1;

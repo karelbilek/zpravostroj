@@ -24,10 +24,6 @@ my %wanted;
 my $not_beginning = join ("|", @{read_option("extractor_not_wanted_at_beginning")});
 	#also global... what are you gonna do
 
-sub lolwtf {
-	my $wat = shift;
-	return $not_wanted{$wat};
-}
 
 sub is_wanted {
 	my $who = shift;
@@ -101,17 +97,19 @@ sub check_wanted{
 }
 
 sub extract_text {   
-    my $text = shift;
+	my $article_ref = shift;
+	my %article = %$article_ref;
+	
+    my $text = $article{html};
 	
 	
     my $dom_tree = new HTML::DOM;
     $dom_tree->write($text);
 	$dom_tree->close();
     
-    my %hash;
-	$hash{extracted} = check_unknown($dom_tree);
-	$hash{title} = $dom_tree->getElementsByTagName('title')->[0]->text();
-    return \%hash;
+	$article{extracted} = check_unknown($dom_tree);
+	$article{title} = $dom_tree->getElementsByTagName('title')->[0]->text();
+    return \%article;
 }
 
 sub extract_texts {   

@@ -8,6 +8,8 @@ use YAML::XS qw(LoadFile DumpFile);
 use File::Touch;
 
 use Zpravostroj::Other;
+use Zpravostroj::WebReader;
+
 
 use base 'Exporter';
 our @EXPORT = qw(get_all_links);
@@ -55,7 +57,7 @@ sub get_new_links{
 	
 	DumpFile(get_filename($source_name), \@visited_arr);
 	
-	return @results;
+	return map ({url=>$_}, @results);
 	
 }
 

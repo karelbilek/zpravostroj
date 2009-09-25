@@ -73,8 +73,9 @@ sub count_themes_document {
 	
 	my %corrected_names;
 	
-	my $hash_ref = shift;
-	my %all_hash = %$hash_ref;
+	my $article_ref = shift;
+	my %article = %$article_ref;
+
 	
 	
 	my %scores;
@@ -88,7 +89,7 @@ sub count_themes_document {
 	
 	my $unused_forms="";
 	
-	foreach my $word (@{$hash_ref->{words}}) {
+	foreach my $word (@{$article{all_words}}) {
 		
 		if (is_banned($word->{lemma})) {
 			$unused_forms=$unused_forms.($word->{form})."_";
@@ -138,7 +139,7 @@ sub count_themes_document {
 	
 	my %named_scores;
 	
-	foreach my $entity (@{$hash_ref->{named}}) {
+	foreach my $entity (@{$article{all_named}}) {
 		my $right_entity = join (" ", (map (($corrected_names{$_})?($corrected_names{$_}):$_ , (split (" ", $entity)))));
 		
 		$named_scores{$right_entity} = 0 if (!exists $scores{$right_entity});
@@ -162,7 +163,7 @@ sub count_themes_document {
 		my $form;
 		my @all_forms;
 		if (my $all_forms_ref = $joined_forms{$lemma}) {
-			my @all_forms = @$all_forms_ref;
+			@all_forms = @$all_forms_ref;
 			
 				#all forms for $lemma are "voting", who will be the FINAL one
 			my %forms;
@@ -175,7 +176,9 @@ sub count_themes_document {
 		push (@res, {lemma=>$lemma, best_form=>$form, all_forms=>\@all_forms, score=>($scores{$lemma}?$scores{$lemma}:"NAMED")});
 	}
 	
-    return \@res;
+	
+	$article{keys} = \@res;
+    return \%article;
 }
 
 sub count_themes {

@@ -3,6 +3,7 @@ package Zpravostroj::Walker;
 use strict;
 use warnings;
 use Zpravostroj::Other;
+use Zpravostroj::WebReader;
 use Zpravostroj::RSS;
 use Zpravostroj::Database;
 use Zpravostroj::Extractor;
@@ -15,20 +16,18 @@ our @EXPORT = qw(download_articles);
 sub download_articles {
 	my $start = get_pool_count;
 	
-	my @links = get_all_links;
-	
-	my @articles = map ({url=>$_}, @links);
-	add_new_articles(@articles);
-	
+	my @articles = get_all_links;
+	add_new_articles(@articles);	
 	print "wrote all URLs.\n";
-	my @sources = read_from_webs(@links);
-	update_articles($start, map ({html=>$_}, @sources));
 	
+	@articles = read_from_webs(@articles);
+	update_articles($start, @articles);
 	print "read all files.\n";
-	my @extracted = extract_texts(@sources);
-	update_articles($start, map ({extracted=>($_->{extracted}), title=>($_->{title})}, @extracted));
 	
+	@articles = extract_texts(@articles);
+	update_articles($start, @articles);
 	print "extracted all files.\n";
+	
 	my @tagged = tag_texts(map($_->{extracted}, @extracted));
 	update_articles($start, map ({tagged=>$_}, @tagged));
 	

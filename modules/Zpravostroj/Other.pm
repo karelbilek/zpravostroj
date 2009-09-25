@@ -6,15 +6,12 @@ use strict;
 use warnings;
 
 use File::Spec;
-use Encode;
-use HTML::Encoding 'encoding_from_http_message';
-use LWP::UserAgent;
-
-
 use utf8;
 
 use base 'Exporter';
-our @EXPORT = qw(split_size all_subthemes is_word is_banned make_normal_word load_yaml_file read_option read_information read_from_web read_from_webs);
+our @EXPORT = qw(split_size all_subthemes is_word is_banned make_normal_word load_yaml_file read_option read_information);
+
+
 
 	#!!!!!!!!!!!! ------ GLOBALS ------ !!!!!!!!!!!!
 my ($option_ref) = load_yaml_file("configure.yaml");
@@ -23,9 +20,9 @@ my %banned=();
 @banned{@{read_information("banned_words")}}=();
 
 my $czechs="ÁČĎĚÉÍŇÓŘŠŤÚŮÝŽáčďěéíňóřšťúůýž";
-
-my $ua = LWP::UserAgent->new;
 	#!!!!!!!!!!!! ------ GLOBALS ------ !!!!!!!!!!!!
+
+
 
 #workaround for weird split behaviour in scalar context - they say its not a bug, i think it is
 sub split_size{my $r=shift;my @ol=split (" |_", $r);return scalar @ol;}
@@ -49,29 +46,7 @@ sub read_option{
 	return $option_ref->{$what};
 }
 
-sub read_from_web {
-	my $pokus_count;
-	my $address = shift;
-	
-	my $resp;
-	
-	do {
-		$resp = $ua->get( $address );
-		$pokus_count++;
-	} while ($pokus_count<=5 and $resp->code != 200);
-		#try to download it 5 times, if server is not responsive
-	
-	if ($resp->code != 200) {
-		return "";
-	}
-	
-	my $enco = encoding_from_http_message($resp);
-	return decode($enco => ($resp->content));
-}
 
-sub read_from_webs {
-	return map (read_from_web($_), @_);
-}
 
 sub read_information {
 	my $what = shift;
