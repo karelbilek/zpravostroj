@@ -1,3 +1,5 @@
 use Zpravostroj::Walker;
 
-print download_articles();
+# print do_everything();
+
+print recount();

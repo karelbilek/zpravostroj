@@ -53,10 +53,21 @@ sub add_new_articles {
 		foreach (keys %$article_ref) {
 			(exists $all_article_properties{$_}) or die "forbidden article property $_";
 		}
-		DumpFile(get_filename($i), $article_ref);
+		dump_article($i, $article_ref);
 		$i++;
 	}
 	write_file($count_file, $i);
+}
+
+sub load_article {
+	my $i = shift;
+	return LoadFile(get_filename($i));
+}
+
+sub dump_article {
+	my $i = shift;
+	my $what = shift;
+	DumpFile(get_filename($i), $what);
 }
 
 sub read_articles {
@@ -64,7 +75,7 @@ sub read_articles {
 	$begin=0 if !$begin;
 	my @result;
 	foreach my $i ($begin..(get_pool_count()-1)){
-		push (@result, LoadFile(get_filename($i)));
+		push (@result, load_article($i));
 	}
 	return @result;
 }
@@ -77,7 +88,7 @@ sub update_articles {
 		foreach my $i ($begin..$begin+(scalar @input)-1){
 			($i<get_pool_count) or die "I can't update article no. $i when there are only ".get_pool_count()." articles.";
 		
-			my %article = %{LoadFile(get_filename($i))};
+			my %article = %{load_article($i)};
 			my %updating = %{shift (@input)};
 		
 			foreach (keys %updating) {
@@ -85,7 +96,7 @@ sub update_articles {
 				$article{$_} = $updating{$_};
 			}
 		
-			DumpFile(get_filename($i), \%article);
+			dump_article($i, \%article);
 		}
 	}
 }

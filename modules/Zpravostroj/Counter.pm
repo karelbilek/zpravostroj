@@ -9,6 +9,7 @@ use Zpravostroj::Other;
 
 use base 'Exporter';
 our @EXPORT = qw( count_themes);
+use utf8;
 
 
 my %corrections;
@@ -141,6 +142,8 @@ sub count_themes_document {
 	
 	foreach my $entity (@{$article{all_named}}) {
 		my $right_entity = join (" ", (map (($corrected_names{$_})?($corrected_names{$_}):$_ , (split (" ", $entity)))));
+		
+		$right_entity =~ s/(\w)\W+$/$1/;
 		
 		$named_scores{$right_entity} = 0 if (!exists $scores{$right_entity});
 		$named_scores{$right_entity}+=split_size($right_entity);

@@ -11,13 +11,17 @@ use Zpravostroj::Tagger;
 use Zpravostroj::Counter;
 
 use base 'Exporter';
-our @EXPORT = qw(download_articles);
+our @EXPORT = qw(do_everything recount);
 
-sub download_articles {
+sub do_everything {
 	my $start = get_pool_count;
 	
 	my @articles = get_all_links;
 	print "got all URLs.\n";
+	if (!scalar @articles) {
+		print "nothing to add.\n";
+		return $start;
+	}
 	
 	add_new_articles(@articles);	
 	print "wrote all URLs.\n";
@@ -47,4 +51,17 @@ sub download_articles {
 	print "wrote all counted. end.\n";
 	
 	return $start;
+}
+
+sub recount {
+	my @articles = read_articles;
+	print "read all.\n";
+	
+	@articles = count_themes(@articles);
+	print "counted all.\n";
+	
+	update_articles(0, @articles);
+	print "wrote all counted. end.\n";
+	
+	
 }

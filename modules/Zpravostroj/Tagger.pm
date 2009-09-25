@@ -94,11 +94,11 @@ sub doc_to_hash {
 my $save_err;
 
 sub shut_up {
-	#open my $saveerr, ">&STDERR";
-	#open STDERR, '>', "/dev/null";
+	open $save_err, ">&STDERR";
+	open STDERR, '>', "/dev/null";
 }
 sub open_up {
-	#open STDERR, ">&", $saveerr;
+	open STDERR, ">&", $save_err;
 }
 
 
