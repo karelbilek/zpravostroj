@@ -1,5 +1,5 @@
 use Zpravostroj::Walker;
 
-# print do_everything();
+print do_everything();
 
-print recount();
+# print recount();

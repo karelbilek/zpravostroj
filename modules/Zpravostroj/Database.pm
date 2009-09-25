@@ -7,7 +7,7 @@ use File::Slurp;
 use File::Touch;
 use Scalar::Util qw(looks_like_number);
 
-use YAML::XS qw(LoadFile DumpFile);
+use YAML::XS;# qw(LoadFile DumpFile);
 
 use Zpravostroj::Other;
 
@@ -61,13 +61,19 @@ sub add_new_articles {
 
 sub load_article {
 	my $i = shift;
-	return LoadFile(get_filename($i));
+	open INP, "<".get_filename($i);
+	my $all="";
+	while (<INP>) {$all .= $_;}
+	close INP;
+	return Load($all);
 }
+
 
 sub dump_article {
 	my $i = shift;
 	my $what = shift;
-	DumpFile(get_filename($i), $what);
+	open OUTP, ">".get_filename($i);
+	print OUTP Dump($what);
 }
 
 sub read_articles {
