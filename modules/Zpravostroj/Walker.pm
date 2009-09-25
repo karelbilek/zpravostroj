@@ -17,6 +17,8 @@ sub download_articles {
 	my $start = get_pool_count;
 	
 	my @articles = get_all_links;
+	print "got all URLs.\n";
+	
 	add_new_articles(@articles);	
 	print "wrote all URLs.\n";
 	
