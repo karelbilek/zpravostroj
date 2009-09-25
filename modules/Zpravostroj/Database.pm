@@ -68,7 +68,7 @@ sub load_article {
 	my $z = new IO::Uncompress::Gunzip;
 	
 	my $all="";
-	while (<$z) {$all .= $_;}
+	while (<$z>) {$all .= $_;}
 	close $z;
 	return Load($all);
 }
