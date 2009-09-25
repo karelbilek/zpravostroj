@@ -12,7 +12,7 @@ use YAML::XS;# qw(LoadFile DumpFile);
 use Zpravostroj::Other;
 
 use base 'Exporter';
-our @EXPORT = qw( get_pool_count add_new_articles read_articles update_articles);
+our @EXPORT = qw( get_pool_count add_new_articles read_articles update_articles bzip_pool bunzip_archive);
 
 my $database_dir = read_option("articles_address");
 my $pool_dir = $database_dir."/pool";
@@ -20,6 +20,8 @@ my $count_file = $pool_dir."/count";
 
 my %all_article_properties;
 @all_article_properties{@{read_option("all_article_properties")}}=();
+
+
 
 sub get_pool_count {
 	if (!-e  $count_file) {
@@ -90,8 +92,14 @@ sub dump_article {
 sub read_articles {
 	my $begin = shift;
 	$begin=0 if !$begin;
+	
+	my $end = shift;
+	$end = (get_pool_count()-1) if !$end;
+	
+	return () if ($end < $begin);
+	
 	my @result;
-	foreach my $i ($begin..(get_pool_count()-1)){
+	foreach my $i ($begin..$end){
 		push (@result, load_article($i));
 	}
 	return @result;
@@ -116,6 +124,31 @@ sub update_articles {
 			dump_article($i, \%article);
 		}
 	}
+}
+
+
+
+	#!!!!!!!!!!!!!!!this should be only temporary and rewritten someday
+sub bzip_pool {
+	my $where = shift;
+	my @articles = read_articles;
+	use IO::Compress::Bzip2;
+	
+	my $z = new IO::Compress::Bzip2($where);	
+
+	print $z Dump(@articles);
+	close $z;
+}
+
+sub bunzip_archive {
+	my $where = shift;
+	
+	use IO::Uncompress::Bunzip2;
+	my $z = new IO::Uncompress::Bunzip2($where);
+	my $all="";
+	while (<$z>) {$all.=$_};
+	my @articles = Load($all);
+	return @articles;
 }
 
 1;

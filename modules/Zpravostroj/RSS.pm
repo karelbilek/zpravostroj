@@ -74,5 +74,5 @@ sub get_new_links{
 
 sub get_all_links {
 	my @RSS_sources = @{read_option("RSS_sources")};
-	return map(get_new_links($_,limit=>2), @RSS_sources); #,limit=>5)
+	return map(get_new_links($_), @RSS_sources); #,limit=>5)
 }
