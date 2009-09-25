@@ -28,13 +28,13 @@ sub download_articles {
 	update_articles($start, @articles);
 	print "extracted all files.\n";
 	
-	my @tagged = tag_texts(map($_->{extracted}, @extracted));
-	update_articles($start, map ({tagged=>$_}, @tagged));
-	
+	@articles = tag_texts(@articles);
+	update_articles($start, @articles);
 	print "tagged all files.\n";
-	my @counted = count_themes(@tagged);
-	update_articles($start, map ({keys=>$_}, @counted));
 	
+	@articles = count_themes(@articles);
+	update_articles($start, @articles);
 	print "counted all files. end.\n";
+	
 	return $start;
 }

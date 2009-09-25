@@ -87,8 +87,8 @@ sub doc_to_hash {
 	
 	my @arnamed = keys %named;
 	
-	$article{all_words}=\@words;
-	$article{all_named}=\@arnamed;
+	$article->{all_words}=\@words;
+	$article->{all_named}=\@arnamed;
 }
 
 sub silently {
@@ -128,7 +128,7 @@ sub tag_texts {
 	
 	silently (\($scenario->apply_on_tmt_documents), @documents_hash{@articles});
 	
-	map (doc_to_hash($_, $document_hash{$_}), @articles);
+	map (doc_to_hash($_, $documents_hash{$_}), @articles);
 	
  	return @articles;
 }
