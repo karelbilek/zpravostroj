@@ -91,21 +91,17 @@ sub doc_to_hash {
 	$article->{all_named}=\@arnamed;
 }
 
-sub silently {
-	my $what = shift;
-	my @options = @_;
-	
+my $save_err;
+
+sub shut_up {
 	#open my $saveerr, ">&STDERR";
 	#open STDERR, '>', "/dev/null";
-	
-	my $result = &$what(@options);
-			#WARNING!!!!WARNING!!!
-			#this works only when what is scalar context! (which is it, INCIDENTALLY, in this file, so I let it like that)
-	
-	#open STDERR, ">&", $saveerr;
-	
-	return $result;
 }
+sub open_up {
+	#open STDERR, ">&", $saveerr;
+}
+
+
  
 my $scenario_initialized = 0;
 my $scenario;
@@ -114,7 +110,9 @@ sub tag_texts {
  
 	
 	unless ($scenario_initialized) {
-		$scenario = silently (\(TectoMT::Scenario->new), ({'blocks'=> [ qw(SCzechW_to_SCzechM::Sentence_segmentation SCzechW_to_SCzechM::Tokenize  SCzechW_to_SCzechM::TagHajic SCzechM_to_SCzechN::Czech_named_ent_SVM_recognizer) ]}));
+		shut_up();
+		$scenario = TectoMT::Scenario->new({'blocks'=> [ qw(SCzechW_to_SCzechM::Sentence_segmentation SCzechW_to_SCzechM::Tokenize  SCzechW_to_SCzechM::TagHajic SCzechM_to_SCzechN::Czech_named_ent_SVM_recognizer) ]});
+		open_up();
 		$scenario_initialized = 1;
 	}
 	
@@ -125,8 +123,9 @@ sub tag_texts {
 	
 	map ($documents_hash{$_}=create_new_document($_->{extracted}), @articles);
  
-	
-	silently (\($scenario->apply_on_tmt_documents), @documents_hash{@articles});
+	shut_up();
+	$scenario->apply_on_tmt_documents(@documents_hash{@articles});
+	open_up();
 	
 	map (doc_to_hash($_, $documents_hash{$_}), @articles);
 	

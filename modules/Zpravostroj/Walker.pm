@@ -21,20 +21,28 @@ sub download_articles {
 	print "wrote all URLs.\n";
 	
 	@articles = read_from_webs(@articles);
+	print "downloaded all webs.\n";
+	
 	update_articles($start, @articles);
-	print "read all files.\n";
+	print "wrote all webs.\n";
 	
 	@articles = extract_texts(@articles);
+	print "extracted all.\n";
+	
 	update_articles($start, @articles);
-	print "extracted all files.\n";
+	print "wrote all extracted.\n";
 	
 	@articles = tag_texts(@articles);
+	print "tagged all.\n";
+		
 	update_articles($start, @articles);
-	print "tagged all files.\n";
+	print "wrote all tagged.\n";
 	
 	@articles = count_themes(@articles);
+	print "counted all.\n";
+	
 	update_articles($start, @articles);
-	print "counted all files. end.\n";
+	print "wrote all counted. end.\n";
 	
 	return $start;
 }

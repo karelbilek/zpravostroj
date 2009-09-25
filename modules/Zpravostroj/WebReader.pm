@@ -35,5 +35,7 @@ sub read_from_web {
 }
 
 sub read_from_webs {
-	return map ((%$_, html=>read_from_web($_->{url})), @_);
+	
+	return map ({my %article=%$_; $article{html}=read_from_web($article{url}); \%article} @_);
+	
 }
