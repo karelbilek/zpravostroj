@@ -11,12 +11,15 @@ use base 'Exporter';
 our @EXPORT = qw( count_themes);
 use utf8;
 
-
+my $longest_correction=0;
 my %corrections;
 {
 	my %read_corrections = %{read_information("corrections")};
 
 	foreach my $correct_lemma (keys %read_corrections) {
+		my $length = split_size($correct_lemma);
+		$length = $longest_correction if ($length > $longest_correction);
+		
 		foreach my $correct_form (@{$read_corrections{$correct_lemma}}) {
 			$corrections{$correct_form} = $correct_lemma;
 		}
@@ -120,10 +123,20 @@ sub count_themes_document {
 			
 			my @last_words_copy = @last_words;
 					#corrections are, sadly, not 1-word-only
-			while (@last_words_copy) {
+					
+			if (scalar @last_words_copy > $longest_correction) {
+				@last_words_copy = splice(@last_words_copy, -$longest_correction);
+			}
+					
+			do {
+				
 				my $joined_form = join(" ", map($_->{form}, @last_words_copy));
 				
 				if (exists $corrections{$joined_form}) {
+					
+					# if (scalar @last_words_copy >= 2) {
+					# 	print "correcting $joined_form from ".join(" ", map($_->{lemma}, @last_words_copy))." to $corrections{$joined_form}\n";
+					# }
 					
 					my %correct_lemmas_hash;
 					my @correct_lemmas = split (" ", $corrections{$joined_form});
@@ -136,12 +149,11 @@ sub count_themes_document {
 						$corrected_names{$_->{lemma}}=$correct_lemmas_hash{$_};
 					}
 					map ($_->{lemma}=$correct_lemmas_hash{$_}, @last_words_copy);
-				}
-				shift @last_words_copy;
-			}
+				} 
+			} while (shift @last_words_copy);
 			
 			@last_words_copy = @last_words;
-			while (@last_words_copy) {
+			do {
 				my $joined_lemma = join(" ", map($_->{lemma}, @last_words_copy));
 				my $joined_form = join(" ", map($_->{form}, @last_words_copy)); 
 				
@@ -158,8 +170,7 @@ sub count_themes_document {
 			
 				$scores{$joined_lemma}+=2-(1/$length);
 			
-				shift @last_words_copy;
-			}
+			} while (shift @last_words_copy);
 		}
 	
 	}
