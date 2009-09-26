@@ -176,12 +176,10 @@ sub count_themes_document {
 		my $form;
 		my @all_forms;
 		if (my $all_forms_ref = $joined_forms{$lemma}) {
+			
 			@all_forms = @$all_forms_ref;
 			
-				#all forms for $lemma are "voting", who will be the FINAL one
-			my %forms;
-			map ($forms{$_}++, @all_forms);
-			$form = (sort {$forms{$b}<=>$forms{$a}} @all_forms)[0];
+			$form = most_frequent(@all_forms);
 		} else {
 			$form = $lemma;
 			@all_forms = ($form);
@@ -193,6 +191,8 @@ sub count_themes_document {
 	$article{keys} = \@res;
     return \%article;
 }
+
+
 
 sub count_themes {
 	return map(count_themes_document($_), @_);

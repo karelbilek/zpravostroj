@@ -9,7 +9,7 @@ use File::Spec;
 use utf8;
 
 use base 'Exporter';
-our @EXPORT = qw(split_size all_subthemes is_word is_banned make_normal_word load_yaml_file read_option read_information);
+our @EXPORT = qw(split_size all_subthemes is_word is_banned make_normal_word load_yaml_file read_option most_frequent read_information);
 
 
 
@@ -38,7 +38,13 @@ sub load_yaml_file {
 	return $ref;
 }
 
-
+sub most_frequent {
+	my @array=@_;
+	my %appearances;
+	foreach(@array){$appearances{$_}++};
+	return ((sort {$appearances{$b}<=>$appearances{$a}} @array)[0]);
+	
+}
 
 sub read_option{
 	my $what = shift;
