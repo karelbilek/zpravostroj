@@ -107,11 +107,6 @@ sub count_themes_document {
 			
 			my %word_copy = %$word;
 			
-			if ($corrections{$word->{form}}) {
-				$word_copy{lemma} = $corrections{$word->{form}};
-				$corrected_names{$word->{lemma}} = $corrections{$word->{form}};
-			}
-			
 			$word_copy{form}=$unused_forms.$word_copy{form};
 						#I will probably no longer need $word but who knows
 						
@@ -124,6 +119,28 @@ sub count_themes_document {
 			}
 			
 			my @last_words_copy = @last_words;
+					#corrections are, sadly, not 1-word-only
+			while (@last_words_copy) {
+				my $joined_form = join(" ", map($_->{form}, @last_words_copy));
+				
+				if (exists $corrections{$joined_form}) {
+					
+					my %correct_lemmas_hash;
+					my @correct_lemmas = split (" ", $corrections{$joined_form});
+					@correct_lemmas_hash{@last_words_copy} = @correct_lemmas;
+						#the keys are references 
+						#this would be possible without this hash too probably
+					
+					foreach (@last_words_copy) {
+						$_->{lemma}=$correct_lemmas_hash{$_};
+						$corrected_names{$_->{lemma}}=$correct_lemmas_hash{$_};
+					}
+					map ($_->{lemma}=$correct_lemmas_hash{$_}, @last_words_copy);
+				}
+				shift @last_words_copy;
+			}
+			
+			@last_words_copy = @last_words;
 			while (@last_words_copy) {
 				my $joined_lemma = join(" ", map($_->{lemma}, @last_words_copy));
 				my $joined_form = join(" ", map($_->{form}, @last_words_copy)); 
