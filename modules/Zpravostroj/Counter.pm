@@ -147,6 +147,7 @@ sub count_themes_document {
 					foreach (@last_words_copy) {
 						$_->{lemma}=$correct_lemmas_hash{$_};
 						$corrected_names{$_->{lemma}}=$correct_lemmas_hash{$_};
+						print "corrected names ".($_->{lemma})."=".($correct_lemmas_hash{$_})."\n";
 					}
 					map ($_->{lemma}=$correct_lemmas_hash{$_}, @last_words_copy);
 				} 
