@@ -6,7 +6,7 @@ use warnings;
 use Zpravostroj::Other;
 
 use base 'Exporter';
-our @EXPORT = qw();
+our @EXPORT = qw(top_themes);
 
 sub theme_rate{
 	my $theme=shift;
@@ -32,8 +32,9 @@ sub top_themes{
 	my $i=0;
 	foreach my $article (@articles){
 		
-		my @keys = $article->{keys};
+		my @keys = @{$article->{keys}};
 		for my $key (@keys) {
+			
 			my @sub_lemmas = ($key->{lemma}, all_subthemes(" ", $key->{lemma}));
 			
 			for my $sub_lemma (@sub_lemmas) {
@@ -64,11 +65,13 @@ sub top_themes{
 		my %result;
 		$result{lemma} = $lemma;
 		$result{score} = theme_rate($lemma, \%appearances);
-		$result{articles} = $appearances{$sub_lemma};
-		$result{all_forms} = $all_forms{$sub_lemma};
-		$result{best_form} = most_frequent{@{$all_forms{$sub_lemma}}};
-		push (@results, \$result);
+		$result{articles} = $appearances{$lemma};
+		$result{all_forms} = $all_forms{$lemma};
+		$result{best_form} = most_frequent{@{$all_forms{$lemma}}};
+		push (@results, \%result);
 	}
 	
 	return @results;
 }
+
+1;
