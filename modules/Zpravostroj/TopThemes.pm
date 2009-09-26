@@ -4,6 +4,8 @@ use strict;
 use warnings;
 
 use Zpravostroj::Other;
+use Zpravostroj::StopWords;
+
 use Test::Deep qw(eq_deeply);
 
 use base 'Exporter';
@@ -13,8 +15,10 @@ sub theme_rate{
 	my $theme=shift;
 	my $appearances_ref=shift;
 	
+	
 	my $count = scalar @{$appearances_ref->{$theme}};
-	my $size = split_size($theme);
+
+	my $size = grep(!exists $stopwords->{$_}, split(" ",$theme));
 	
 	return $count ** (2*$size); #original
 #	return (2* $size) ** ($count);
@@ -23,7 +27,8 @@ sub theme_rate{
 sub top_themes{
 	my @articles = @_;
 	
-	
+	my %stopwords; 
+	@stopwords{get_stopwords(10, 0.75, @articles)}=();
 		
 	my %appearances;
 	my %all_forms;
