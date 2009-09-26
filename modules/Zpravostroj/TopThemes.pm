@@ -16,7 +16,8 @@ sub theme_rate{
 	my $count = scalar @{$appearances_ref->{$theme}};
 	my $size = split_size($theme);
 	
-	return $count ** (2*$size);
+	return $count ** (2*$size); #original
+#	return (2* $size) ** ($count);
 }
 
 sub top_themes{
@@ -83,11 +84,12 @@ sub top_themes{
 	my @results;
 	for my $lemma (sort {theme_rate($b, \%appearances) <=> theme_rate($a, \%appearances)} keys %appearances) {
 		my %result;
-		$result{lemma} = $lemma;
-		$result{score} = theme_rate($lemma, \%appearances);
-		$result{articles} = $appearances{$lemma};
-		$result{articles_count} = scalar (@{$appearances{$lemma}});
+		# $result{lemma} = $lemma;
+		# $result{score} = theme_rate($lemma, \%appearances);
+		# $result{articles} = $appearances{$lemma};
+		# $result{articles_count} = scalar (@{$appearances{$lemma}});
 		$result{best_form} = most_frequent(@{$all_forms{$lemma}});
+		# $result{all_forms} = $all_forms{$lemma};
 		push (@results, \%result);# if (length $lemma <= 3); #;
 	}
 	
