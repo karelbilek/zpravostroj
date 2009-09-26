@@ -67,6 +67,15 @@ sub just_first {
 	
 }
 
+sub clean_small {
+	#clean those really small ones
+	#really small = <2 = less than 1 mention
+	my $themes_ref = shift;
+	foreach my $theme (keys %$themes_ref) {
+		delete $themes_ref->{$theme} if ($themes_ref->{$theme}<2);
+	}
+}
+
 
 
 sub count_themes_document {
@@ -155,6 +164,7 @@ sub count_themes_document {
 	just_first(\%named_scores, $max_first_named);
 	
 	just_first(\%scores, $max_first_themes);
+	clean_small(\%scores);
     
 
 	my %superhash = (%scores, %named_scores);
