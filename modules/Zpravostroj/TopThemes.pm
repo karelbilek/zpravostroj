@@ -42,8 +42,10 @@ sub top_themes{
 			}
 	
 			
-			for my $form ($key->{all_forms}) {
-				my @sub_forms = ($form, all_substhemes(" ", $form));
+			for my $form (@{$key->{all_forms}}) {
+				my @sub_forms = ($form, all_subthemes(" ", $form));
+				
+				die "HORRIBLE DEATH! ".$form."!=".$key->{lemma} if ((scalar @sub_forms) != (scalar @sub_lemmas));
 				
 				for my $sub_lemma (@sub_lemmas) {
 					
@@ -67,7 +69,7 @@ sub top_themes{
 		$result{score} = theme_rate($lemma, \%appearances);
 		$result{articles} = $appearances{$lemma};
 		$result{all_forms} = $all_forms{$lemma};
-		$result{best_form} = most_frequent{@{$all_forms{$lemma}}};
+		$result{best_form} = most_frequent(@{$all_forms{$lemma}});
 		push (@results, \%result);
 	}
 	

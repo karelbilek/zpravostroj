@@ -41,7 +41,8 @@ sub load_yaml_file {
 sub most_frequent {
 	my @array=@_;
 	my %appearances;
-	foreach(@array){$appearances{$_}++};
+	@appearances{@array}=(0) x scalar @array;
+	for my $element (@array){$appearances{$element}++};
 	return ((sort {$appearances{$b}<=>$appearances{$a}} @array)[0]);
 	
 }
