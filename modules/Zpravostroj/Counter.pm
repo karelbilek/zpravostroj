@@ -11,23 +11,6 @@ use base 'Exporter';
 our @EXPORT = qw( count_themes);
 use utf8;
 
-my $longest_correction=0;
-my %corrections;
-{
-	my %read_corrections = %{read_information("corrections")};
-
-	foreach my $correct_lemma (keys %read_corrections) {
-		my $length = split_size($correct_lemma);
-		$length = $longest_correction if ($length > $longest_correction);
-		
-		foreach my $correct_form (@{$read_corrections{$correct_lemma}}) {
-			$corrections{$correct_form} = $correct_lemma;
-		}
-	}
-}
-		#this IS global - but it does make sense!!!!!!!!§§§!! really!!
-		#why would I read this thing every time again and again?
-		#on the other hand, I will 100% need it!
 
 
 
@@ -124,7 +107,7 @@ sub count_themes_document {
 			my @last_words_copy = @last_words;
 					#corrections are, sadly, not 1-word-only
 					
-			if (scalar @last_words_copy > $longest_correction) {
+			if (scalar @last_words_copy > longest_correction) {
 				@last_words_copy = splice(@last_words_copy, -$longest_correction);
 			}
 					
@@ -132,14 +115,14 @@ sub count_themes_document {
 				
 				my $joined_form = join(" ", map($_->{form}, @last_words_copy));
 				
-				if (exists $corrections{$joined_form}) {
+				if (get_correction($joined_form)) {
 					
 				
 						# print "correcting $joined_form from ".join(" ", map($_->{lemma}, @last_words_copy))." to $corrections{$joined_form}\n";
 					
 					
 					my %correct_lemmas_hash;
-					my @correct_lemmas = split (" ", $corrections{$joined_form});
+					my @correct_lemmas = split (" ", get_correction($joined_form));
 					@correct_lemmas_hash{@last_words_copy} = @correct_lemmas;
 						#the keys are references 
 						#this would be possible without this hash too probably

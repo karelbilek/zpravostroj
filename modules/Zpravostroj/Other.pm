@@ -9,7 +9,7 @@ use File::Spec;
 use utf8;
 
 use base 'Exporter';
-our @EXPORT = qw(split_size all_subthemes is_word is_banned make_normal_word load_yaml_file read_option most_frequent read_information);
+our @EXPORT = qw(split_size all_subthemes is_word is_banned make_normal_word load_yaml_file read_option most_frequent read_information get_correction longest_correction);
 
 
 
@@ -21,6 +21,14 @@ my %banned=();
 
 my $czechs="ÁČĎĚÉÍŇÓŘŠŤÚŮÝŽáčďěéíňóřšťúůýž";
 	#!!!!!!!!!!!! ------ GLOBALS ------ !!!!!!!!!!!!
+	
+	
+my $longest_correction=0;
+my %corrections;
+	#!!!!!!!!!!!! ------ GLOBALS ------ !!!!!!!!!!!!
+
+
+
 
 
 
@@ -102,5 +110,27 @@ sub make_normal_word {
 	
     return $text;
 }
+
+
+sub get_correction {
+	my $what=shift;
+	if (!$longest_correction) {
+		my %read_corrections = %{read_information("corrections")};
+
+		foreach my $correct_lemma (keys %read_corrections) {
+			my $length = split_size($correct_lemma);
+			$length = $longest_correction if ($length > $longest_correction);
+
+			foreach my $correct_form (@{$read_corrections{$correct_lemma}}) {
+				$corrections{$correct_form} = $correct_lemma;
+			}
+		}
+	}
+	return 0 if (!exists $corrections{$what});
+	
+	return $corrections{$what};
+}
+
+sub longest_correction {return $longest_correction;}
 
 1;
