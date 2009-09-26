@@ -21,7 +21,7 @@ sub get_stopwords {
 	my $granularity = shift;
 	my $tolerance = shift;
 	my @articles = @_;
-
+	my $size = @articles;
 
 	# my $granularity=10;
 	# my $tolerance = 0.75;
@@ -38,7 +38,7 @@ sub get_stopwords {
 		map($words_count{$_}++, keys %existence);
 	}
 	
-	my @everything = grep ($words_count{$_}>=($tolerance*get_pool_count()/($granularity)), keys %words_count);
+	my @everything = grep ($words_count{$_}>=($tolerance*$size/($granularity)), keys %words_count);
 	@everything = grep (!is_banned($_), @everything);
 	
 	return @everything;

@@ -14,7 +14,7 @@ our @EXPORT = qw(top_themes);
 sub theme_rate{
 	my $theme=shift;
 	my $appearances_ref=shift;
-	
+	my $stopwords = shift;
 	
 	my $count = scalar @{$appearances_ref->{$theme}};
 
@@ -87,7 +87,7 @@ sub top_themes{
 	#so basically, I am done
 	
 	my @results;
-	for my $lemma (sort {theme_rate($b, \%appearances) <=> theme_rate($a, \%appearances)} keys %appearances) {
+	for my $lemma (sort {theme_rate($b, \%appearances, \%stopwords) <=> theme_rate($a, \%appearances, \%stopwords)} keys %appearances) {
 		my %result;
 		# $result{lemma} = $lemma;
 		# $result{score} = theme_rate($lemma, \%appearances);
