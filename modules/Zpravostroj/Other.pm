@@ -86,7 +86,7 @@ sub is_word {
 
 sub is_banned {
 	my $what=shift;
-	return ((exists $banned{lc($what)}) or (length ($what) < read_option("min_word_length")));
+	return ((exists $banned{lc($what)}) or ($what=~/^[0-9]+$/));# or (length ($what) < read_option("min_word_length")));
 }
 
 sub make_normal_word {

@@ -70,7 +70,7 @@ sub top_themes{
 		$result{articles} = $appearances{$lemma};
 		$result{all_forms} = $all_forms{$lemma};
 		$result{best_form} = most_frequent(@{$all_forms{$lemma}});
-		push (@results, \%result);
+		push (@results, \%result);# if (length $lemma <= 3); #;
 	}
 	
 	return @results;

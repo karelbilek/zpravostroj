@@ -153,8 +153,8 @@ sub count_themes_document {
 		my $what = shift;
 		$what =~ s/^\W*(\w*)\W*$/$1/;
 		
-		return undef if ($what eq "");
-		return $what."_" if is_banned($what);
+		return "" if ($what eq "");
+		return "" if is_banned($what);
 		return $corrected_names{$what}." " if ($corrected_names{$what});
 		return $what." ";
 	};
@@ -162,7 +162,7 @@ sub count_themes_document {
 	foreach my $entity (@{$article{all_named}}) {
 		my $right_entity = join ("", (map ($correct_entity->($_) , (split (" ", $entity)))));
 		
-		$right_entity =~ s/((\w+_)| )+$//;
+		$right_entity =~ s/ +$//; #trailing space
 		
 		$named_scores{$right_entity} = 0 if (!exists $scores{$right_entity});
 		$named_scores{$right_entity}+=split_size($right_entity);
