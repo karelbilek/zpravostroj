@@ -16,7 +16,7 @@ use Zpravostroj::Database;
 use Zpravostroj::Other;
 
 use base 'Exporter';
-our @EXPORT = qw( );
+our @EXPORT = qw(get_stopwords);
 
 sub get_stopwords {
 	my $granularity=5;
@@ -30,10 +30,10 @@ sub get_stopwords {
 		my %existence;
 		@existence{@all_words} = ();
 		
-		map($words_count++, keys %existence);
+		map($words_count{$_}++, keys %existence);
 	}
 	
-	my @everything = grep ($words_count{$_}>=(get_pool_count()/(2*$granularity)), keys %existence);
+	my @everything = grep ($words_count{$_}>=(get_pool_count()/($granularity)), keys %words_count);
 	
 	return @everything;
 }

@@ -108,7 +108,7 @@ sub count_themes_document {
 					#corrections are, sadly, not 1-word-only
 					
 			if (scalar @last_words_copy > longest_correction) {
-				@last_words_copy = splice(@last_words_copy, -$longest_correction);
+				@last_words_copy = splice(@last_words_copy, -(longest_correction));
 			}
 					
 			do {
