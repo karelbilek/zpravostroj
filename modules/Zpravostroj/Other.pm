@@ -94,7 +94,7 @@ sub make_normal_word {
     my $text = shift;
     return unless defined $text;
     
-    $text =~ s/^([A-Za-z$czechs ]*).*$/$1/;
+    $text =~ s/^([A-Za-z0-9$czechs ]*).*$/$1/;
         #remove all weird letters
     
     $text =~ s/ +$//;

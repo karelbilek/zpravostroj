@@ -149,10 +149,18 @@ sub count_themes_document {
 	
 	my %named_scores;
 	
+	my $correct_entity = sub {
+		my $what = shift;
+		$what =~ s/^W+(\w)\W+$/$1/;
+		return $what."_" if is_banned($what);
+		return $corrected_names{$what}." " if ($corrected_names{$what});
+		return $what." ";
+	};
+	
 	foreach my $entity (@{$article{all_named}}) {
-		my $right_entity = join (" ", (map (($corrected_names{$_})?($corrected_names{$_}):$_ , (split (" ", $entity)))));
+		my $right_entity = join ("", (map ($correct_entity->($_) , (split (" ", $entity)))));
 		
-		$right_entity =~ s/(\w)\W+$/$1/;
+		$right_entity =~ s/(_\w)+$//;
 		
 		$named_scores{$right_entity} = 0 if (!exists $scores{$right_entity});
 		$named_scores{$right_entity}+=split_size($right_entity);
