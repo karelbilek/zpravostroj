@@ -107,7 +107,18 @@ sub extract_text {
     $dom_tree->write($text);
 	$dom_tree->close();
     
-	$article{extracted} = check_unknown($dom_tree);
+	my $extracted = check_unknown($dom_tree);
+	my @sentences = split(" *[\.\"\'] *", $extracted);
+	my %written;
+	my $result="";
+	for my $sentence (@sentences) {
+		unless (exists $written{$sentence}) {
+			$result.=$sentence.". ";
+			$written{$sentence}=1;
+		}
+	}
+	
+	$article{extracted} = $result;
 	$article{title} = $dom_tree->getElementsByTagName('title')->[0]->text();
     return \%article;
 }
