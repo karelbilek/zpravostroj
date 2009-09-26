@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use Zpravostroj::Other;
+use Test::Deep qw(eq_deeply);
 
 use base 'Exporter';
 our @EXPORT = qw(top_themes);
@@ -21,9 +22,7 @@ sub theme_rate{
 sub top_themes{
 	my @articles = @_;
 	
-	#my %scores;	
-		#this hash wouldnt be 100% needed  (it can be counted from %appearences VERY easily)
-		#but it makes things easier
+	
 		
 	my %appearances;
 	my %all_forms;
@@ -58,6 +57,25 @@ sub top_themes{
 		}
 		
 		++$i;
+	}
+	
+	#remove redundant subthemes
+	
+	for my $lemma (sort {split_size($b)<=>split_size($a)} keys %appearances) {
+		
+		#I can delete the appearance so I have to test again
+		if (exists $appearances{$lemma}) {
+			
+			my @lemma_appearances = @{$appearances{$lemma}};
+			for my $sub_lemma (all_subthemes(" ",$lemma)) {
+				
+				my @sub_lemma_appearances = @{$appearances{$sub_lemma}};
+				if (eq_deeply(\@lemma_appearances, \@sub_lemma_appearances)) {
+					delete $appearances{$sub_lemma};
+					delete $all_forms{$sub_lemma};
+				} 
+			}
+		} 
 	}
 	
 	#so basically, I am done
