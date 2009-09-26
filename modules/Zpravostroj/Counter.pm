@@ -134,9 +134,9 @@ sub count_themes_document {
 				
 				if (exists $corrections{$joined_form}) {
 					
-					# if (scalar @last_words_copy >= 2) {
-					# 	print "correcting $joined_form from ".join(" ", map($_->{lemma}, @last_words_copy))." to $corrections{$joined_form}\n";
-					# }
+				
+						# print "correcting $joined_form from ".join(" ", map($_->{lemma}, @last_words_copy))." to $corrections{$joined_form}\n";
+					
 					
 					my %correct_lemmas_hash;
 					my @correct_lemmas = split (" ", $corrections{$joined_form});
@@ -145,9 +145,9 @@ sub count_themes_document {
 						#this would be possible without this hash too probably
 					
 					foreach (@last_words_copy) {
-						$_->{lemma}=$correct_lemmas_hash{$_};
 						$corrected_names{$_->{lemma}}=$correct_lemmas_hash{$_};
-						print "corrected names ".($_->{lemma})."=".($correct_lemmas_hash{$_})."\n";
+						# print "corrected names ".($_->{lemma})."=".($correct_lemmas_hash{$_})."\n";
+						$_->{lemma}=$correct_lemmas_hash{$_};
 					}
 					map ($_->{lemma}=$correct_lemmas_hash{$_}, @last_words_copy);
 				} 
