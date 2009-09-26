@@ -30,26 +30,17 @@ sub do_everything {
 	@articles = read_from_webs(@articles);
 	print "downloaded all webs.\n";
 	
-	update_articles($start, @articles);
-	print "wrote all webs.\n";
-	
 	@articles = extract_texts(@articles);
-	print "extracted all.\n";
-	
-	update_articles($start, @articles);
-	print "wrote all extracted.\n";
+	print "extracted all. goodbye for a while...\n";
 	
 	@articles = tag_texts(@articles);
-	print "tagged all.\n";
+	print "...hello again. tagged all (wow).\n";
 		
-	update_articles($start, @articles);
-	print "wrote all tagged.\n";
-	
 	@articles = count_themes(@articles);
 	print "counted all.\n";
 	
 	update_articles($start, @articles);
-	print "wrote all counted. end.\n";
+	print "wrote everything. end.\n";
 	
 	return $start;
 }

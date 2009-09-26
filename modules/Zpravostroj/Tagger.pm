@@ -122,7 +122,7 @@ sub tag_texts {
 	
 	
 	map ($documents_hash{$_}=create_new_document($_->{extracted}), @articles);
- 
+	
 	shut_up();
 	$scenario->apply_on_tmt_documents(@documents_hash{@articles});
 	open_up();
