@@ -6,13 +6,14 @@ use warnings;
 use File::Slurp;
 use File::Touch;
 use Scalar::Util qw(looks_like_number);
+use DateTime;
 
 use YAML::XS;# qw(LoadFile DumpFile);
 
 use Zpravostroj::Other;
 
 use base 'Exporter';
-our @EXPORT = qw( get_pool_count add_new_articles read_articles update_articles bzip_pool bunzip_archive);
+our @EXPORT = qw( get_pool_count add_new_articles read_pool_articles update_pool_articles bzip_pool bunzip_archive);
 
 my $database_dir = read_option("articles_address");
 my $pool_dir = $database_dir."/pool";
@@ -43,7 +44,7 @@ sub get_pool_count {
 	}
 }
 
-sub get_filename {
+sub get_pool_filename {
 	my $i = shift;
 	return $pool_dir."/".$i.".yaml.bz2";
 }
@@ -67,7 +68,7 @@ sub load_article {
 	use IO::Uncompress::Bunzip2;
 	
 #	open my $z, "<".get_filename($i);
-	my $z = new IO::Uncompress::Bunzip2(get_filename($i));
+	my $z = new IO::Uncompress::Bunzip2(get_pool_filename($i));
 	
 	my $all="";
 	while (<$z>) {$all .= $_;}
@@ -80,16 +81,22 @@ sub dump_article {
 	my $i = shift;
 	my $what = shift;
 	
+	dump_anywhere(get_pool_filename($i), $what);
+}
+
+sub dump_anything {
+	my $where = shift;
+	my $what = shift;
 	use IO::Compress::Bzip2;
 	
-	my $z = new IO::Compress::Bzip2(get_filename($i));	
+	my $z = new IO::Compress::Bzip2();	
 #	open my $z, ">".get_filename($i);
 
 	print $z Dump($what);
 	close $z;
 }
 
-sub read_articles {
+sub read_pool_articles {
 	my $begin = shift;
 	$begin=0 if !$begin;
 	
@@ -105,7 +112,7 @@ sub read_articles {
 	return @result;
 }
 
-sub update_articles {
+sub update_pool_articles {
 	my $begin = shift;
 	$begin=0 if !$begin;
 	my @input = @_;
@@ -129,15 +136,23 @@ sub update_articles {
 
 
 	#!!!!!!!!!!!!!!!this should be only temporary and rewritten someday
-sub bzip_pool {
-	my $where = shift;
-	my @articles = read_articles;
-	use IO::Compress::Bzip2;
+sub archive_pool {
+	my $day = DateTime->today->date;
+	my $archive_dir = $database_dir."/".$day;
+	my $big_zip = $archive_dir."/archive.yaml.bz2";
 	
-	my $z = new IO::Compress::Bzip2($where);	
-
-	print $z Dump(@articles);
-	close $z;
+	my @articles = read_pool_articles;
+	
+	dump_anything($big_zip, \@articles);
+	
+	my $i=0;
+	for my $article(@articles) {
+		my $article=$archive_dir."/".$i.".yaml.bz2";
+		dump_anything({link=>($article->{link}), });
+		
+		$i++;
+	}
+	
 }
 
 sub bunzip_archive {
