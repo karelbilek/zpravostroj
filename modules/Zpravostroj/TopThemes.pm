@@ -18,17 +18,27 @@ sub theme_rate{
 	
 	my $count = scalar @{$appearances_ref->{$theme}};
 
-	my $size = grep(!exists $stopwords->{$_}, split(" ",$theme));
+	my $size = stop_size($stopwords, $theme);
 	
 	return $count ** (2*$size); #original
 #	return (2* $size) ** ($count);
+}
+
+sub stop_size {
+	my $stopwords = shift;
+	my $word = shift;
+	return scalar grep(!exists $stopwords->{$_}, split(" ",$word));
 }
 
 sub top_themes{
 	my @articles = @_;
 	
 	my %stopwords; 
-	@stopwords{get_stopwords(10, 0.75, @articles)}=();
+	#@stopwords{get_stopwords(10, 0.8, @articles)}=();
+	
+	# {use YAML::XS;
+	# my @wa = keys %stopwords;
+	# print Dump(\@wa);}
 		
 	my %appearances;
 	my %all_forms;
@@ -89,10 +99,11 @@ sub top_themes{
 	my @results;
 	for my $lemma (sort {theme_rate($b, \%appearances, \%stopwords) <=> theme_rate($a, \%appearances, \%stopwords)} keys %appearances) {
 		my %result;
-		# $result{lemma} = $lemma;
+		$result{lemma} = $lemma;
 		# $result{score} = theme_rate($lemma, \%appearances);
-		# $result{articles} = $appearances{$lemma};
+		$result{articles} = $appearances{$lemma};
 		# $result{articles_count} = scalar (@{$appearances{$lemma}});
+		# $result{stop_size} = stop_size(\%stopwords, $lemma);
 		$result{best_form} = most_frequent(@{$all_forms{$lemma}});
 		# $result{all_forms} = $all_forms{$lemma};
 		push (@results, \%result);# if (length $lemma <= 3); #;
