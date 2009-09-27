@@ -34,7 +34,7 @@ sub top_themes{
 	my @articles = @_;
 	
 	my %stopwords; 
-	#@stopwords{get_stopwords(10, 0.8, @articles)}=();
+	@stopwords{get_stopwords(10, 0.8, @articles)}=();
 	
 	# {use YAML::XS;
 	# my @wa = keys %stopwords;
