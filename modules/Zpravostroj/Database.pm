@@ -7,13 +7,14 @@ use File::Slurp;
 use File::Touch;
 use Scalar::Util qw(looks_like_number);
 use DateTime;
+use File::Remove 'rm';
 
 use YAML::XS;# qw(LoadFile DumpFile);
 
 use Zpravostroj::Other;
 
 use base 'Exporter';
-our @EXPORT = qw( get_pool_count add_new_articles read_pool_articles update_pool_articles archive_pool bunzip_archive);
+our @EXPORT = qw( get_pool_count add_new_articles read_pool_articles update_pool_articles archive_pool load_anything);
 
 my $database_dir = read_option("articles_address");
 my $pool_dir = $database_dir."/pool";
@@ -64,18 +65,22 @@ sub add_new_articles {
 
 sub load_article {
 	my $i = shift;
+	return load_anything(get_pool_filename($i));
 	
+}
+
+sub load_anything {
+	my $where = shift;
 	use IO::Uncompress::Bunzip2;
 	
-	(-e get_pool_filename($i)) or die "WHAT THE FUCK ".get_pool_filename($i);
+	(-e $where) or die "OH MY GOD PANIC!! ".$where;
 	
-#	open my $z, "<".get_filename($i);
-	my $z = new IO::Uncompress::Bunzip2(get_pool_filename($i));
+	my $z = new IO::Uncompress::Bunzip2($where);
 	
-	my $all="";
-	while (<$z>) {$all .= $_;}
+	my $all = do {local ($/); <$z>};
 	close $z;
 	return Load($all);
+
 }
 
 
@@ -140,7 +145,6 @@ sub update_pool_articles {
 
 
 
-	#!!!!!!!!!!!!!!!this should be only temporary and rewritten someday
 sub archive_pool {
 	my $day = DateTime->today->date;
 	my $archive_dir = $database_dir."/".$day;
@@ -164,16 +168,19 @@ sub archive_pool {
 		$i++;
 	}
 	
+	# LETS REMOVE THE DAMNED POOL!!! HA HA HA !!!
+	rm(\1, $pool_dir);
 }
 
-sub bunzip_archive {
-	my $where = shift;
+sub unarchive_pool {
+	my $day = shift;
 	
-	use IO::Uncompress::Bunzip2;
-	my $z = new IO::Uncompress::Bunzip2($where);
-	my $all="";
-	while (<$z>) {$all.=$_};
-	my @articles = Load($all);
+	my $archive_dir = $database_dir."/".$day;
+	if (!-d $archive_dir) {
+		die "Wrong date $day OR folder $archive_dir just doesn't exist.";
+	}
+	
+	my @articles = @{load_anything($archive_dir)};
 	return @articles;
 }
 
