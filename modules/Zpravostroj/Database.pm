@@ -13,7 +13,7 @@ use YAML::XS;# qw(LoadFile DumpFile);
 use Zpravostroj::Other;
 
 use base 'Exporter';
-our @EXPORT = qw( get_pool_count add_new_articles read_pool_articles update_pool_articles bzip_pool bunzip_archive);
+our @EXPORT = qw( get_pool_count add_new_articles read_pool_articles update_pool_articles archive_pool bunzip_archive);
 
 my $database_dir = read_option("articles_address");
 my $pool_dir = $database_dir."/pool";
@@ -67,6 +67,8 @@ sub load_article {
 	
 	use IO::Uncompress::Bunzip2;
 	
+	(-e get_pool_filename($i)) or die "WHAT THE FUCK ".get_pool_filename($i);
+	
 #	open my $z, "<".get_filename($i);
 	my $z = new IO::Uncompress::Bunzip2(get_pool_filename($i));
 	
@@ -87,9 +89,10 @@ sub dump_article {
 sub dump_anything {
 	my $where = shift;
 	my $what = shift;
+
 	use IO::Compress::Bzip2;
 	
-	my $z = new IO::Compress::Bzip2();	
+	my $z = new IO::Compress::Bzip2($where);	
 #	open my $z, ">".get_filename($i);
 
 	print $z Dump($what);
@@ -107,7 +110,9 @@ sub read_pool_articles {
 	
 	my @result;
 	foreach my $i ($begin..$end){
-		push (@result, load_article($i));
+		my $article = load_article($i);
+
+		push (@result, $article);
 	}
 	return @result;
 }
@@ -139,6 +144,10 @@ sub update_pool_articles {
 sub archive_pool {
 	my $day = DateTime->today->date;
 	my $archive_dir = $database_dir."/".$day;
+	if (!-d $archive_dir) {
+		mkdir $archive_dir or die "Dir $archive_dir cannot be created. Better luck next time, pal.";
+	}
+	
 	my $big_zip = $archive_dir."/archive.yaml.bz2";
 	
 	my @articles = read_pool_articles;
@@ -149,8 +158,8 @@ sub archive_pool {
 	for my $article(@articles) {
 		my $article_file=$archive_dir."/".$i.".yaml.bz2";
 		
-		my @keys = map ({best_form=>$_->{best_form}, lemma=>$_->{lemma}}, @{$article->keys});
-		dump_anything($article_file, {link=>($article->{link}), keys=>\@keys});
+		my @keys = map ({best_form=>$_->{best_form}, lemma=>$_->{lemma}}, @{$article->{keys}});
+		dump_anything($article_file, {url=>($article->{url}), keys=>\@keys, title=>$article->{title}});
 		
 		$i++;
 	}
