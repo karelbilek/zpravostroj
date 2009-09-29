@@ -14,7 +14,7 @@ use YAML::XS;# qw(LoadFile DumpFile);
 use Zpravostroj::Other;
 
 use base 'Exporter';
-our @EXPORT = qw( get_pool_count add_new_articles read_pool_articles update_pool_articles archive_pool load_anything);
+our @EXPORT = qw( get_pool_count add_new_articles read_pool_articles update_pool_articles archive_pool unarchive_pool load_anything);
 
 my $database_dir = read_option("articles_address");
 my $pool_dir = $database_dir."/pool";
@@ -79,6 +79,11 @@ sub load_anything {
 	
 	my $all = do {local ($/); <$z>};
 	close $z;
+	# my $all="";
+	# while (<$z>) {
+	# 	$all .= $_;
+	# }
+	# close $z;
 	return Load($all);
 
 }
@@ -88,7 +93,7 @@ sub dump_article {
 	my $i = shift;
 	my $what = shift;
 	
-	dump_anywhere(get_pool_filename($i), $what);
+	dump_anything(get_pool_filename($i), $what);
 }
 
 sub dump_anything {
@@ -180,7 +185,11 @@ sub unarchive_pool {
 		die "Wrong date $day OR folder $archive_dir just doesn't exist.";
 	}
 	
-	my @articles = @{load_anything($archive_dir)};
+	my $archive_file = $archive_dir."/archive.yaml.bz2";
+	
+	my $what = load_anything($archive_file);
+	
+	my @articles = @{$what};
 	return @articles;
 }
 

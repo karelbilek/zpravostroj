@@ -35,4 +35,9 @@ all_article_properties: #dont remove anything that is in more files
     - html
     - all_words
     - all_named
-
+password_script_dir: /afs/ms/u/b/bilek7am/BIG/skola/rocnik/pass
+    #sadly, I have to save my password somehow on the disc (because of kerberos)
+    #so I use this a-little-security thing at least
+    #it THIS dir, there is only ONE file with .sh with unknown name
+    #and this script returns the password
+    #(I shouldn't write this probably)
