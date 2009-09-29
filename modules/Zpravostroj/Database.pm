@@ -147,8 +147,10 @@ sub archive_pool {
 	
 	my $i=0;
 	for my $article(@articles) {
-		my $article=$archive_dir."/".$i.".yaml.bz2";
-		dump_anything({link=>($article->{link}), });
+		my $article_file=$archive_dir."/".$i.".yaml.bz2";
+		
+		my @keys = map ({best_form=>$_->{best_form}, lemma=>$_->{lemma}}, @{$article->keys});
+		dump_anything($article_file, {link=>($article->{link}), keys=>\@keys});
 		
 		$i++;
 	}

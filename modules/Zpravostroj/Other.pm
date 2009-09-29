@@ -94,6 +94,8 @@ sub is_word {
 
 sub is_banned {
 	my $what=shift;
+	return 1 if ((!$what) or ($what=''));
+	
 	return ((exists $banned{lc($what)}) or ($what=~/^[0-9]+$/));# or (length ($what) < read_option("min_word_length")));
 }
 
