@@ -41,7 +41,7 @@ sub do_everything {
 	@articles = count_themes(@articles);
 	print "counted all.\n";
 	
-	update_articles($start, @articles);
+	update_pool_articles($start, @articles);
 	print "wrote everything.\n";
 	
 	return $start;
