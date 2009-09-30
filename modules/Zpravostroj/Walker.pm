@@ -13,6 +13,25 @@ use Zpravostroj::Counter;
 use base 'Exporter';
 our @EXPORT = qw(do_everything recount);
 
+my $last_day="";
+
+sub step {
+	print time." - starting.\n";
+	do_everything;
+	print "counting top themes...\n";
+	count_pool_themes;
+	print "...done.\n"
+	
+	my $new_day = get_day;
+	if ($last_day eq "") or ($last_day eq $new_day) {
+		print "no need to archive yet.\n";
+	} else {
+		print "archiving...\n";
+		archive_pool;
+		print "done. \n"
+	}
+	print time." - done\n==========\n";
+}
 
 sub do_everything {
 	my $start = get_pool_count;
@@ -40,7 +59,7 @@ sub do_everything {
 	print "counted all.\n";
 	
 	update_articles($start, @articles);
-	print "wrote everything. end.\n";
+	print "wrote everything.\n";
 	
 	return $start;
 }

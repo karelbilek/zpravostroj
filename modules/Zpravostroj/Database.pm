@@ -3,18 +3,23 @@ package Zpravostroj::Database;
 use strict;
 use warnings;
 
-use File::Slurp;
 use File::Touch;
+use File::Remove 'rm';
+use File::Slurp;
 use Scalar::Util qw(looks_like_number);
 use DateTime;
-use File::Remove 'rm';
-
 use YAML::XS;# qw(LoadFile DumpFile);
+use File::Copy;
+
+use IO::Uncompress::Bunzip2;
+use IO::Compress::Bzip2;
 
 use Zpravostroj::Other;
+use Zpravostroj::TopThemes;
+
 
 use base 'Exporter';
-our @EXPORT = qw( get_pool_count add_new_articles read_pool_articles update_pool_articles archive_pool unarchive_pool load_anything);
+our @EXPORT = qw( get_day get_pool_count add_new_articles read_pool_articles update_pool_articles archive_pool unarchive load_anything count_pool_themes);
 
 my $database_dir = read_option("articles_address");
 my $pool_dir = $database_dir."/pool";
@@ -22,6 +27,14 @@ my $count_file = $pool_dir."/count";
 
 my %all_article_properties;
 @all_article_properties{@{read_option("all_article_properties")}}=();
+
+my $archive="archive.yaml.bz2";
+my $topthemes = "top_themes.yaml.bz2";
+
+sub get_day {
+
+	return DateTime->today->date
+}
 
 
 
@@ -33,9 +46,14 @@ sub get_pool_count {
 			}
 			mkdir $pool_dir or die "making directory $pool_dir not succesful.";
 		}
+		
+		
 		touch $count_file or die "touching $count_file not succesful.";
 		return 0;
 	} else {
+		
+
+		
 		my $count = read_file($count_file);
 		if (looks_like_number($count)) {
 			return $count;
@@ -43,6 +61,11 @@ sub get_pool_count {
 			return 0;
 		}
 	}
+}
+
+sub set_pool_count {
+	my $i=shift;
+	write_file($count_file, $i);
 }
 
 sub get_pool_filename {
@@ -60,7 +83,7 @@ sub add_new_articles {
 		dump_article($i, $article_ref);
 		$i++;
 	}
-	write_file($count_file, $i);
+	set_pool_count($i);
 }
 
 sub load_article {
@@ -71,7 +94,6 @@ sub load_article {
 
 sub load_anything {
 	my $where = shift;
-	use IO::Uncompress::Bunzip2;
 	
 	(-e $where) or die "OH MY GOD PANIC!! ".$where;
 	
@@ -100,7 +122,6 @@ sub dump_anything {
 	my $where = shift;
 	my $what = shift;
 
-	use IO::Compress::Bzip2;
 	
 	my $z = new IO::Compress::Bzip2($where);	
 #	open my $z, ">".get_filename($i);
@@ -127,6 +148,19 @@ sub read_pool_articles {
 	return @result;
 }
 
+
+
+sub count_pool_themes {
+	
+	my $where = $pool_dir."/".$topthemes;
+	my @articles = read_pool_articles;
+			#-------------------------------FUTURE:::::add some buffering so I dont have to read it again
+	my @themes = top_themes(@articles);
+	dump_anything($where, \@articles);
+}
+
+
+
 sub update_pool_articles {
 	my $begin = shift;
 	$begin=0 if !$begin;
@@ -151,13 +185,13 @@ sub update_pool_articles {
 
 
 sub archive_pool {
-	my $day = DateTime->today->date;
+	my $day = get_day();
 	my $archive_dir = $database_dir."/".$day;
 	if (!-d $archive_dir) {
 		mkdir $archive_dir or die "Dir $archive_dir cannot be created. Better luck next time, pal.";
 	}
 	
-	my $big_zip = $archive_dir."/archive.yaml.bz2";
+	my $big_zip = $archive_dir."/".$archive;
 	
 	my @articles = read_pool_articles;
 	
@@ -173,11 +207,15 @@ sub archive_pool {
 		$i++;
 	}
 	
-	# LETS REMOVE THE DAMNED POOL!!! HA HA HA !!!
+	
+	copy($pool_dir."/".$topthemes, $archive_dir."/".$topthemes);
+	
+	
+	# LETS DELETE THE DAMNED POOL!!! HA HA HA !!!
 	rm(\1, $pool_dir);
 }
 
-sub unarchive_pool {
+sub unarchive {
 	my $day = shift;
 	
 	my $archive_dir = $database_dir."/".$day;
@@ -185,7 +223,7 @@ sub unarchive_pool {
 		die "Wrong date $day OR folder $archive_dir just doesn't exist.";
 	}
 	
-	my $archive_file = $archive_dir."/archive.yaml.bz2";
+	my $archive_file = $archive_dir."/".$archive;
 	
 	my $what = load_anything($archive_file);
 	
