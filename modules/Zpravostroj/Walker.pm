@@ -11,27 +11,10 @@ use Zpravostroj::Tagger;
 use Zpravostroj::Counter;
 
 use base 'Exporter';
-our @EXPORT = qw(do_everything recount);
+our @EXPORT = qw(do_everything recount step);
 
 my $last_day="";
 
-sub step {
-	print time." - starting.\n";
-	do_everything;
-	print "counting top themes...\n";
-	count_pool_themes;
-	print "...done.\n"
-	
-	my $new_day = get_day;
-	if ($last_day eq "") or ($last_day eq $new_day) {
-		print "no need to archive yet.\n";
-	} else {
-		print "archiving...\n";
-		archive_pool;
-		print "done. \n"
-	}
-	print time." - done\n==========\n";
-}
 
 sub do_everything {
 	my $start = get_pool_count;
@@ -64,8 +47,27 @@ sub do_everything {
 	return $start;
 }
 
+sub step {
+	print time." - starting.\n";
+	do_everything;
+	print "counting top themes...\n";
+	count_pool_themes;
+	print "...done.\n";
+	
+	my $new_day = get_day;
+	if (($last_day eq "") or ($last_day eq $new_day)) {
+		print "no need to archive yet.\n";
+	} else {
+		print "archiving...\n";
+		archive_pool;
+		print "done. \n"
+	}
+	print time." - done\n==========\n";
+}
+
+
 sub recount {
-	my @articles = read_articles;
+	my @articles = read_pool_articles;
 	print "read all.\n";
 	
 	@articles = count_themes(@articles);
@@ -76,3 +78,5 @@ sub recount {
 	
 	
 }
+
+1;
