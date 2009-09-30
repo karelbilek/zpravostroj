@@ -20,29 +20,29 @@ sub do_everything {
 	my $start = get_pool_count;
 	
 	my @articles = get_all_links;
-	print "got all URLs.\n";
+	print time." - got all URLs.\n";
 	if (!scalar @articles) {
-		print "nothing to add.\n";
+		print time." - nothing to add.\n";
 		return $start;
 	}
 	
 	add_new_articles(@articles);	
-	print "wrote all URLs.\n";
+	print time." - wrote all URLs.\n";
 	
 	@articles = read_from_webs(@articles);
-	print "downloaded all webs.\n";
+	print time." - downloaded all webs.\n";
 	
 	@articles = extract_texts(@articles);
-	print "extracted all. goodbye for a while...\n";
+	print time." - extracted all. goodbye for a while...\n";
 	
 	@articles = tag_texts(@articles);
-	print "...hello again. tagged all (wow).\n";
+	print time." - ...hello again. tagged all (wow).\n";
 		
 	@articles = count_themes(@articles);
-	print "counted all.\n";
+	print time." - counted all.\n";
 	
 	update_pool_articles($start, @articles);
-	print "wrote everything.\n";
+	print time." - wrote everything.\n";
 	
 	return $start;
 }
@@ -50,17 +50,17 @@ sub do_everything {
 sub step {
 	print time." - starting.\n";
 	do_everything;
-	print "counting top themes...\n";
+	print time." - counting top themes...\n";
 	count_pool_themes;
-	print "...done.\n";
+	print time." - ...done.\n";
 	
 	my $new_day = get_day;
 	if (($last_day eq "") or ($last_day eq $new_day)) {
-		print "no need to archive yet.\n";
+		print time." - no need to archive yet.\n";
 	} else {
-		print "archiving...\n";
+		print time." - archiving...\n";
 		archive_pool;
-		print "done. \n"
+		print time." - done. \n"
 	}
 	print time." - done\n==========\n";
 }
@@ -73,7 +73,7 @@ sub recount {
 	@articles = count_themes(@articles);
 	print "counted all.\n";
 	
-	update_articles(0, @articles);
+	update_pool_articles(0, @articles);
 	print "wrote all counted. end.\n";
 	
 	

@@ -134,11 +134,14 @@ sub count_themes_document {
 					}
 					map ($_->{lemma}=$correct_lemmas_hash{$_}, @last_words_copy);
 				} 
-			} while (shift @last_words_copy);
+				shift @last_words_copy;
+			} while (@last_words_copy);
 			
 			@last_words_copy = @last_words;
 			do {
 				my $joined_lemma = join(" ", map($_->{lemma}, @last_words_copy));
+				use YAML::XS;
+				die (Dump(\@last_words)) if ($joined_lemma eq "") ;
 				my $joined_form = join(" ", map($_->{form}, @last_words_copy)); 
 				
 				
@@ -153,8 +156,8 @@ sub count_themes_document {
 				$scores{$joined_lemma}=0 if (!exists $scores{$joined_lemma});
 			
 				$scores{$joined_lemma}+=2-(1/$length);
-			
-			} while (shift @last_words_copy);
+				shift @last_words_copy;
+			} while (@last_words_copy);
 		}
 	
 	}

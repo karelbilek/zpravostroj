@@ -156,7 +156,7 @@ sub count_pool_themes {
 	my @articles = read_pool_articles;
 			#-------------------------------FUTURE:::::add some buffering so I dont have to read it again
 	my @themes = top_themes(@articles);
-	dump_anything($where, \@articles);
+	dump_anything($where, \@themes);
 }
 
 

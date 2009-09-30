@@ -11,7 +11,7 @@ RSS_sources:
     - http://bleskove.aktualne.centrum.cz/export/rss-bleskove-hp.phtml
 articles_address: /afs/ms/u/b/bilek7am/BIG/skola/rocnik/data/articles
 RSS_address: /afs/ms/u/b/bilek7am/BIG/skola/rocnik/data/RSS
-RSS_kept: 200
+RSS_kept: 1000
 min_word_length: 3
 max_theme_length: 20
 counter_first_named: 30
