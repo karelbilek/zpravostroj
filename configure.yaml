@@ -41,3 +41,4 @@ password_script_dir: /afs/ms/u/b/bilek7am/BIG/skola/rocnik/pass
     #it THIS dir, there is only ONE file with .sh with unknown name
     #and this script returns the password
     #(I shouldn't write this probably)
+log_file: /afs/ms/u/b/bilek7am/BIG/skola/rocnik/data/log

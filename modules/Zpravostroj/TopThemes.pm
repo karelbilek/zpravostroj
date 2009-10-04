@@ -31,10 +31,14 @@ sub stop_size {
 }
 
 sub top_themes{
+	my_log("top_themes - entering.");
+	
 	my @articles = @_;
 	
 	my %stopwords; 
 	@stopwords{get_stopwords(20, 0.85, @articles)}=();
+	
+	my_log("top_themes - stopwords loaded.");
 	
 	# {use YAML::XS;
 	# my @wa = keys %stopwords;
@@ -45,9 +49,12 @@ sub top_themes{
 		#every lemma should have all of those
 		
 	my $i=0;
+	
+	my_log("top_themes - want to read ALL the themes....");
 	foreach my $article (@articles){
 		
-		my @keys = @{$article->{keys}};
+		my @keys;
+		@keys = @{$article->{keys}} if $article->{keys};
 		for my $key (@keys) {
 			
 			my @sub_lemmas = ($key->{lemma}, all_subthemes(" ", $key->{lemma}));
@@ -74,6 +81,7 @@ sub top_themes{
 		
 		++$i;
 	}
+	my_log("top_themes - ....done. Lets remove redundant subthemes...");
 	
 	#remove redundant subthemes
 	
@@ -94,6 +102,7 @@ sub top_themes{
 		} 
 	}
 	
+	my_log("top_themes - ....done.");
 	#so basically, I am done
 	
 	my @results;
@@ -109,7 +118,10 @@ sub top_themes{
 		push (@results, \%result);# if (length $lemma <= 3); #;
 	}
 	
-	splice (@results, 250);
+	
+	splice (@results, 250)if @results>250;
+	
+	my_log("top_themes - exiting");
 	
 	return @results;
 }

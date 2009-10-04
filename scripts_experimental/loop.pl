@@ -11,6 +11,6 @@ my $pass = `$script`;
 while (1) {
 	step;
 	`klog -pa $pass`;	#this is sadly needed :(
-	sleep(18000);
+	sleep(14400);
 }
 

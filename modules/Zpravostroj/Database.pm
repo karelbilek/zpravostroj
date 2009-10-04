@@ -7,7 +7,6 @@ use File::Touch;
 use File::Remove 'rm';
 use File::Slurp;
 use Scalar::Util qw(looks_like_number);
-use DateTime;
 use YAML::XS;# qw(LoadFile DumpFile);
 use File::Copy;
 
@@ -19,7 +18,7 @@ use Zpravostroj::TopThemes;
 
 
 use base 'Exporter';
-our @EXPORT = qw( get_day get_pool_count add_new_articles read_pool_articles update_pool_articles archive_pool unarchive load_anything count_pool_themes);
+our @EXPORT = qw( get_pool_count add_new_articles read_pool_articles update_pool_articles archive_pool unarchive load_anything count_pool_themes);
 
 my $database_dir = read_option("articles_address");
 my $pool_dir = $database_dir."/pool";
@@ -31,14 +30,11 @@ my %all_article_properties;
 my $archive="archive.yaml.bz2";
 my $topthemes = "top_themes.yaml.bz2";
 
-sub get_day {
-
-	return DateTime->today->date
-}
 
 
 
 sub get_pool_count {
+	my_log ("get_pool_count - entering");
 	if (!-e  $count_file) {
 		if (!-d $pool_dir) {
 			if (!-d $database_dir) {
@@ -49,6 +45,7 @@ sub get_pool_count {
 		
 		
 		touch $count_file or die "touching $count_file not succesful.";
+		my_log ("get_pool_count - creating");
 		return 0;
 	} else {
 		
@@ -56,8 +53,10 @@ sub get_pool_count {
 		
 		my $count = read_file($count_file);
 		if (looks_like_number($count)) {
+			my_log ("get_pool_count - returning normal count");
 			return $count;
 		} else {
+			my_log ("get_pool_count - weird zero");
 			return 0;
 		}
 	}
@@ -74,6 +73,7 @@ sub get_pool_filename {
 }
 
 sub add_new_articles {
+	my_log ("add_new_articles - entering");
 	my @articles = @_;
 	my $i = get_pool_count;
 	foreach my $article_ref (@articles) {
@@ -84,6 +84,8 @@ sub add_new_articles {
 		$i++;
 	}
 	set_pool_count($i);
+	my_log ("add_new_articles - done");
+	
 }
 
 sub load_article {
@@ -95,7 +97,7 @@ sub load_article {
 sub load_anything {
 	my $where = shift;
 	
-	(-e $where) or die "OH MY GOD PANIC!! ".$where;
+	return undef if (!-e $where) ;
 	
 	my $z = new IO::Uncompress::Bunzip2($where);
 	
@@ -126,7 +128,7 @@ sub dump_anything {
 	my $z = new IO::Compress::Bzip2($where);	
 #	open my $z, ">".get_filename($i);
 
-	print $z Dump($what);
+	print $z Dump($what) unless (!$what);
 	close $z;
 }
 
@@ -162,6 +164,8 @@ sub count_pool_themes {
 
 
 sub update_pool_articles {
+	my_log ("update_pool_articles - entering");
+	
 	my $begin = shift;
 	$begin=0 if !$begin;
 	my @input = @_;
@@ -180,11 +184,14 @@ sub update_pool_articles {
 			dump_article($i, \%article);
 		}
 	}
+	my_log ("update_pool_articles - escaping");
 }
 
 
 
 sub archive_pool {
+	my_log ("archive_pool - entering");
+	
 	my $day = get_day();
 	my $archive_dir = $database_dir."/".$day;
 	if (!-d $archive_dir) {
@@ -197,6 +204,9 @@ sub archive_pool {
 	
 	dump_anything($big_zip, \@articles);
 	
+	my_log ("archive_pool - everything dumped to big zip, lets extract extra keys...");
+	
+	
 	my $i=0;
 	for my $article(@articles) {
 		my $article_file=$archive_dir."/".$i.".yaml.bz2";
@@ -207,15 +217,16 @@ sub archive_pool {
 		$i++;
 	}
 	
-	
+	my_log ("archive_pool - OK, done, now let's copy the topthemes file...");	
 	copy($pool_dir."/".$topthemes, $archive_dir."/".$topthemes);
 	
-	
-	# LETS DELETE THE DAMNED POOL!!! HA HA HA !!!
+	my_log ("archive_pool - done. Now lets remove the pool...");
 	rm(\1, $pool_dir);
+	my_log ("archive_pool - ...done. Exiting.");
 }
 
 sub unarchive {
+	my_log ("unarchive - this should not get called.... yet.");
 	my $day = shift;
 	
 	my $archive_dir = $database_dir."/".$day;

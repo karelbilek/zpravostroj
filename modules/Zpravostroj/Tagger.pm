@@ -94,10 +94,12 @@ sub doc_to_hash {
 my $save_err;
 
 sub shut_up {
+	my_log("shut_up");
 	open $save_err, ">&STDERR";
 	open STDERR, '>', "/dev/null";
 }
 sub open_up {
+	my_log("open_up");
 	open STDERR, ">&", $save_err;
 }
 
@@ -107,29 +109,38 @@ my $scenario_initialized = 0;
 my $scenario;
  
 sub tag_texts {
- 
 	
+	my @articles = @_;
+ 
+	my_log("tag_texts - entering");
 	unless ($scenario_initialized) {
+		my_log("tag_texts - initializing scenario for the first time");
+		
 		shut_up();
 		$scenario = TectoMT::Scenario->new({'blocks'=> [ qw(SCzechW_to_SCzechM::Sentence_segmentation SCzechW_to_SCzechM::Tokenize  SCzechW_to_SCzechM::TagHajic SCzechM_to_SCzechN::Czech_named_ent_SVM_recognizer) ]});
 		open_up();
+		my_log("tag_texts - done initializing");		
 		$scenario_initialized = 1;
 	}
 	
  
-	my @articles = @_;
+	
 	my %documents_hash;
 	
 	
 	map ($documents_hash{$_}=create_new_document($_->{extracted}), @articles);
 	
+	my_log("tag_texts - lets apply the thing on the document! ha ha!");
 	shut_up();
 	$scenario->apply_on_tmt_documents(@documents_hash{@articles});
 	open_up();
+	my_log("tag_texts - done. hashing back....");
+	
 	
 	map (doc_to_hash($_, $documents_hash{$_}), @articles);
 	
- 	return @articles;
+	my_log("tag_texts - ...done. exiting");
+	return @articles;
 }
  
 1;

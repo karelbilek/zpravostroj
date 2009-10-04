@@ -63,9 +63,7 @@ sub clean_small {
 }
 
 
-
 sub count_themes_document {
-	
 	
 	my %corrected_names;
 	
@@ -84,6 +82,8 @@ sub count_themes_document {
 	my @last_words;
 	
 	my $unused_forms="";
+	
+	my_log ("count_themes_document - some basic assigns, lets go counting!");
 	
 	foreach my $word (@{$article{all_words}}) {
 		
@@ -111,7 +111,7 @@ sub count_themes_document {
 				@last_words_copy = splice(@last_words_copy, -(longest_correction));
 			}
 					
-			do {
+			 while (@last_words_copy) {
 				
 				my $joined_form = join(" ", map($_->{form}, @last_words_copy));
 				
@@ -135,13 +135,12 @@ sub count_themes_document {
 					map ($_->{lemma}=$correct_lemmas_hash{$_}, @last_words_copy);
 				} 
 				shift @last_words_copy;
-			} while (@last_words_copy);
+			}
 			
 			@last_words_copy = @last_words;
-			do {
+			while (@last_words_copy) {
 				my $joined_lemma = join(" ", map($_->{lemma}, @last_words_copy));
-				use YAML::XS;
-				die (Dump(\@last_words)) if ($joined_lemma eq "") ;
+				die (join "PRAZDNE: ", map($_->{lemma}, @last_words)) if ($joined_lemma eq "") ;
 				my $joined_form = join(" ", map($_->{form}, @last_words_copy)); 
 				
 				
@@ -157,10 +156,12 @@ sub count_themes_document {
 			
 				$scores{$joined_lemma}+=2-(1/$length);
 				shift @last_words_copy;
-			} while (@last_words_copy);
+			}
 		}
 	
 	}
+	
+	my_log ("count_themes_document - all counted. Lets correct entites."); 
 	
 	my %named_scores;
 	
@@ -174,6 +175,7 @@ sub count_themes_document {
 		return $what." ";
 	};
 	
+	
 	foreach my $entity (@{$article{all_named}}) {
 		my $right_entity = join ("", (map ($correct_entity->($_) , (split (" ", $entity)))));
 		
@@ -184,7 +186,7 @@ sub count_themes_document {
 			#again, here, it's not so important, it's just a safety-catch
 	}
 	
-	
+	my_log ("count_themes_document - entities corrected. Lets clean hashes.");
 	
 	just_first(\%named_scores, $max_first_named);
 	
@@ -196,6 +198,8 @@ sub count_themes_document {
 	clean_subthemes(\%superhash);
 	
 	my @res;
+	
+	my_log ("count_themes_document - hashes cleaned. Lets count the best ones.");
 	
 	foreach my $lemma (keys %superhash) {
 		my $form;
@@ -212,6 +216,7 @@ sub count_themes_document {
 		push (@res, {lemma=>$lemma, best_form=>$form, all_forms=>\@all_forms, score=>($scores{$lemma}?$scores{$lemma}:"NAMED")});
 	}
 	
+	my_log ("count_themes_document - the best ones cleaned. Lets go home");
 	
 	$article{keys} = \@res;
     return \%article;
@@ -220,7 +225,19 @@ sub count_themes_document {
 
 
 sub count_themes {
-	return map(count_themes_document($_), @_);
+	my @articles = @_;
+	my $i=0;
+	my @results;
+	for my $article (@articles) {
+		my_log ("count_themes - before article $i.");
+		my $result = count_themes_document($article);
+		my_log ("count_themes - after article $i.");
+		push (@results, $result);
+		my_log("count_themes - pushing, lets do one more!");
+		$i++;
+	}
+	my_log("cont_themes - or not. returning home.");
+	return @results;
 }
 
 1;

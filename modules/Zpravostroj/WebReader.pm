@@ -10,6 +10,7 @@ use LWP::UserAgent;
 use base 'Exporter';
 our @EXPORT =qw(read_from_web read_from_webs);
 
+use Zpravostroj::Other;
 
 my $ua = LWP::UserAgent->new;
 
@@ -35,7 +36,10 @@ sub read_from_web {
 }
 
 sub read_from_webs {
+	my_log("read_from_webs - entering...");
 	
-	return map ({my %article=%$_; $article{html}=read_from_web($article{url}); \%article} @_);
+	my @result = map ({my %article=%$_; $article{html}=read_from_web($article{url}); \%article} @_);
 	
+	my_log("read_from_webs - ...done. exiting.");
+	return @result;
 }

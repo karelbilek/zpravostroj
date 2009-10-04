@@ -20,61 +20,59 @@ sub do_everything {
 	my $start = get_pool_count;
 	
 	my @articles = get_all_links;
-	print time." - got all URLs.\n";
+	my_log("do_everything - got all URLs");
 	if (!scalar @articles) {
-		print time." - nothing to add.\n";
+		my_log("do_everything - nothing to add");
 		return $start;
 	}
 	
 	add_new_articles(@articles);	
-	print time." - wrote all URLs.\n";
+	my_log("do_everything - wrote all URLs");
 	
 	@articles = read_from_webs(@articles);
-	print time." - downloaded all webs.\n";
+	my_log("do_everything - downloaded all webs.");
 	
 	@articles = extract_texts(@articles);
-	print time." - extracted all. goodbye for a while...\n";
+	my_log("do_everything - extracted all. takes a while...");
 	
 	@articles = tag_texts(@articles);
-	print time." - ...hello again. tagged all (wow).\n";
+	my_log("do_everything - hello again. tagged all");
 		
 	@articles = count_themes(@articles);
-	print time." - counted all.\n";
+	my_log("do_everything - counted all");
 	
 	update_pool_articles($start, @articles);
-	print time." - wrote everything.\n";
+	my_log("do_everything - wrote everything.");
 	
 	return $start;
 }
 
 sub step {
-	print time." - starting.\n";
+	my_log("step - starting");
 	do_everything;
-	print time." - counting top themes...\n";
+	my_log("step - counting top themes...");
 	count_pool_themes;
-	print time." - ...done.\n";
+	my_log("step - ...done");
 	
 	my $new_day = get_day;
 	if (($last_day eq "") or ($last_day eq $new_day)) {
-		print time." - no need to archive yet.\n";
+		my_log("step - no need to archive yet.");
 	} else {
-		print time." - archiving...\n";
+		my_log("step - archiving...");
 		archive_pool;
-		print time." - done. \n"
+		my_log("step - archiving done.");
 	}
-	print time." - done\n==========\n";
+	$last_day = $new_day;
+	my_log("step - done. going to sleep.");
 }
 
 
 sub recount {
 	my @articles = read_pool_articles;
-	print "read all.\n";
 	
 	@articles = count_themes(@articles);
-	print "counted all.\n";
 	
 	update_pool_articles(0, @articles);
-	print "wrote all counted. end.\n";
 	
 	
 }

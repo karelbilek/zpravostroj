@@ -7,9 +7,11 @@ use warnings;
 
 use File::Spec;
 use utf8;
+use DateTime;
+
 
 use base 'Exporter';
-our @EXPORT = qw(split_size all_subthemes is_word is_banned make_normal_word load_yaml_file read_option most_frequent read_information get_correction longest_correction);
+our @EXPORT = qw(get_day my_log split_size all_subthemes is_word is_banned make_normal_word load_yaml_file read_option most_frequent read_information get_correction longest_correction);
 
 
 
@@ -25,11 +27,26 @@ my $czechs="ÁČĎĚÉÍŇÓŘŠŤÚŮÝŽáčďěéíňóřšťúůýž";
 	
 my $longest_correction=0;
 my %corrections;
+my $log_file = read_option("log_file");
 	#!!!!!!!!!!!! ------ GLOBALS ------ !!!!!!!!!!!!
 
 
+sub get_day {
 
+	return DateTime->today->dmy;
+}
 
+sub get_time {
+	my $now = DateTime->now;
+	return (($now->hms()).($now->millisecond()));
+}
+
+sub my_log {
+	my $what = shift;
+	open (my $fh, ">>", $log_file);
+	print {$fh} get_day(),":", get_time()," - ", $what,"\n";
+	close $fh;
+}
 
 
 #workaround for weird split behaviour in scalar context - they say its not a bug, i think it is

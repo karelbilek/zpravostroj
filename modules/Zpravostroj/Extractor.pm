@@ -106,11 +106,16 @@ sub extract_text {
     my $dom_tree = new HTML::DOM;
     $dom_tree->write($text);
 	$dom_tree->close();
+	my_log("extract_text - created DOM");
     
 	my $extracted = check_unknown($dom_tree);
+	
+	my_log("extract_text - basically extracted");
 	my @sentences = split(" *[\.\"\'] *", $extracted);
 	my %written;
 	my $result="";
+	
+	my_log("extract_text - going to check repeated sentences...");
 	for my $sentence (@sentences) {
 		unless (exists $written{$sentence}) {
 			$result.=$sentence.". ";
@@ -120,9 +125,22 @@ sub extract_text {
 	
 	$article{extracted} = $result;
 	$article{title} = $dom_tree->getElementsByTagName('title')->[0]->text();
+	
+	my_log("extract_text - exiting");
     return \%article;
 }
 
 sub extract_texts {   
-   return (map (extract_text($_), @_));
+	my @texts = @_;
+	my @results;
+	my $i=0;
+	for my $text (@texts) {
+		my_log("extract_texts - before $i");
+		my $result = extract_text($text);
+		my_log("extract_texts - after $i");
+		push(@results, $result);
+		$i++;
+	}
+	my_log("extract_texts - exiting");
+	return @results;
 }
