@@ -9,7 +9,7 @@ use File::Slurp;
 use Scalar::Util qw(looks_like_number);
 use YAML::XS;# qw(LoadFile DumpFile);
 use File::Copy;
-
+use File::Touch;
 use IO::Uncompress::Bunzip2;
 use IO::Compress::Bzip2;
 
@@ -97,18 +97,29 @@ sub load_article {
 sub load_anything {
 	my $where = shift;
 	
-	return undef if (!-e $where) ;
+	if (!-e $where) {
+		my_log("load_anything - WARNING WARNING - $where does not exist!!");
+		return "";
+	}
 	
 	my $z = new IO::Uncompress::Bunzip2($where);
 	
+	if (!$z) {
+		my_log("load_anything - WARNING WARNING - $where cannot be read for weird reason...");
+		return "";
+	}
+	
 	my $all = do {local ($/); <$z>};
 	close $z;
-	# my $all="";
-	# while (<$z>) {
-	# 	$all .= $_;
-	# }
-	# close $z;
-	return Load($all);
+	
+	my $result;
+	eval {$result = Load($all)};
+	if ($@) {
+		my_log("load_anything - WARNING WARNING - some weird error given when loading $where - ".$@." :-(");
+		return "";
+	}
+	
+	return $result;
 
 }
 
@@ -125,10 +136,24 @@ sub dump_anything {
 	my $what = shift;
 
 	
-	my $z = new IO::Compress::Bzip2($where);	
-#	open my $z, ">".get_filename($i);
+	my $z = new IO::Compress::Bzip2($where);
+	if (!$z) {
+		my_log("dump_anything - WARNING WARNING - cannot create file ".$where);
+		return;
+	}	
+	
+	if (!$what) {
+		my_log ("dump_anything - WARNING WARNING - \$what is empty :-(");
+		return;
+	}
 
-	print $z Dump($what) unless (!$what);
+	my $dumped;
+	eval {$dumped = Dump($what)};
+	if ($@) {
+		my_log("dump_anything - WARNING WARNING - cannot dump when trying to write to ".$where."- ".$@." :-(");
+	}
+	
+	print $z $dumped unless (!$what);
 	close $z;
 }
 

@@ -57,9 +57,19 @@ sub load_yaml_file {
 	my $name = shift;
 	
 	my ($volume, $directory) = File::Spec->splitpath( $INC{'Zpravostroj/Other.pm'} );
-	my $config_file = File::Spec->catpath( $volume, $directory, '../../'.$name );
+	my $whole_name = File::Spec->catpath( $volume, $directory, '../../'.$name );
+	
+	if (!-e $whole_name) {
+		my_log("load_yaml_file - WARNING WARNING - file ".$whole_name." does not exists!");
+		return "";
+	}
 
-	my $ref = LoadFile($config_file) or die "file $name does not exist.";
+	my $ref="";
+	
+	eval{$ref = LoadFile($whole_name)};
+	if ($@) {
+		my_log("load_yaml_file - WARNING WARNING - some strange error when reading ". $whole_name." - ".$@." :-(");
+	}
 	return $ref;
 }
 
@@ -135,11 +145,14 @@ sub make_normal_word {
 sub get_correction {
 	my $what=shift;
 	if (!$longest_correction) {
-		my %read_corrections = %{read_information("corrections")};
+		my %read_corrections;
+		if (my $correction_ref = read_information("corrections")) {
+			%read_corrections = %{read_information("corrections")};
+		}
 
 		foreach my $correct_lemma (keys %read_corrections) {
 			my $length = split_size($correct_lemma);
-			$length = $longest_correction if ($length > $longest_correction);
+			$longest_correction = $length if ($length > $longest_correction);
 
 			foreach my $correct_form (@{$read_corrections{$correct_lemma}}) {
 				$corrections{$correct_form} = $correct_lemma;

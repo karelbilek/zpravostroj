@@ -124,7 +124,8 @@ sub extract_text {
 	}
 	
 	$article{extracted} = $result;
-	$article{title} = $dom_tree->getElementsByTagName('title')->[0]->text();
+	$article{title} = "";
+	eval{$article{title} = $dom_tree->getElementsByTagName('title')->[0]->text()};
 	
 	my_log("extract_text - exiting");
     return \%article;
