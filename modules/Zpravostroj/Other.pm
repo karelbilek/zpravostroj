@@ -8,10 +8,11 @@ use warnings;
 use File::Spec;
 use utf8;
 use DateTime;
+use Text::Unaccent;
 
 
 use base 'Exporter';
-our @EXPORT = qw(get_day my_log split_size all_subthemes is_word is_banned make_normal_word load_yaml_file read_option most_frequent read_information get_correction longest_correction);
+our @EXPORT = qw(get_day my_log my_warning split_size all_subthemes is_word is_banned make_normal_word load_yaml_file read_option most_frequent read_information get_correction longest_correction);
 
 
 
@@ -28,6 +29,7 @@ my $czechs="ÁČĎĚÉÍŇÓŘŠŤÚŮÝŽáčďěéíňóřšťúůýž";
 my $longest_correction=0;
 my %corrections;
 my $log_file = read_option("log_file");
+my $warning_file = read_option("warning_file");
 	#!!!!!!!!!!!! ------ GLOBALS ------ !!!!!!!!!!!!
 
 
@@ -40,6 +42,14 @@ sub get_time {
 	my $now = DateTime->now;
 	return (($now->hms()).($now->millisecond()));
 }
+
+sub my_warning {
+	my $what = shift;
+	open (my $fh, ">>", $warning_file);
+	print {$fh} get_day(),":", get_time()," - ", $what,"\n";
+	close $fh;
+}
+
 
 sub my_log {
 	my $what = shift;
@@ -60,7 +70,7 @@ sub load_yaml_file {
 	my $whole_name = File::Spec->catpath( $volume, $directory, '../../'.$name );
 	
 	if (!-e $whole_name) {
-		my_log("load_yaml_file - WARNING WARNING - file ".$whole_name." does not exists!");
+		my_warning("load_yaml_file - file ".$whole_name." does not exists!");
 		return "";
 	}
 
@@ -68,7 +78,7 @@ sub load_yaml_file {
 	
 	eval{$ref = LoadFile($whole_name)};
 	if ($@) {
-		my_log("load_yaml_file - WARNING WARNING - some strange error when reading ". $whole_name." - ".$@." :-(");
+		my_warning("load_yaml_file - some strange error when reading ". $whole_name." - ".$@." :-(");
 	}
 	return $ref;
 }
@@ -135,8 +145,11 @@ sub make_normal_word {
     $text =~ s/^([A-Za-z0-9$czechs ]*).*$/$1/;
         #remove all weird letters
     
+	$key = unac_string('UTF-8', lc $key);
+	
     $text =~ s/ +$//;
         #remove final space(s)
+	$text = unac_string('UTF-8', lc $text);
 	
     return $text;
 }

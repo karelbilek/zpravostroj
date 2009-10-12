@@ -19,33 +19,39 @@ our @EXPORT = qw(get_stopwords);
 
 sub get_stopwords {
 	my_log("get_stopwords - entering");
-	my $granularity = shift;
-	my $tolerance = shift;
-	my @articles = @_;
-	my $size = @articles;
+	my @everything;
+	eval {
+		my $granularity = shift;
+		my $tolerance = shift;
+		my @articles = @_;
+		my $size = @articles;
 
-	# my $granularity=10;
-	# my $tolerance = 0.75;
+		# my $granularity=10;
+		# my $tolerance = 0.75;
 	
-	my %words_count;
+		my %words_count;
 	
-	my_log("get_stopwords - lets do it for each one...");
-	while (@articles) {
-		my @part = splice (@articles, 0, $granularity);
-		my @all_words = map (map ($_->{lemma} , @{$_->{all_words}}), @part);
+		my_log("get_stopwords - lets do it for each one...");
+		while (@articles) {
+			my @part = splice (@articles, 0, $granularity);
+			my @all_words = map (map ($_->{lemma} , @{$_->{all_words}}), @part);
 		
-		my %existence;
-		@existence{@all_words} = ();
+			my %existence;
+			@existence{@all_words} = ();
 		
-		map($words_count{$_}++, keys %existence);
+			map($words_count{$_}++, keys %existence);
+		}
+	
+		my_log("get_stopwords - done. Let's count stopwords...");
+	
+		@everything = grep ($words_count{$_}>=($tolerance*$size/($granularity)), keys %words_count);
+		@everything = grep (!is_banned($_), @everything);
+	
+		my_log("get_stopwords - ...done. exiting.");
+	};
+	if ($@) {
+		my_warning("get_stopwords - cannot get stopwords - weird error $@.");
 	}
-	
-	my_log("get_stopwords - done. Let's count stopwords...");
-	
-	my @everything = grep ($words_count{$_}>=($tolerance*$size/($granularity)), keys %words_count);
-	@everything = grep (!is_banned($_), @everything);
-	
-	my_log("get_stopwords - ...done. exiting.");
 	
 	return @everything;
 }

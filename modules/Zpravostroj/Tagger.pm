@@ -32,21 +32,26 @@ sub create_new_document{
 sub save_words {
 	my $words_ref = shift;	
 	my $node = shift;
- 
-	if (my $lemma = ($node->get_attr('lemma'))) {
-		if (my $lemma_better = (make_normal_word($lemma))) {
+ 	
+	eval {
+		if (my $lemma = ($node->get_attr('lemma'))) {
+			if (my $lemma_better = (make_normal_word($lemma))) {
 			
-			my $form = $node->get_attr('form');
-			push (@{$words_ref},{lemma=>$lemma_better, form=>$form});
+				my $form = $node->get_attr('form');
+				push (@{$words_ref},{lemma=>$lemma_better, form=>$form});
 			
-				#THE LEMMA DOESN'T HAVE TO BE 100% CORRECT!
-				#why? because Tagger doesn't read corrections.yaml
-				#because corrections can change, but I want to run this module as little as possible
+					#THE LEMMA DOESN'T HAVE TO BE 100% CORRECT!
+					#why? because Tagger doesn't read corrections.yaml
+					#because corrections can change, but I want to run this module as little as possible
 			
+			}
 		}
-	}
-	foreach my $child ($node->get_children) {
-		save_words($words_ref, $child);
+		foreach my $child ($node->get_children) {
+			save_words($words_ref, $child);
+		}
+	};
+	if ($@) {
+		my_warning("save_words - unidentified error - $@");
 	}
 }
 
@@ -54,17 +59,22 @@ sub save_words {
 sub save_named {
 	my $named_ref = shift;
 	my $node = shift;
- 
-	if ($node->get_deref_attr('m.rf')) {
-		#it is a named entity.
-		my $type;
-		if (($type=($node->get_attr('ne_type'))) and (length(my $name = $node->get_attr('normalized_name'))>=read_option("min_word_length")) and ($type =~ "/^".join("|", @wanted_named)."/")) {
-			$named_ref->{$name} = 1;
+	
+	eval {
+		if ($node->get_deref_attr('m.rf')) {
+			#it is a named entity.
+			my $type;
+			if (($type=($node->get_attr('ne_type'))) and (length(my $name = $node->get_attr('normalized_name'))>=read_option("min_word_length")) and ($type =~ "/^".join("|", @wanted_named)."/")) {
+				$named_ref->{$name} = 1;
+			}
 		}
-	}
  
-	foreach my $child ($node->get_children) {
-		save_named( $named_ref, $child);
+		foreach my $child ($node->get_children) {
+			save_named( $named_ref, $child);
+		}
+	};
+	if ($@) {
+		my_warning("save_named - unidentified error - $@");
 	}
 }
  
@@ -77,11 +87,13 @@ sub doc_to_hash {
 	my %named;
 	
 	foreach my $bundle ( $document->get_bundles() ) {
-		save_words(\@words, $bundle->get_tree('SCzechM'));
+		eval {save_words(\@words, $bundle->get_tree('SCzechM'))};
+		if ($@) {my_warning("doc_to_hash - cannot get SCzechM tree - $@")};
 	}
 	
 	foreach my $bundle ( $document->get_bundles() ) {
-		save_named( \%named, $bundle->get_tree('SCzechN'));
+		eval {save_named( \%named, $bundle->get_tree('SCzechN'))};
+		if ($@) {my_warning("doc_to_hash - cannot get SCzechN tree - $@")};
 	}
 	
 	
@@ -117,9 +129,17 @@ sub tag_texts {
 		my_log("tag_texts - initializing scenario for the first time");
 		
 		shut_up();
-		$scenario = TectoMT::Scenario->new({'blocks'=> [ qw(SCzechW_to_SCzechM::Sentence_segmentation SCzechW_to_SCzechM::Tokenize  SCzechW_to_SCzechM::TagHajic SCzechM_to_SCzechN::Czech_named_ent_SVM_recognizer) ]});
+		
+		my $err;
+		do {
+			eval {$scenario = TectoMT::Scenario->new({'blocks'=> [ qw(SCzechW_to_SCzechM::Sentence_segmentation SCzechW_to_SCzechM::Tokenize  SCzechW_to_SCzechM::TagHajic SCzechM_to_SCzechN::Czech_named_ent_SVM_recognizer) ]})};
+					#redirecting STDERR doesn'  stop eval from working
+			$err=$@;
+		} while ($err); 
+					#I simply HAVE to have scenario for future work. If it causes infinite loop, so be it, I just NEED the scenario
+		
 		open_up();
-		my_log("tag_texts - done initializing");		
+		my_log("tag_texts - done initializing");
 		$scenario_initialized = 1;
 	}
 	
@@ -132,7 +152,16 @@ sub tag_texts {
 	
 	my_log("tag_texts - lets apply the thing on the document! ha ha!");
 	shut_up();
-	$scenario->apply_on_tmt_documents(@documents_hash{@articles});
+	
+	eval {$scenario->apply_on_tmt_documents(@documents_hash{@articles})};
+	if ($@) {
+		my_warning("tag_texts - error while applying to tmt documents - $@; trying for 2nd time");
+		eval {$scenario->apply_on_tmt_documents(@documents_hash{@articles})};
+		if ($@) {
+			my_warning("tag_texts - giving up.");
+		}
+	};
+	
 	open_up();
 	my_log("tag_texts - done. hashing back....");
 	

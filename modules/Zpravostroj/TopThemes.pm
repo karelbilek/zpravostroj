@@ -16,7 +16,7 @@ sub theme_rate{
 	my $appearances_ref=shift;
 	my $stopwords = shift;
 	
-	my $count = scalar @{$appearances_ref->{$theme}};
+	my $count = scalar keys %{$appearances_ref->{$theme}};
 
 	my $size = stop_size($stopwords, $theme);
 	
@@ -60,7 +60,7 @@ sub top_themes{
 			my @sub_lemmas = ($key->{lemma}, all_subthemes(" ", $key->{lemma}));
 			
 			for my $sub_lemma (@sub_lemmas) {
-				push(@{$appearances{$sub_lemma}}, $i);
+				$appearances{$sub_lemma}->{$i}=undef;
 			}
 	
 			
@@ -90,18 +90,18 @@ sub top_themes{
 		#I can delete the appearance so I have to test again
 		if (exists $appearances{$lemma}) {
 			
-			my @lemma_appearances = @{$appearances{$lemma}};
+			my %lemma_appearances = %{$appearances{$lemma}};
 			for my $sub_lemma (all_subthemes(" ",$lemma)) {
 				
-				my @sub_lemma_appearances = @{$appearances{$sub_lemma}};
-				if (eq_deeply(\@lemma_appearances, \@sub_lemma_appearances)) {
+				my %sub_lemma_appearances = %{$appearances{$sub_lemma}};
+				if (eq_deeply(\%lemma_appearances, \%sub_lemma_appearances)) {
 					delete $appearances{$sub_lemma};
 					delete $all_forms{$sub_lemma};
 				} 
 			}
 		} 
 	}
-	
+		
 	my_log("top_themes - ....done.");
 	#so basically, I am done
 	
@@ -110,7 +110,8 @@ sub top_themes{
 		my %result;
 		$result{lemma} = $lemma;
 		# $result{score} = theme_rate($lemma, \%appearances);
-		$result{articles} = $appearances{$lemma};
+		my @res_appearances = keys %{$appearances{$lemma}};
+		$result{articles} = \@res_appearances;
 		# $result{articles_count} = scalar (@{$appearances{$lemma}});
 		# $result{stop_size} = stop_size(\%stopwords, $lemma);
 		$result{best_form} = most_frequent(@{$all_forms{$lemma}});

@@ -83,7 +83,13 @@ sub get_new_links{
 sub get_all_links {
 	my_log("get_all_links - entering");
 	my @RSS_sources = @{read_option("RSS_sources")};
-	my @result = map(get_new_links($_), @RSS_sources); #,limit=>5)
+	my @result;
+	for my $source (@RSS_sources) {
+		eval {push (@result, get_new_links($source))};
+		if ($@) {
+			my_warning("get_all_links - error downloading $source - $@");
+		}
+	}
 	my_log("get_all_links - exiting");
 	return @result;
 }

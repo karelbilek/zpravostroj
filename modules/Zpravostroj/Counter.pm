@@ -70,155 +70,163 @@ sub count_themes_document {
 	my $article_ref = shift;
 	my %article = %$article_ref;
 
+	eval {
 	
-	
-	my %scores;
-		#hashes with scores of entites
-		#lemma=>score	
+		my %scores;
+			#hashes with scores of entites
+			#lemma=>score	
 			
-	my %joined_forms;
-		#hash, used to retrieve form from lemma	
+		my %joined_forms;
+			#hash, used to retrieve form from lemma	
 			
-	my @last_words;
+		my @last_words;
 	
-	my $unused_forms="";
+		my $unused_forms="";
 	
-	my_log ("count_themes_document - some basic assigns, lets go counting!");
-	
-	foreach my $word (@{$article{all_words}}) {
+		my_log ("count_themes_document - some basic assigns, lets go counting!");
+		if ((!exists $article{all_words}) and (!exists $article{all_named})) {
+			my_warning("count_themes_document - article does not contain all_words or all_named attribute!");
+			return \%article;
+		}
 		
-		if (is_banned($word->{lemma})) {
-			$unused_forms=$unused_forms.($word->{form})."_";
-		} else {
+		foreach my $word (@{$article{all_words}}) {
+		
+			if (is_banned($word->{lemma})) {
+				$unused_forms=$unused_forms.($word->{form})."_";
+			} else {
 			
-			my %word_copy = %$word;
+				my %word_copy = %$word;
 			
-			$word_copy{form}=$unused_forms.$word_copy{form};
-						#I will probably no longer need $word but who knows
+				$word_copy{form}=$unused_forms.$word_copy{form};
+							#I will probably no longer need $word but who knows
 						
-			$unused_forms="";
+				$unused_forms="";
 			
-			push(@last_words, \%word_copy);
+				push(@last_words, \%word_copy);
 			
-			if (@last_words > $max_length) {
-				shift @last_words;
+				if (@last_words > $max_length) {
+					shift @last_words;
+				}
+			
+				my @last_words_copy = @last_words;
+						#corrections are, sadly, not 1-word-only
+					
+				if (scalar @last_words_copy > longest_correction) {
+					@last_words_copy = splice(@last_words_copy, -(longest_correction));
+				}
+					
+				 while (@last_words_copy) {
+				
+					my $joined_form = join(" ", map($_->{form}, @last_words_copy));
+				
+					if (get_correction($joined_form)) {
+					
+				
+							# print "correcting $joined_form from ".join(" ", map($_->{lemma}, @last_words_copy))." to $corrections{$joined_form}\n";
+					
+					
+						my %correct_lemmas_hash;
+						my @correct_lemmas = split (" ", get_correction($joined_form));
+						@correct_lemmas_hash{@last_words_copy} = @correct_lemmas;
+							#the keys are references 
+							#this would be possible without this hash too probably
+					
+						foreach (@last_words_copy) {
+							$corrected_names{$_->{lemma}}=$correct_lemmas_hash{$_};
+							# print "corrected names ".($_->{lemma})."=".($correct_lemmas_hash{$_})."\n";
+							$_->{lemma}=$correct_lemmas_hash{$_};
+						}
+						map ($_->{lemma}=$correct_lemmas_hash{$_}, @last_words_copy);
+					} 
+					shift @last_words_copy;
+				}
+			
+				@last_words_copy = @last_words;
+				while (@last_words_copy) {
+					my $joined_lemma = join(" ", map($_->{lemma}, @last_words_copy));
+					die (join "PRAZDNE: ", map($_->{lemma}, @last_words)) if ($joined_lemma eq "") ;
+					my $joined_form = join(" ", map($_->{form}, @last_words_copy)); 
+				
+				
+					push (@{$joined_forms{$joined_lemma}}, $joined_form);
+						#example: joined_forms{"Petr Kalousek"} = ["Petra Kalouska", "Petra Kalouska", "s_Petrem Kalouskem"]
+			
+					my $length = split_size($joined_form);
+													#why this and NOT just scalar (@last wors)?
+													#because there can be "_" in $joined_form
+					$length = 1 unless $length;
+			
+					$scores{$joined_lemma}=0 if (!exists $scores{$joined_lemma});
+			
+					$scores{$joined_lemma}+=2-(1/$length);
+					shift @last_words_copy;
+				}
 			}
-			
-			my @last_words_copy = @last_words;
-					#corrections are, sadly, not 1-word-only
-					
-			if (scalar @last_words_copy > longest_correction) {
-				@last_words_copy = splice(@last_words_copy, -(longest_correction));
-			}
-					
-			 while (@last_words_copy) {
-				
-				my $joined_form = join(" ", map($_->{form}, @last_words_copy));
-				
-				if (get_correction($joined_form)) {
-					
-				
-						# print "correcting $joined_form from ".join(" ", map($_->{lemma}, @last_words_copy))." to $corrections{$joined_form}\n";
-					
-					
-					my %correct_lemmas_hash;
-					my @correct_lemmas = split (" ", get_correction($joined_form));
-					@correct_lemmas_hash{@last_words_copy} = @correct_lemmas;
-						#the keys are references 
-						#this would be possible without this hash too probably
-					
-					foreach (@last_words_copy) {
-						$corrected_names{$_->{lemma}}=$correct_lemmas_hash{$_};
-						# print "corrected names ".($_->{lemma})."=".($correct_lemmas_hash{$_})."\n";
-						$_->{lemma}=$correct_lemmas_hash{$_};
-					}
-					map ($_->{lemma}=$correct_lemmas_hash{$_}, @last_words_copy);
-				} 
-				shift @last_words_copy;
-			}
-			
-			@last_words_copy = @last_words;
-			while (@last_words_copy) {
-				my $joined_lemma = join(" ", map($_->{lemma}, @last_words_copy));
-				die (join "PRAZDNE: ", map($_->{lemma}, @last_words)) if ($joined_lemma eq "") ;
-				my $joined_form = join(" ", map($_->{form}, @last_words_copy)); 
-				
-				
-				push (@{$joined_forms{$joined_lemma}}, $joined_form);
-					#example: joined_forms{"Petr Kalousek"} = ["Petra Kalouska", "Petra Kalouska", "s_Petrem Kalouskem"]
-			
-				my $length = split_size($joined_form);
-												#why this and NOT just scalar (@last wors)?
-												#because there can be "_" in $joined_form
-				$length = 1 unless $length;
-			
-				$scores{$joined_lemma}=0 if (!exists $scores{$joined_lemma});
-			
-				$scores{$joined_lemma}+=2-(1/$length);
-				shift @last_words_copy;
-			}
+	
 		}
 	
-	}
+		my_log ("count_themes_document - all counted. Lets correct entites."); 
 	
-	my_log ("count_themes_document - all counted. Lets correct entites."); 
+		my %named_scores;
 	
-	my %named_scores;
-	
-	my $correct_entity = sub {
-		my $what = shift;
-		$what =~ s/^\W*(\w*)\W*$/$1/;
+		my $correct_entity = sub {
+			my $what = shift;
+			$what =~ s/^\W*(\w*)\W*$/$1/;
 		
-		return "" if ($what eq "");
-		return "" if is_banned($what);
-		return $corrected_names{$what}." " if ($corrected_names{$what});
-		return $what." ";
-	};
+			return "" if ($what eq "");
+			return "" if is_banned($what);
+			
+			return join ("_", map((($corrected_names{$_})?($corrected_names{$_}):($_)),(split("_",$what))))." ";
+		};
 	
 	
-	foreach my $entity (@{$article{all_named}}) {
-		my $right_entity = join ("", (map ($correct_entity->($_) , (split (" ", $entity)))));
+		foreach my $entity (@{$article{all_named}}) {
+			my $right_entity = join ("", (map ($correct_entity->($_) , (split (" ", $entity)))));
 		
-		$right_entity =~ s/ +$//; #trailing space
+			$right_entity =~ s/ +$//; #trailing space
 		
-		$named_scores{$right_entity} = 0 if (!exists $scores{$right_entity});
-		$named_scores{$right_entity}+=split_size($right_entity);
-			#again, here, it's not so important, it's just a safety-catch
-	}
+			$named_scores{$right_entity} = 0 if (!exists $scores{$right_entity});
+			$named_scores{$right_entity}+=split_size($right_entity);
+				#again, here, it's not so important, it's just a safety-catch
+		}
 	
-	my_log ("count_themes_document - entities corrected. Lets clean hashes.");
+		my_log ("count_themes_document - entities corrected. Lets clean hashes.");
 	
-	just_first(\%named_scores, $max_first_named);
+		just_first(\%named_scores, $max_first_named);
 	
-	just_first(\%scores, $max_first_themes);
-	clean_small(\%scores);
+		just_first(\%scores, $max_first_themes);
+		clean_small(\%scores);
     
 
-	my %superhash = (%scores, %named_scores);
-	clean_subthemes(\%superhash);
+		my %superhash = (%scores, %named_scores);
+		clean_subthemes(\%superhash);
 	
-	my @res;
+		my @res;
 	
-	my_log ("count_themes_document - hashes cleaned. Lets count the best ones.");
+		my_log ("count_themes_document - hashes cleaned. Lets count the best ones.");
 	
-	foreach my $lemma (keys %superhash) {
-		my $form;
-		my @all_forms;
-		if (my $all_forms_ref = $joined_forms{$lemma}) {
+		foreach my $lemma (keys %superhash) {
+			my $form;
+			my @all_forms;
+			if (my $all_forms_ref = $joined_forms{$lemma}) {
 			
-			@all_forms = @$all_forms_ref;
+				@all_forms = @$all_forms_ref;
 			
-			$form = most_frequent(@all_forms);
-		} else {
-			$form = $lemma;
-			@all_forms = ($form);
+				$form = most_frequent(@all_forms);
+			} else {
+				$form = $lemma;
+				@all_forms = ($form);
+			}
+			push (@res, {lemma=>$lemma, best_form=>$form, all_forms=>\@all_forms, score=>($scores{$lemma}?$scores{$lemma}:"NAMED")});
 		}
-		push (@res, {lemma=>$lemma, best_form=>$form, all_forms=>\@all_forms, score=>($scores{$lemma}?$scores{$lemma}:"NAMED")});
+	
+		my_log ("count_themes_document - the best ones cleaned. Lets go home");
+	
+		$article{keys} = \@res;
+	};
+	if ($@) {
+		my_warning("count_themes_document - weird error $@.");
 	}
-	
-	my_log ("count_themes_document - the best ones cleaned. Lets go home");
-	
-	$article{keys} = \@res;
     return \%article;
 }
 
@@ -229,11 +237,15 @@ sub count_themes {
 	my $i=0;
 	my @results;
 	for my $article (@articles) {
+		my $result={};
 		my_log ("count_themes - before article $i.");
-		my $result = count_themes_document($article);
+		
+		eval {$result = count_themes_document($article)};
+		
+		if ($@) {my_warning("count_themes - error when counting - $@");};
+		
 		my_log ("count_themes - after article $i.");
 		push (@results, $result);
-		my_log("count_themes - pushing, lets do one more!");
 		$i++;
 	}
 	my_log("cont_themes - or not. returning home.");

@@ -100,6 +100,12 @@ sub extract_text {
 	my $article_ref = shift;
 	my %article = %$article_ref;
 	
+	
+	if (!exists $article{html}) {
+		my_warning("extract_text - article does not have html atribute!");
+		return \%article;
+	}
+	
     my $text = $article{html};
 	
 	
@@ -126,18 +132,25 @@ sub extract_text {
 	$article{extracted} = $result;
 	$article{title} = "";
 	eval{$article{title} = $dom_tree->getElementsByTagName('title')->[0]->text()};
-	
+		#sometimes, article does not have title. it happens.
+		
 	my_log("extract_text - exiting");
     return \%article;
 }
 
 sub extract_texts {   
-	my @texts = @_;
+	my @articles = @_;
 	my @results;
 	my $i=0;
-	for my $text (@texts) {
+	
+	for my $article (@articles) {
 		my_log("extract_texts - before $i");
-		my $result = extract_text($text);
+		my $result={};
+	
+		eval{$result = extract_text($article)};
+		
+		if ($@) {my_warning("extract_texts - weird error $@")};
+		
 		my_log("extract_texts - after $i");
 		push(@results, $result);
 		$i++;
