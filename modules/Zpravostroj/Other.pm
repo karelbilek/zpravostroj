@@ -144,9 +144,7 @@ sub make_normal_word {
     
     $text =~ s/^([A-Za-z0-9$czechs ]*).*$/$1/;
         #remove all weird letters
-    
-	$key = unac_string('UTF-8', lc $key);
-	
+    	
     $text =~ s/ +$//;
         #remove final space(s)
 	$text = unac_string('UTF-8', lc $text);
