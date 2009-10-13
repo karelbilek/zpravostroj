@@ -8,7 +8,7 @@ use warnings;
 use File::Spec;
 use utf8;
 use DateTime;
-use Text::Unaccent;
+#use Text::Unaccent;
 
 
 use base 'Exporter';
@@ -147,7 +147,8 @@ sub make_normal_word {
     	
     $text =~ s/ +$//;
         #remove final space(s)
-	$text = unac_string('UTF-8', lc $text);
+	#$text = unac_string('UTF-8', lc $text);
+	$text= lc $text;
 	
     return $text;
 }

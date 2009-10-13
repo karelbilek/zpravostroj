@@ -60,7 +60,7 @@ sub top_themes{
 			my @sub_lemmas = ($key->{lemma}, all_subthemes(" ", $key->{lemma}));
 			
 			for my $sub_lemma (@sub_lemmas) {
-				$appearances{$sub_lemma}->{$i}=undef;
+				$appearances{$sub_lemma}->{$i}=1;
 			}
 	
 			
@@ -92,12 +92,13 @@ sub top_themes{
 			
 			my %lemma_appearances = %{$appearances{$lemma}};
 			for my $sub_lemma (all_subthemes(" ",$lemma)) {
-				
-				my %sub_lemma_appearances = %{$appearances{$sub_lemma}};
-				if (eq_deeply(\%lemma_appearances, \%sub_lemma_appearances)) {
-					delete $appearances{$sub_lemma};
-					delete $all_forms{$sub_lemma};
-				} 
+				if (exists $appearances{$sub_lemma}) {
+					my %sub_lemma_appearances = %{$appearances{$sub_lemma}};
+					if (eq_deeply(\%lemma_appearances, \%sub_lemma_appearances)) {
+						delete $appearances{$sub_lemma};
+						delete $all_forms{$sub_lemma};
+					} 
+				}
 			}
 		} 
 	}

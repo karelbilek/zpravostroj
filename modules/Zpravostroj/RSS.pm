@@ -85,7 +85,7 @@ sub get_all_links {
 	my @RSS_sources = @{read_option("RSS_sources")};
 	my @result;
 	for my $source (@RSS_sources) {
-		eval {push (@result, get_new_links($source))};
+		eval {push (@result, get_new_links($source, (limit=>5)))};
 		if ($@) {
 			my_warning("get_all_links - error downloading $source - $@");
 		}

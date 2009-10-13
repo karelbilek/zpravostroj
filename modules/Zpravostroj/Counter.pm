@@ -184,10 +184,14 @@ sub count_themes_document {
 			my $right_entity = join ("", (map ($correct_entity->($_) , (split (" ", $entity)))));
 		
 			$right_entity =~ s/ +$//; #trailing space
-		
-			$named_scores{$right_entity} = 0 if (!exists $scores{$right_entity});
-			$named_scores{$right_entity}+=split_size($right_entity);
-				#again, here, it's not so important, it's just a safety-catch
+					
+					#numbers-only entities (they happen sometimes, donno why)
+			unless ($right_entity eq "") {
+				
+				$named_scores{$right_entity} = 0 if (!exists $scores{$right_entity});
+				$named_scores{$right_entity}+=split_size($right_entity);
+					#again, here, it's not so important, it's just a safety-catch
+			}
 		}
 	
 		my_log ("count_themes_document - entities corrected. Lets clean hashes.");

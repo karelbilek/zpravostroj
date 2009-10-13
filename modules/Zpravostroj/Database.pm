@@ -266,9 +266,11 @@ sub archive_pool {
 	my $topthemes_file = $archive_dir."/".$topthemes;
 	
 	my_log ("archive_pool - OK, done, now let's copy the topthemes file...");	
-	copy($pool_dir."/".$topthemes, );
+	copy($pool_dir."/".$topthemes, $topthemes_file);
 	
 	my @themes = @{load_anything($topthemes_file)};
+	splice (@themes, 100)if @themes>100;
+	
 	for my $theme(@themes) {
 		save_key_count($theme->{lemma}, $day, scalar @{$theme->{articles}});
 	}
