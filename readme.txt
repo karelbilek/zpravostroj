@@ -12,3 +12,12 @@ right now, it doesn't really work and it probably won't for a couple of weeks. b
 AND. right now, the needed directiories are written as absolute paths in configure.yaml, and it's a file that gets updated TOGETHER with this git. so, it's not really for public use as a stand-alone product and it will probably never be.
 
 thats all for now I guess
+
+
+!!!!!!!!!!
+one important thing
+saving of themes is based on the assumpsion that you have filenames set as unicode
+=
+the program creates filenames WITH DIACRITICS.
+
+If you don't like it, don't use it.... which you probably won't
