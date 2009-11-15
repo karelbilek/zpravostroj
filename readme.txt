@@ -1,6 +1,6 @@
 ummm... hello
 
-this is a school project, that downloads stuff from major czech news sources, puts it in a BIIIIG database and then tries to somehow analyse it.
+this is a school project called Zpravostroj (meaning "news machine", maybe), that downloads stuff from major czech news sources, puts it in a BIIIIG database and then tries to somehow analyse it.
 
 it heavily uses TectoMT - a "highly modular NLP (Natural Language Processing) software system implemented in Perl programming language under Linux." (from their site, http://ufal.mff.cuni.cz/tectomt/)
 
