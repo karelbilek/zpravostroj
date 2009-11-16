@@ -1,0 +1,10 @@
+* if you are stuck on fixing a problem, ask yourself - do you REALLY need to fix it?
+	* isnt there some SIMPLE workaround?
+	* arent your cases of the problem somwhat special?
+		*for example, you dont actually NEED to know encoding of file with RSS, because all you need are URLs
+	
+* DONT REPEAT YOURSELF
+	* using global parameter is better than RY
+	* not using global parameter is even better
+
+* infinite loop is ALWAYS BAD
