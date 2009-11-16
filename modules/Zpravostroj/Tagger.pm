@@ -109,13 +109,13 @@ sub doc_to_hash {
 my $save_err;
 
 sub shut_up {
-	my_log("shut_up");
-	open $save_err, ">&STDERR";
-	open STDERR, '>', "/dev/null";
+	#my_log("shut_up");
+	#open $save_err, ">&STDERR";
+	#open STDERR, '>', "/dev/null";
 }
 sub open_up {
-	my_log("open_up");
-	open STDERR, ">&", $save_err;
+	#my_log("open_up");
+	#open STDERR, ">&", $save_err;
 }
 
 
@@ -134,13 +134,17 @@ sub tag_texts {
 		shut_up();
 		
 		my $err;
+		my $errcount;
 		do {
-			eval {$scenario = TectoMT::Scenario->new({'blocks'=> [ qw(SCzechW_to_SCzechM::Sentence_segmentation SCzechW_to_SCzechM::Tokenize  SCzechW_to_SCzechM::TagHajic SCzechM_to_SCzechN::Czech_named_ent_SVM_recognizer) ]})};
+			eval {$scenario = TectoMT::Scenario->new({'blocks'=> [ qw(SCzechW_to_SCzechM::Sentence_segmentation SCzechW_to_SCzechM::Tokenize  SCzechW_to_SCzechM::TagHajic SCzechM_to_SCzechN::SVM_ne_recognizer) ]})};
 					#redirecting STDERR doesn'  stop eval from working
 			$err=$@;
-		} while ($err); 
+			$errcount++;
+		} while ($err and ($errcount < 5)); 
 					#I simply HAVE to have scenario for future work. If it causes infinite loop, so be it, I just NEED the scenario
-		
+		if ($err) {
+			die $err;
+		}
 		open_up();
 		my_log("tag_texts - done initializing");
 		$scenario_initialized = 1;

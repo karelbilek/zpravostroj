@@ -6,6 +6,7 @@ use warnings;
 use Encode;
 use HTML::Encoding 'encoding_from_http_message';
 use LWP::UserAgent;
+use utf8;
 
 use base 'Exporter';
 our @EXPORT =qw(read_from_web read_from_webs);
@@ -18,6 +19,7 @@ my $ua = LWP::UserAgent->new;
 sub read_from_web {
 	my $try_count;
 	my $address = shift;
+	my $not_decoding = shift;
 	
 	my $resp;
 	
@@ -32,7 +34,11 @@ sub read_from_web {
 	}
 	
 	my $enco = encoding_from_http_message($resp);
-	return decode($enco => ($resp->content));
+	if ($not_decoding) {
+		return ($resp->content);
+	} else {
+		return decode($enco => ($resp->content));
+	}
 }
 
 sub read_from_webs {

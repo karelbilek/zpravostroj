@@ -53,7 +53,7 @@ sub my_warning {
 
 sub my_log {
 	my $what = shift;
-	open (my $fh, ">>", $log_file);
+	open (my $fh, ">>", $log_file) or die $log_file."cannot be opened, wonder why? Dying painfully\n";
 	print {$fh} get_day(),":", get_time()," - ", $what,"\n";
 	close $fh;
 }

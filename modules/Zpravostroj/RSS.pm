@@ -9,7 +9,7 @@ use File::Touch;
 
 use Zpravostroj::Other;
 use Zpravostroj::WebReader;
-
+use utf8;
 
 use base 'Exporter';
 our @EXPORT = qw(get_all_links);
@@ -28,12 +28,18 @@ sub get_new_links{
 	my_log("get_new_links - entering for $source");
 	
 	my %options = @_; #if there is a limit (just for testing)
-	my $content = read_from_web ($source);
+	my $content = read_from_web ($source, 1);
 	
-	
-	my $rai = XML::RAI->parse_string(encode("utf8",$content));
-		#this might be a bug in XML::RAI...I don't really know why RAI expects utf8 but it does
-	
+	my $rai;
+	eval { $rai = XML::RAI->parse($content);};
+	if ($@) {
+		my_warning("XML RAI died - it returns -> $@ <-");
+		print "SHITTA!$source\n";
+		die "XML RAI died";
+	}
+
+		#this might be a bug in XML::RAI...I don't really know 
+		#why RAI expects it encoded but apparently it does
 	
 	my $source_name = lc $source;
 	$source_name =~ s/^http:\/\/([^\.]*\.)*([^\.]*)\.cz.*$/$+/;	

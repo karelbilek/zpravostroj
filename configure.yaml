@@ -1,4 +1,5 @@
 ---
+#THOSE ADDRESS SHOULD NOT BE HARDCODED GOD DAMNED AAAAAA
 RSS_sources:
     - http://www.blesk.cz/rss
     - http://servis.idnes.cz/rss.asp?c=zpravodaj
@@ -9,8 +10,8 @@ RSS_sources:
     - http://www.ceskenoviny.cz/sluzby/rss/index.php
     - http://www.financninoviny.cz/sluzby/rss/index.php
     - http://bleskove.aktualne.centrum.cz/export/rss-bleskove-hp.phtml
-articles_address: /afs/ms/u/b/bilek7am/BIG/skola/rocnik/data/articles
-RSS_address: /afs/ms/u/b/bilek7am/BIG/skola/rocnik/data/RSS
+articles_address: /a/merkur2/ufallabhome/bilek/rocnik/data/articles
+RSS_address: /a/merkur2/ufallabhome/bilek/rocnik/data/RSS
 RSS_kept: 1000
 min_word_length: 3
 max_theme_length: 20
@@ -35,12 +36,6 @@ all_article_properties: #dont remove anything that is in more files
     - html
     - all_words
     - all_named
-password_script_dir: /afs/ms/u/b/bilek7am/BIG/skola/rocnik/pass
-    #sadly, I have to save my password somehow on the disc (because of kerberos)
-    #so I use this a-little-security thing at least
-    #it THIS dir, there is only ONE file with .sh with unknown name
-    #and this script returns the password
-    #(I shouldn't write this probably)
-log_file: /afs/ms/u/b/bilek7am/BIG/skola/rocnik/data/log
-warning_file: /afs/ms/u/b/bilek7am/BIG/skola/rocnik/data/warnings
-themes_dir: /afs/ms/u/b/bilek7am/BIG/skola/rocnik/data/themes
+log_file: /a/merkur2/ufallabhome/bilek/rocnik/data/log
+warning_file: /a/merkur2/ufallabhome/bilek/rocnik/data/warnings
+themes_dir: /a/merkur2/ufallabhome/bilek/rocnik/data/themes
