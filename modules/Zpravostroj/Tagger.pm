@@ -109,13 +109,13 @@ sub doc_to_hash {
 my $save_err;
 
 sub shut_up {
-	#my_log("shut_up");
-	#open $save_err, ">&STDERR";
-	#open STDERR, '>', "/dev/null";
+	my_log("shut_up");
+	open $save_err, ">&STDERR";
+	open STDERR, '>', "/dev/null";
 }
 sub open_up {
-	#my_log("open_up");
-	#open STDERR, ">&", $save_err;
+	my_log("open_up");
+	open STDERR, ">&", $save_err;
 }
 
 
