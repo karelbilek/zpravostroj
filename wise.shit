@@ -8,3 +8,5 @@
 	* not using global parameter is even better
 
 * infinite loop is ALWAYS BAD
+
+* there is ALWAYS a chance Perl already knows it
