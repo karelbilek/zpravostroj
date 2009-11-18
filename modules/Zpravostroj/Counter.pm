@@ -62,6 +62,7 @@ sub second_counting_phase {
 	my @all_forms = map {$_->{form}} @all_words;
 	
 	my %keys_count;
+	my %score;
 	my %forms;
 	
 	while (@all_lemmas) {
@@ -73,7 +74,7 @@ sub second_counting_phase {
 			my $forms_joined = join (" ", @sub_forms);
 			my $lemmas_joined = join (" ", @sub_lemmas);
 			$forms{$lemmas_joined} = $forms_joined;
-			$keys_count{$lemmas_joined}+=log($number_of_articles / $all_counts_ref->{$lemmas_joined});
+			$keys_count{$lemmas_joined}++;#=log($number_of_articles / $all_counts_ref->{$lemmas_joined});
 			pop @sub_forms;
 			pop @sub_lemmas;
 			
@@ -83,11 +84,13 @@ sub second_counting_phase {
 		shift @all_lemmas;
 		shift @all_forms;
 	}
-	my @all_lemmas_sorted= (sort {$keys_count{$b}<=>$keys_count{$a}} (keys %keys_count));
-		
-	my @all_forms_sorted=map {$forms{$_}} @all_lemmas_sorted;
+	%score = map {$_ => $keys_count{$_}*log($number_of_articles / $all_counts_ref->{$_})} keys %keys_count;
 	
-	return \@all_forms_sorted;
+	my @all_lemmas_sorted= (sort {$score{$b}<=>$score{$a}} (keys %score));
+		
+	my @res=map {{form=>$forms{$_}, lemma=>$_, keys_count=>$keys_count{$_},score=>$score{$_}, inverse_count=>$all_counts_ref->{$_}}} @all_lemmas_sorted;
+	
+	return \@res;
 	
 }
 

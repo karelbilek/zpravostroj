@@ -14,7 +14,7 @@ articles_address: /a/merkur2/ufallabhome/bilek/rocnik/data/articles
 RSS_address: /a/merkur2/ufallabhome/bilek/rocnik/data/RSS
 RSS_kept: 1000
 min_word_length: 3
-max_theme_length: 20
+max_theme_length: 4
 counter_first_named: 30
 counter_first_themes: 15
 tagger_wanted_named:
