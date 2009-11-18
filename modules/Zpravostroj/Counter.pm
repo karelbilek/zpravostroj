@@ -84,7 +84,7 @@ sub second_counting_phase {
 		shift @all_lemmas;
 		shift @all_forms;
 	}
-	%score = map {$_ => (split_size($_)*(2-$keys_count{$_}))*log($number_of_articles / (2*$all_counts_ref->{$_}))} keys %keys_count;
+	%score = map {$_ => ((2 - 1/ split_size($_))*($keys_count{$_})*log($number_of_articles / (2*$all_counts_ref->{$_})))} keys %keys_count;
 	
 	my @all_lemmas_sorted= (sort {$score{$b}<=>$score{$a}} (keys %score));
 		
