@@ -10,6 +10,7 @@ use Zpravostroj::Other;
 use base 'Exporter';
 our @EXPORT = qw( count_themes);
 use utf8;
+# use Clone::Fast qw( clone );
 
 
 
@@ -55,34 +56,33 @@ sub first_counting_phase {
 
 sub second_counting_phase {
 	my $number_of_articles = shift;
+	my $count_bottom_ref = shift;
+	
 	my $all_counts_ref = shift;
 	
 	my @all_words = @_;
-	my @all_lemmas = map {$_->{lemma}} @all_words;
-	my @all_forms = map {$_->{form}} @all_words;
-	
+
+
 	my %keys_count;
 	my %score;
 	my %forms;
 	
-	while (@all_lemmas) {
-		my $smaller_i = ($#all_forms < ($max_length-1))?($#all_forms):($max_length-1);
-		my @sub_forms = @all_forms[0..$smaller_i];
-		my @sub_lemmas = @all_lemmas[0..$smaller_i];
+	while (@all_words) {
+		my $smaller_i = ($#all_words < ($max_length-1))?($#all_words):($max_length-1);
+		
+		my @sub_words = @all_words[0..$smaller_i];
 
-		while (@sub_forms) {
-			my $forms_joined = join (" ", @sub_forms);
-			my $lemmas_joined = join (" ", @sub_lemmas);
+		while (@sub_words) {
+			my $forms_joined = join (" ", map {$_->{form}} @sub_words);
+			my $lemmas_joined = join (" ", map {$_->{lemma}} @sub_words);
 			$forms{$lemmas_joined} = $forms_joined;
 			$keys_count{$lemmas_joined}++;#=log($number_of_articles / $all_counts_ref->{$lemmas_joined});
-			pop @sub_forms;
-			pop @sub_lemmas;
+			pop @sub_words;
 			
 			
 		}
 		
-		shift @all_lemmas;
-		shift @all_forms;
+		shift @all_words;
 	}
 	%score = map {$_ => ((2 - 1/ split_size($_))*($keys_count{$_})*log($number_of_articles / (2*$all_counts_ref->{$_})))} keys %keys_count;
 	
@@ -94,6 +94,26 @@ sub second_counting_phase {
 	
 }
 
+sub connect_bottom {
+	my $article_ref = shift;
+	my $count_bottom_ref = shift;
+	
+	my @corrected;
+	my $pre="";
+	for my $word (@{$article_ref->{all_words}}) {
+		if (exists $count_bottom_ref->{$word->{form}}) {
+			$pre.=$word->{form}."_";
+		} else {
+			push (@corrected, {form => $pre.($word->{form}), lemma => $word->{lemma}});
+			$pre="";
+		}
+	}
+	
+	$article_ref->{all_words_copy} = \@corrected;
+			# I will HAVE to delete this from article hash later!
+	
+}
+
 
 sub count_themes {
 	my @articles = @_;
@@ -101,7 +121,28 @@ sub count_themes {
 	my %all_counts;
 	
 	foreach (@articles) {first_counting_phase(\%all_counts,map{$_->{lemma}} @{$_->{all_words}})};
-	foreach (@articles) { $_->{top_keys}=second_counting_phase(scalar @articles, \%all_counts,@{$_->{all_words}}) };
+	
+	my @counts_bottom = sort {$all_counts{$b} <=> $all_counts{$a}} keys %all_counts;
+	splice (@counts_bottom, @counts_bottom/10);
+	
+	print (join ("\n", @counts_bottom));
+	
+	my %count_bottom_hash;
+	@count_bottom_hash{@counts_bottom}=();
+		
+	# foreach (@articles) {$_->{all_words_clone} = clone ($_->{all_words})};
+	foreach (@articles) {connect_bottom($_, \%count_bottom_hash)};
+		
+	# counting IDF AGAIN!!!! with different words!!
+	%all_counts=();
+	foreach (@articles) {first_counting_phase(\%all_counts,map{$_->{lemma}} @{$_->{all_words_copy}})};
+	
+	
+	foreach (@articles) { $_->{top_keys}=second_counting_phase(scalar @articles,\%count_bottom_hash, \%all_counts,@{$_->{all_words_copy}}) };
+	
+	foreach (@articles) { delete $_->{all_words_copy} };
+	
+	
 	
 	return @articles;
 }

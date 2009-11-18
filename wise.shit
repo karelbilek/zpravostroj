@@ -10,3 +10,5 @@
 * infinite loop is ALWAYS BAD
 
 * there is ALWAYS a chance Perl already knows it
+
+* LOOK CAREFULLY what the error tells you.... sometimes, it's a lot
