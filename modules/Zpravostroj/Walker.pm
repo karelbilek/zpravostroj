@@ -35,11 +35,16 @@ sub do_everything {
 	@articles = extract_texts(@articles);
 	my_log("do_everything - extracted all. takes a while...");
 	
+	update_pool_articles($start, @articles);
+	
 	@articles = tag_texts(@articles);
 	my_log("do_everything - hello again. tagged all");
+	
+	update_pool_articles($start, @articles);
 		
 	@articles = count_themes(@articles);
 	my_log("do_everything - counted all");
+	
 	
 	update_pool_articles($start, @articles);
 	my_log("do_everything - wrote everything.");
@@ -68,11 +73,16 @@ sub step {
 
 
 sub recount {
+	my_log("recount - start");
 	my @articles = read_pool_articles;
+	my_log("recount - read, gonna count");
 	
 	@articles = count_themes(@articles);
+	my_log("recount - counted, gonna update");
+	
 	
 	update_pool_articles(0, @articles);
+	my_log("recount - updated, end");
 	
 	
 }
