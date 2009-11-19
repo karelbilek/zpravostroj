@@ -4,7 +4,6 @@ use strict;
 use warnings;
 
 use Zpravostroj::Other;
-use Zpravostroj::StopWords;
 
 use Test::Deep qw(eq_deeply);
 
@@ -36,7 +35,7 @@ sub top_themes{
 	my @articles = @_;
 	
 	my %stopwords; 
-	@stopwords{get_stopwords(20, 0.85, @articles)}=();
+	#@stopwords{get_stopwords(20, 0.85, @articles)}=();
 	
 	my_log("top_themes - stopwords loaded.");
 	

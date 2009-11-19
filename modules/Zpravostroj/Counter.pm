@@ -57,10 +57,12 @@ sub second_counting_phase {
 	my $count_bottom_ref = shift;
 	
 	my $all_counts_ref = shift;
+	my $article_ref = shift;
 	
-	my @all_words = @_;
-
-
+	my @all_words = @{$article_ref->{all_words_copy}};
+	
+	
+	
 	my %keys_count;
 	my %score;
 	my %forms;
@@ -97,7 +99,10 @@ sub second_counting_phase {
 	my %res_lemmas_hash;
 	@res_lemmas_hash{@res_lemmas}=();
 	
-	for my $lemma (sort {split_size($b) <=> split_size($a)} @res_lemmas) {
+	my @named = grep {!($_=~/^\s*\d*\s*$/) and exists $keys_count{$_}} @{$article_ref->{all_named}};
+	@res_lemmas_hash{@named}=();
+	
+	for my $lemma (sort {split_size($b) <=> split_size($a)} keys %res_lemmas_hash) {
 		for my $sublemma (all_subthemes(" ", $lemma)) {
 			delete $res_lemmas_hash{$sublemma};
 		}
@@ -142,7 +147,7 @@ sub count_themes {
 	foreach (@articles) {first_counting_phase(1, \%all_counts,map{$_->{lemma}} @{$_->{all_words}})};
 	
 	my @counts_bottom = sort {$all_counts{$b} <=> $all_counts{$a}} keys %all_counts;
-	splice (@counts_bottom, @counts_bottom/33);
+	splice (@counts_bottom, @counts_bottom/44);
 	
 	
 	print (join ("\n", @counts_bottom));
@@ -163,7 +168,7 @@ sub count_themes {
 	foreach (@articles) {first_counting_phase($max_length, \%all_counts,map{$_->{lemma}} @{$_->{all_words_copy}})};
 	
 	
-	foreach (@articles) { $_->{top_keys}=second_counting_phase($max_length, scalar @articles,\%count_bottom_hash, \%all_counts,@{$_->{all_words_copy}}) };
+	foreach (@articles) { $_->{top_keys}=second_counting_phase($max_length, scalar @articles,\%count_bottom_hash, \%all_counts,$_) };
 	
 	foreach (@articles) { delete $_->{all_words_copy} };
 	
