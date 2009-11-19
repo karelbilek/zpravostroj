@@ -109,6 +109,9 @@ sub extract_text {
     my $text = $article{html};
 	
 	
+	while ($text =~ s/<!--([^-]*|-[^-]*)*-->//) {};
+	#stripping all the comments, baby
+	
     my $dom_tree = new HTML::DOM;
     $dom_tree->write($text);
 	$dom_tree->close();
