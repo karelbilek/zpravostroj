@@ -11,10 +11,44 @@ use Zpravostroj::Tagger;
 use Zpravostroj::Counter;
 
 use base 'Exporter';
-our @EXPORT = qw(do_everything recount step);
+our @EXPORT = qw(do_everything recount step retag_recount redo_all_on_one);
 
 my $last_day="";
 
+sub redo_all_on_one {
+	my $which = shift;
+	my ($article) = read_pool_articles($which, $which);
+	
+	extract_texts($article);
+	
+	update_pool_articles($which, $article);
+	
+	($article) = tag_texts($article);
+	
+	update_pool_articles($which, $article);
+		
+	($article) = count_themes($article);
+	
+	
+	update_pool_articles($which, $article);
+}
+
+sub retag_recount {
+	my @articles = read_pool_articles;
+	@articles = extract_texts(@articles);
+	
+	
+	
+	@articles = tag_texts(@articles);
+	
+	
+	@articles = count_themes(@articles);
+	
+	update_pool_articles(0, @articles);
+	
+	
+	count_pool_themes;
+}
 
 sub do_everything {
 	my $start = get_pool_count;
