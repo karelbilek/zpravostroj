@@ -4,7 +4,6 @@ use strict;
 use warnings;
 
 use Zpravostroj::Other;
-use Zpravostroj::StopWords;
 
 use Test::Deep qw(eq_deeply);
 
@@ -14,31 +13,31 @@ our @EXPORT = qw(top_themes);
 sub theme_rate{
 	my $theme=shift;
 	my $appearances_ref=shift;
-	my $stopwords = shift;
+	# my $stopwords = shift;
 	
 	my $count = scalar keys %{$appearances_ref->{$theme}};
 
-	my $size = stop_size($stopwords, $theme);
+	my $size = split_size($theme);
 	
 	return $count ** (2*$size); #original
 #	return (2* $size) ** ($count);
 }
-
-sub stop_size {
-	my $stopwords = shift;
-	my $word = shift;
-	return scalar grep(!exists $stopwords->{$_}, split(" ",$word));
-}
+# 
+# sub stop_size {
+# 	my $stopwords = shift;
+# 	my $word = shift;
+# 	return scalar grep(!exists $stopwords->{$_}, split(" ",$word));
+# }
 
 sub top_themes{
 	my_log("top_themes - entering.");
 	
 	my @articles = @_;
 	
-	my %stopwords; 
-	@stopwords{get_stopwords(20, 0.85, @articles)}=();
+	#my %stopwords; 
+	#@stopwords{get_stopwords(20, 0.85, @articles)}=();
 	
-	my_log("top_themes - stopwords loaded.");
+	# my_log("top_themes - stopwords loaded.");
 	
 	# {use YAML::XS;
 	# my @wa = keys %stopwords;
@@ -54,7 +53,7 @@ sub top_themes{
 	foreach my $article (@articles){
 		
 		my @keys;
-		@keys = @{$article->{keys}} if $article->{keys};
+		@keys = @{$article->{top_keys}} if $article->{top_keys};
 		for my $key (@keys) {
 			
 			my @sub_lemmas = ($key->{lemma}, all_subthemes(" ", $key->{lemma}));
@@ -107,13 +106,16 @@ sub top_themes{
 	#so basically, I am done
 	
 	my @results;
-	for my $lemma (sort {theme_rate($b, \%appearances, \%stopwords) <=> theme_rate($a, \%appearances, \%stopwords)} keys %appearances) {
+	for my $lemma (sort {theme_rate($b, \%appearances) <=> theme_rate($a, \%appearances)} keys %appearances) {
 		my %result;
 		#$result{lemma} = $lemma;
 		my @res_appearances = keys %{$appearances{$lemma}};
+<<<<<<< HEAD
 		# $result{articles} = \@res_appearances;
+=======
+		#$result{articles} = \@res_appearances;
+>>>>>>> rewriting_keyscores
 		$result{best_form} = most_frequent(@{$all_forms{$lemma}});
-		# $result{all_forms} = $all_forms{$lemma};
 		push (@results, \%result);# if (length $lemma <= 3); #;
 	}
 	

@@ -12,15 +12,13 @@ use DateTime;
 
 
 use base 'Exporter';
-our @EXPORT = qw(get_day my_log my_warning split_size all_subthemes is_word is_banned make_normal_word load_yaml_file read_option most_frequent read_information get_correction longest_correction);
-
+our @EXPORT = qw(get_day my_log my_warning split_size all_subthemes is_word  make_normal_word load_yaml_file read_option most_frequent read_information get_correction longest_correction);
 
 
 	#!!!!!!!!!!!! ------ GLOBALS ------ !!!!!!!!!!!!
 my ($option_ref) = load_yaml_file("configure.yaml");
+my $warning_file = read_option("warning_file");
 
-my %banned=();
-@banned{@{read_information("banned_words")}}=();
 
 my $czechs="ÁČĎĚÉÍŇÓŘŠŤÚŮÝŽáčďěéíňóřšťúůýž";
 	#!!!!!!!!!!!! ------ GLOBALS ------ !!!!!!!!!!!!
@@ -29,7 +27,6 @@ my $czechs="ÁČĎĚÉÍŇÓŘŠŤÚŮÝŽáčďěéíňóřšťúůýž";
 my $longest_correction=0;
 my %corrections;
 my $log_file = read_option("log_file");
-my $warning_file = read_option("warning_file");
 	#!!!!!!!!!!!! ------ GLOBALS ------ !!!!!!!!!!!!
 
 
@@ -45,6 +42,7 @@ sub get_time {
 
 sub my_warning {
 	my $what = shift;
+	print $what."\n";
 	open (my $fh, ">>", $warning_file);
 	print {$fh} get_day(),":", get_time()," - ", $what,"\n";
 	close $fh;
@@ -60,7 +58,7 @@ sub my_log {
 
 
 #workaround for weird split behaviour in scalar context - they say its not a bug, i think it is
-sub split_size{my $r=shift;my @ol=split (" |_", $r);return scalar @ol;}
+sub split_size{my $r=shift;my @ol=split (" ", $r);return scalar @ol;}
 
 
 sub load_yaml_file {
@@ -129,20 +127,13 @@ sub is_word {
 	return ($what =~ /^[A-Za-z0-9$czechs]+$/);
 }
 
-sub is_banned {
-	my $what=shift;
-
-	return 1 if ((!$what) or ($what eq ''));
-	
-	return ((exists $banned{lc($what)}) or ($what=~/^[0-9]+$/));# or (length ($what) < read_option("min_word_length")));
-}
 
 sub make_normal_word {
 
     my $text = shift;
     return unless defined $text;
     
-    $text =~ s/^([A-Za-z0-9$czechs ]*).*$/$1/;
+    $text =~ s/^([^\-\.,_;\/\\\^\?!]*).*$/$1/;
         #remove all weird letters
     	
     $text =~ s/ +$//;
@@ -153,29 +144,37 @@ sub make_normal_word {
     return $text;
 }
 
+sub load_corrections {
+	my %read_corrections;
+	if (my $correction_ref = read_information("corrections")) {
+		%read_corrections = %{read_information("corrections")};
+	}
+
+	foreach my $correct_lemma (keys %read_corrections) {
+		my $length = split_size($correct_lemma);
+		$longest_correction = $length if ($length > $longest_correction);
+
+		foreach my $correct_form (@{$read_corrections{$correct_lemma}}) {
+			$corrections{$correct_form} = $correct_lemma;
+		}
+	}
+}
 
 sub get_correction {
 	my $what=shift;
 	if (!$longest_correction) {
-		my %read_corrections;
-		if (my $correction_ref = read_information("corrections")) {
-			%read_corrections = %{read_information("corrections")};
-		}
-
-		foreach my $correct_lemma (keys %read_corrections) {
-			my $length = split_size($correct_lemma);
-			$longest_correction = $length if ($length > $longest_correction);
-
-			foreach my $correct_form (@{$read_corrections{$correct_lemma}}) {
-				$corrections{$correct_form} = $correct_lemma;
-			}
-		}
+		load_corrections
 	}
 	return 0 if (!exists $corrections{$what});
 	
 	return $corrections{$what};
 }
 
-sub longest_correction {return $longest_correction;}
+sub longest_correction {
+	if (!$longest_correction) {
+		load_corrections;
+	}
+	return $longest_correction;
+}
 
 1;

@@ -32,11 +32,7 @@ sub get_new_links{
 	
 	my $rai;
 	eval { $rai = XML::RAI->parse($content);};
-	if ($@) {
-		my_warning("XML RAI died - it returns -> $@ <-");
-		print "SHITTA!$source\n";
-		die "XML RAI died";
-	}
+
 
 		#this might be a bug in XML::RAI...I don't really know 
 		#why RAI expects it encoded but apparently it does
@@ -66,6 +62,7 @@ sub get_new_links{
 			#I wont force it to
 	
 	my_log("get_new_links - check each one...");
+	
 	foreach my $item (@items) {
 		last if (($options{"limit"}) and ($count>=$options{"limit"}));
 		$count++;
@@ -73,10 +70,14 @@ sub get_new_links{
 	}
 	
 	my_log("get_new_links - adding visited..");
+	
+	
 	unshift (@visited_arr, @results);
 	if (scalar @visited_arr > $RSS_kept) {
 		splice (@visited_arr, $RSS_kept);
 	}
+	
+	
 	
 	my_log("get_new_links - dumping everything...");
 	DumpFile(get_filename($source_name), \@visited_arr);
@@ -91,7 +92,7 @@ sub get_all_links {
 	my @RSS_sources = @{read_option("RSS_sources")};
 	my @result;
 	for my $source (@RSS_sources) {
-		eval {push (@result, get_new_links($source, (limit=>2)))};
+		eval {push (@result, get_new_links($source))};
 		if ($@) {
 			my_warning("get_all_links - error downloading $source - $@");
 		}
