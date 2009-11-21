@@ -110,23 +110,9 @@ sub top_themes{
 		my %result;
 		#$result{lemma} = $lemma;
 		my @res_appearances = keys %{$appearances{$lemma}};
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 		# $result{articles} = \@res_appearances;
-=======
 		#$result{articles} = \@res_appearances;
->>>>>>> rewriting_keyscores
-=======
-		#$result{articles} = \@res_appearances;
->>>>>>> rewriting_keyscores
-=======
-		#$result{articles} = \@res_appearances;
->>>>>>> rewriting_keyscores
-=======
-		#$result{articles} = \@res_appearances;
->>>>>>> rewriting_keyscores
 		$result{best_form} = most_frequent(@{$all_forms{$lemma}});
 		push (@results, \%result);# if (length $lemma <= 3); #;
 	}
