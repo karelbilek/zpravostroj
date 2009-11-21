@@ -113,7 +113,11 @@ sub top_themes{
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		# $result{articles} = \@res_appearances;
+=======
+		#$result{articles} = \@res_appearances;
+>>>>>>> rewriting_keyscores
 =======
 		#$result{articles} = \@res_appearances;
 >>>>>>> rewriting_keyscores
