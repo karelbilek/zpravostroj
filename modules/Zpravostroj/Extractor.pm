@@ -112,9 +112,10 @@ sub extract_text {
 	while ($text =~ s/<!--([^-]*|-[^-]*)*-->//) {};
 	#stripping all the comments, baby
 	
-    my $dom_tree = new HTML::DOM;
 
-    $dom_tree->write($text);
+	my $dom_tree = new HTML::DOM;
+	
+	$dom_tree->write($text);
 	$dom_tree->close();
 	my_log("extract_text - created DOM");
     
