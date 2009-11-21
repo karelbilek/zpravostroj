@@ -111,7 +111,11 @@ sub top_themes{
 		#$result{lemma} = $lemma;
 		my @res_appearances = keys %{$appearances{$lemma}};
 <<<<<<< HEAD
+<<<<<<< HEAD
 		# $result{articles} = \@res_appearances;
+=======
+		#$result{articles} = \@res_appearances;
+>>>>>>> rewriting_keyscores
 =======
 		#$result{articles} = \@res_appearances;
 >>>>>>> rewriting_keyscores

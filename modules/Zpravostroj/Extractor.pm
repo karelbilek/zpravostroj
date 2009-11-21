@@ -113,8 +113,14 @@ sub extract_text {
 	#stripping all the comments, baby
 	
 <<<<<<< HEAD
+<<<<<<< HEAD
     my $dom_tree = new HTML::DOM;
     $dom_tree->write($text);
+=======
+	my $dom_tree = new HTML::DOM;
+	
+	$dom_tree->write($text);
+>>>>>>> rewriting_keyscores
 =======
 	my $dom_tree = new HTML::DOM;
 	
