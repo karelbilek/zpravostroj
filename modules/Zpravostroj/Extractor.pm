@@ -114,8 +114,14 @@ sub extract_text {
 	
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     my $dom_tree = new HTML::DOM;
     $dom_tree->write($text);
+=======
+	my $dom_tree = new HTML::DOM;
+	
+	$dom_tree->write($text);
+>>>>>>> rewriting_keyscores
 =======
 	my $dom_tree = new HTML::DOM;
 	
