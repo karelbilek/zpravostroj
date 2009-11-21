@@ -147,10 +147,14 @@ sub make_corrections {
 	
 	for my $length (1..longest_correction) {
 		for my $i (0..(scalar @{$article_ref->{all_words}})-$length){
-			my $joined_form = join (" ", map {$_->{form}} @{$article_ref->{all_words}}[$i..$i+length]);
+				
+			my $joined_form = join (" ", map {$_->{form}} @{$article_ref->{all_words}}[$i..$i+$length-1]);
+			
 			if (my $correction = get_correction($joined_form)) {
-				# my @correction_split = split (" ", $correction);
-				@{$article_ref->{all_words}}[$i..$i+length] = split (" ", $correction);
+				my @correction_split = split (" ", $correction);
+				for my $j (0..$length-1) {
+					${$article_ref->{all_words}}[$j+$i]->{lemma}=$correction_split[$j];
+				}
 			}
 		}
 	}
@@ -170,7 +174,6 @@ sub count_themes {
 	splice (@counts_bottom, @counts_bottom/44);
 	
 	
-	print (join ("\n", @counts_bottom));
 	
 	my %count_bottom_hash;
 	@count_bottom_hash{@counts_bottom}=();

@@ -108,14 +108,10 @@ sub top_themes{
 	my @results;
 	for my $lemma (sort {theme_rate($b, \%appearances) <=> theme_rate($a, \%appearances)} keys %appearances) {
 		my %result;
-		$result{lemma} = $lemma;
-		# $result{score} = theme_rate($lemma, \%appearances);
+		#$result{lemma} = $lemma;
 		my @res_appearances = keys %{$appearances{$lemma}};
-		$result{articles} = \@res_appearances;
-		# $result{articles_count} = scalar (@{$appearances{$lemma}});
-		# $result{stop_size} = stop_size(\%stopwords, $lemma);
+		#$result{articles} = \@res_appearances;
 		$result{best_form} = most_frequent(@{$all_forms{$lemma}});
-		# $result{all_forms} = $all_forms{$lemma};
 		push (@results, \%result);# if (length $lemma <= 3); #;
 	}
 	

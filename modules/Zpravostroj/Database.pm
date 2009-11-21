@@ -133,7 +133,6 @@ sub load_anything {
 	close $z;
 	
 	my $result;
-	print $where."\n";
 	eval {$result = Load($all)};
 	if ($@) {
 		my_warning("load_anything - some weird error given when loading $where - ".$@." :-(");
