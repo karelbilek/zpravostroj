@@ -76,7 +76,7 @@ sub second_counting_phase {
 		while (@sub_words) {
 			my $forms_joined = join (" ", map {$_->{form}} @sub_words);
 			my $lemmas_joined = join (" ", map {$_->{lemma}} @sub_words);
-			$forms{$lemmas_joined} = $forms_joined;
+			push (@{$forms{$lemmas_joined}}, $forms_joined);
 			$keys_count{$lemmas_joined}++;#=log($number_of_articles / $all_counts_ref->{$lemmas_joined});
 			pop @sub_words;
 			
@@ -109,10 +109,14 @@ sub second_counting_phase {
 	}
 	
 	my @res;
-	for (keys %res_lemmas_hash) {
-		push (@res, {lemma=>$_, form=>$forms{$_}, score=>$score{$_}, count=>$keys_count{$_}, reverse=>($all_counts_ref->{$_})});
+	for my $lemma (sort {$score{$b}<=>$score{$a}} keys %res_lemmas_hash) {
+		my %form_vote;
+		for my $form (@{$forms{$lemma}}) {
+			$form_vote{$form}++;
+		}
+		my @sorted = sort {$form_vote{$b}<=>$form_vote{$a}} keys %form_vote;
+		push (@res, {lemma=>$lemma, best_form=>$sorted[0],all_forms=>\@sorted, score=>$score{$lemma}, count=>$keys_count{$lemma}, reverse=>($all_counts_ref->{$lemma})});
 	}
-	
 	
 	return \@res;
 	

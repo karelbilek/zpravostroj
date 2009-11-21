@@ -60,7 +60,7 @@ sub my_log {
 
 
 #workaround for weird split behaviour in scalar context - they say its not a bug, i think it is
-sub split_size{my $r=shift;my @ol=split (" |_", $r);return scalar @ol;}
+sub split_size{my $r=shift;my @ol=split (" ", $r);return scalar @ol;}
 
 
 sub load_yaml_file {

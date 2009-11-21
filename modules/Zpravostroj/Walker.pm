@@ -82,7 +82,11 @@ sub recount {
 	
 	
 	update_pool_articles(0, @articles);
-	my_log("recount - updated, end");
+	
+	my_log("recount - updated, gonna count pool themes");
+	
+	count_pool_themes;
+	my_log("recount - counted, end");
 	
 	
 }
