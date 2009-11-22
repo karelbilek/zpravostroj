@@ -77,7 +77,7 @@ sub get_pool_count {
 	} else {
 		
 		my $count=0;
-		eval {$count = scalar grep(/\d+\.yaml\.bz2$/, <$pool_dir/*.yaml.bz2>)};
+		eval {$count = scalar grep(/(^|\/)\d+\.yaml\.bz2$/, <$pool_dir/*.yaml.bz2>)};
 		
 		if ($@) {
 			my_warning("get_pool_count - weird error getting pool count - $@");
@@ -113,32 +113,52 @@ sub load_article {
 }
 
 sub load_anything {
+	
+	
 	my $where = shift;
+	
+
 	my $no_existence_warning = shift;
+	
+
 	
 	if (!-e $where) {
 		my_warning("load_anything - $where does not exist!!") unless ($no_existence_warning);
 		return "";
 	}
 	
+
+	
 	my $z = new IO::Uncompress::Bunzip2($where);
+	
+
 	
 	if (!$z) {
 		my_warning("load_anything - $where cannot be read for weird reason...");
-		return "";
+		return \%all_article_properties; #trick - I return EMPTY article
 	}
+	
+
 	
 	my $all = do {local ($/); <$z>};
 	close $z;
 	
+
 	my $result;
-	eval {$result = Load($all)};
-	if ($@) {
-		my_warning("load_anything - some weird error given when loading $where - ".$@." :-(");
-		return "";
-	}
+	if ($all) {
+
+		eval {$result = Load($all)};
+		
+
+		if ($@) {
+			my_warning("load_anything - some weird error given when loading $where - ".$@." :-(");
+			return \%all_article_properties; #trick - I return EMPTY article
+		}
 	
-	return $result;
+		return $result;
+	} else {
+		return \%all_article_properties; #trick - I return EMPTY article
+	}
 
 }
 
@@ -153,8 +173,9 @@ sub dump_article {
 sub dump_anything {
 	my $where = shift;
 	my $what = shift;
-
 	
+
+	# open my $z, "| bzip2 > $where";
 	my $z = new IO::Compress::Bzip2($where);
 	if (!$z) {
 		my_warning("dump_anything - cannot create file ".$where);
@@ -189,7 +210,8 @@ sub read_pool_articles {
 	foreach my $i ($begin..$end){
 		my $article = load_article($i);
 
-		push (@result, $article);
+		push (@result, $article) if (defined $article);
+			#if some article is unreadable, this will "delete" him from database
 	}
 	return @result;
 }
@@ -197,9 +219,18 @@ sub read_pool_articles {
 
 
 sub update_pool_themes {
-	
-	my $where = $pool_dir."/".$topthemes;
 	my $themes = shift;
+	if (!$themes) {
+		die "SHIT\n";
+	}
+	my $filename = shift;
+	if (!$filename) {
+		$filename = $topthemes;
+	} else {
+		$filename = $filename.".yaml.bz2";
+	}
+	
+	my $where = $pool_dir."/".$filename;
 	dump_anything($where, $themes);
 }
 
@@ -211,18 +242,15 @@ sub update_pool_articles {
 	my $begin = shift;
 	$begin=0 if !$begin;
 	my @input = @_;
-	my $pool_count = get_pool_count;
 	if (@input) {
 		foreach my $i ($begin..$begin+(scalar @input)-1){
-			($i<$pool_count) or die "I can't update article no. $i when there are only ".get_pool_count()." articles.";
 		
-			my %article = %{load_article($i)};
-			my %updating = %{shift (@input)};
+			my %article = %{shift (@input)};
 		
-			foreach (keys %updating) {
+			foreach (keys %article) {
 				#(exists $all_article_properties{$_}) or die "forbidden article property $_";
 				#
-				if (exists $all_article_properties{$_}) {$article{$_} = $updating{$_}} else {delete $article{$_}};
+				if (!exists $all_article_properties{$_}) {delete $article{$_}};
 			}
 		
 			dump_article($i, \%article);

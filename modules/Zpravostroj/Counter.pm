@@ -85,7 +85,7 @@ sub second_counting_phase {
 	my @res_lemmas;
 	
 	# verze A - u prvniho s jednickou se zastavim
-	push (@res_lemmas, shift @all_lemmas_sorted) while ($keys_count{$all_lemmas_sorted[0]}>1);
+	push (@res_lemmas, shift @all_lemmas_sorted) while (@all_lemmas_sorted && $keys_count{$all_lemmas_sorted[0]}>1);
 	
 	# verze B - vezmi vse co je >1
 	# @res_lemmas = map {if ($keys_count{$_}>1){$_}else{()}} @all_lemmas_sorted;
@@ -133,16 +133,20 @@ sub connect_bottom {
 
 sub make_corrections {
 	my $article_ref = shift;
-	
-	for my $length (1..longest_correction) {
-		for my $i (0..(scalar @{$article_ref->{all_words}})-$length){
+	if (!defined $article_ref->{all_words}) {
+		my @empty = ();
+		$article_ref->{all_words} = \@empty;
+	} else {
+		for my $length (1..longest_correction) {
+			for my $i (0..(scalar @{$article_ref->{all_words}})-$length){
 				
-			my $joined_form = join (" ", map {$_->{form}} @{$article_ref->{all_words}}[$i..$i+$length-1]);
+				my $joined_form = join (" ", map {$_->{form}} @{$article_ref->{all_words}}[$i..$i+$length-1]);
 			
-			if (my $correction = get_correction($joined_form)) {
-				my @correction_split = split (" ", $correction);
-				for my $j (0..$length-1) {
-					${$article_ref->{all_words}}[$j+$i]->{lemma}=$correction_split[$j];
+				if (my $correction = get_correction($joined_form)) {
+					my @correction_split = split (" ", $correction);
+					for my $j (0..$length-1) {
+						${$article_ref->{all_words}}[$j+$i]->{lemma}=$correction_split[$j];
+					}
 				}
 			}
 		}
@@ -150,9 +154,13 @@ sub make_corrections {
 }
 
 sub real_score {
-	my ($score_ref, $appearances_ref, $all_counts_ref, $number_of_articles, $what) = @_;
+	my ($score_ref, $appearances_ref, $all_counts_ref, $number_of_articles, $what, $a, $b, $c, $d) = @_;
 	
-	return ($score_ref->{$what})*(scalar (keys %{$appearances_ref->{$what}}))*log($number_of_articles/$all_counts_ref->{$what});
+	#return ;#
+	my $score = (log(scalar (keys %{$appearances_ref->{$what}})+1)**$a)*(log($number_of_articles/(($b*100)*($all_counts_ref->{$what})))**$c)* (($score_ref->{$what})**$d);
+	#print "---$a--$b--$c--$d--$score-\n";
+	return $score;
+	
 }
 
 sub count_top_themes {
@@ -161,6 +169,10 @@ sub count_top_themes {
 	my %all_forms;
 	
 	my $all_counts_ref = shift;
+	my $pa = shift;
+	my $pb = shift;
+	my $pc = shift;
+	my $pd = shift;
 	my @articles = @_;
 	
 	for my $i (0..$#articles) {
@@ -180,7 +192,7 @@ sub count_top_themes {
 	
 	my @results;
 	for my $lemma (sort {
-			real_score(\%top_theme_scores, \%appearances, $all_counts_ref, scalar @articles, $b) <=> real_score(\%top_theme_scores, \%appearances, $all_counts_ref, scalar @articles, $a)
+			real_score(\%top_theme_scores, \%appearances, $all_counts_ref, scalar @articles, $b, $pa, $pb, $pc, $pd) <=> real_score(\%top_theme_scores, \%appearances, $all_counts_ref, scalar @articles, $a, $pa, $pb, $pc, $pd)
 		} keys %top_theme_scores) {
 			
 		my %result;
@@ -189,7 +201,8 @@ sub count_top_themes {
 		$result{articles} = \@res_appearances;
 		$result{best_form} = most_frequent(@{$all_forms{$lemma}});
 		$result{all_forms} = \@{$all_forms{$lemma}};
-		$result{score} = $top_theme_scores{ $lemma};
+		$result{score} = real_score(\%top_theme_scores, \%appearances, $all_counts_ref, scalar @articles, $lemma, $pa, $pb, $pc, $pd);
+		$result {somerandomcrap} = (scalar @articles)/(1000*($all_counts_ref->{$lemma}));
 		push (@results, \%result);
 	}
 	
@@ -200,6 +213,11 @@ sub count_top_themes {
 }
 
 sub count_themes {
+	my $pa = shift;
+	my $pb = shift;
+	my $pc = shift;
+	my $pd = shift;
+	
 	my @articles = @_;
 	
 	my %all_counts;
@@ -221,7 +239,7 @@ sub count_themes {
 	
 	
 	
-	my $max_length=read_option("max_theme_length");
+	my $max_length=4;#read_option("max_theme_length");
 	
 	
 	# counting IDF AGAIN!!!! with different words!!
@@ -233,7 +251,7 @@ sub count_themes {
 	
 	foreach (@articles) { delete $_->{all_words_copy} };
 	
-	my $top_themes = count_top_themes(\%all_counts, @articles);
+	my $top_themes = count_top_themes(\%all_counts, $pa, $pb, $pc, $pd, @articles);
 	
 	print "size of themes is ".scalar @$top_themes."\n";
 	

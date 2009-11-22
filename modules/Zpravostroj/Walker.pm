@@ -42,7 +42,7 @@ sub retag_recount {
 	
 	@articles = tag_texts(@articles);
 	
-	my %r = count_themes(@articles);
+	my %r = count_themes(1,1,1,1, @articles);
 	@articles = @{$r{articles}};
 	
 	update_pool_articles(0, @articles);
@@ -55,34 +55,27 @@ sub do_everything {
 	my $start = get_pool_count;
 	
 	my @articles = get_all_links;
-	my_log("do_everything - got all URLs");
-	if (!scalar @articles) {
-		my_log("do_everything - nothing to add");
-		return $start;
+		if (!scalar @articles) {
+				return $start;
 	}
 	
 	add_new_articles(@articles);	
-	my_log("do_everything - wrote all URLs");
-	
+		
 	@articles = read_from_webs(@articles);
-	my_log("do_everything - downloaded all webs.");
-	
+		
 	@articles = extract_texts(@articles);
-	my_log("do_everything - extracted all. takes a while...");
-	
+		
 	update_pool_articles($start, @articles);
 	
 	@articles = tag_texts(@articles);
-	my_log("do_everything - hello again. tagged all");
-	
+		
 	update_pool_articles($start, @articles);
 	
 	
 	#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!this is WRONG AND YOU SHOULD FEEL WRONG
 	my %r = count_themes(@articles);
 	@articles = @{$r{articles}};
-	my_log("do_everything - counted all");
-	
+		
 	
 	update_pool_articles($start, @articles);
 	
@@ -91,40 +84,30 @@ sub do_everything {
 }
 
 sub step {
-	my_log("step - starting");
 	do_everything;
 	
-	my_log("step - ...done");
-	
+		
 	my $new_day = get_day;
 	if (($last_day eq "") or ($last_day eq $new_day)) {
-		my_log("step - no need to archive yet.");
+		#-----
 	} else {
-		my_log("step - archiving...");
 		archive_pool;
-		my_log("step - archiving done.");
 	}
 	$last_day = $new_day;
-	my_log("step - done. going to sleep.");
 }
 
 
 sub recount {
-	my_log("recount - start");
 	my @articles = read_pool_articles;
-	my_log("recount - read, gonna count");
-	
-	my %r = count_themes(@articles);
+		
+	my %r = count_themes(1,1,1,1,@articles);
 	@articles = @{$r{articles}};
-	my_log("recount - counted, gonna update");
 	
 	
 	update_pool_articles(0, @articles);
 	
-	my_log("recount - updated, gonna count pool themes");
 	
 	update_pool_themes($r{top_themes});
-	my_log("recount - counted, end");
 	
 	
 }
