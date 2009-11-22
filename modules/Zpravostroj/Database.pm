@@ -15,11 +15,10 @@ use IO::Compress::Bzip2;
 use utf8;
 
 use Zpravostroj::Other;
-use Zpravostroj::TopThemes;
 
 
 use base 'Exporter';
-our @EXPORT = qw( get_pool_count add_new_articles read_pool_articles save_key_count update_pool_themes archive_pool unarchive load_anything count_pool_themes);
+our @EXPORT = qw( get_pool_count add_new_articles read_pool_articles save_key_count update_pool_themes archive_pool unarchive load_anything update_pool_articles);
 
 my $database_dir = read_option("articles_address");
 my $pool_dir = $database_dir."/pool";

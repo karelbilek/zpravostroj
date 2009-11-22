@@ -163,21 +163,23 @@ sub count_top_themes {
 		@keys = @{$article->{top_keys}} if $article->{top_keys};
 		
 		for my $key (@keys) {
+			my $lemma = $key->{lemma};
+			
 			$appearances{$lemma}->{$i} = undef;
-			$scores{$lemma}+=$key->{score};
+			$top_theme_scores{$lemma}+=$key->{score};
 			push (@{$all_forms{$lemma}}, @{$key->{all_forms}});
 		}
 	}
 	
 	my @results;
-	for my $lemma (sort $top_theme_scores{$b}) <=> $top_theme_scores{$a}} keys %scores) {
+	for my $lemma (sort {$top_theme_scores{$b} <=> $top_theme_scores{$a}} keys %top_theme_scores) {
 		my %result;
-		$result{lemma} = $lemma;
+		$result{lemmatkoLOL} = $lemma;
 		my @res_appearances = keys %{$appearances{$lemma}};
 		$result{articles} = \@res_appearances;
 		$result{best_form} = most_frequent(@{$all_forms{$lemma}});
 		$result{all_forms} = \@{$all_forms{$lemma}};
-		$result{score} = real_score(\%scores, \%appearances, $lemma);
+		$result{score} = $top_theme_scores{ $lemma};
 		push (@results, \%result);
 	}
 	
@@ -223,7 +225,7 @@ sub count_themes {
 	
 	
 	
-	return {articles=>\@articles, top_themes=>count_top_themes(@articles)};
+	return (articles=>\@articles, top_themes=>count_top_themes(@articles));
 }
 
 1;
