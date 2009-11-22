@@ -149,11 +149,18 @@ sub make_corrections {
 	}
 }
 
+sub real_score {
+	my ($score_ref, $appearances_ref, $all_counts_ref, $number_of_articles, $what) = @_;
+	
+	return ($score_ref->{$what})*(scalar (keys %{$appearances_ref->{$what}}))*log($number_of_articles/$all_counts_ref->{$what});
+}
+
 sub count_top_themes {
 	my %appearances;
 	my %top_theme_scores;
 	my %all_forms;
 	
+	my $all_counts_ref = shift;
 	my @articles = @_;
 	
 	for my $i (0..$#articles) {
@@ -172,9 +179,12 @@ sub count_top_themes {
 	}
 	
 	my @results;
-	for my $lemma (sort {$top_theme_scores{$b} <=> $top_theme_scores{$a}} keys %top_theme_scores) {
+	for my $lemma (sort {
+			real_score(\%top_theme_scores, \%appearances, $all_counts_ref, scalar @articles, $b) <=> real_score(\%top_theme_scores, \%appearances, $all_counts_ref, scalar @articles, $a)
+		} keys %top_theme_scores) {
+			
 		my %result;
-		$result{lemmatkoLOL} = $lemma;
+		$result{lemma} = $lemma;
 		my @res_appearances = keys %{$appearances{$lemma}};
 		$result{articles} = \@res_appearances;
 		$result{best_form} = most_frequent(@{$all_forms{$lemma}});
@@ -223,7 +233,7 @@ sub count_themes {
 	
 	foreach (@articles) { delete $_->{all_words_copy} };
 	
-	my $top_themes = count_top_themes(@articles);
+	my $top_themes = count_top_themes(\%all_counts, @articles);
 	
 	print "size of themes is ".scalar @$top_themes."\n";
 	
