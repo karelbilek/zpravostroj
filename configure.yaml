@@ -31,7 +31,6 @@ all_article_properties: #dont remove anything that is in more files
                         #     it will be impossible to change then!
     - url
     - title
-    - keys 		# DELETE THIS LATER MMKAY?
     - top_keys
     - extracted
     - html
