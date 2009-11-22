@@ -14,14 +14,6 @@ use List::Util qw(sum);
 # use Clone::Fast qw( clone );
 
 
-
-my $max_first_named = read_option("counter_first_named"); 			#30
-my $max_first_themes = read_option("counter_first_themes");			#15
-	#number of named entities/themes that get it to final keys
-	#BUT! this is BEFORE the subthemes cleaning!
-	#number of entities should be high - this is actually just a safety catch if the NE recogniser goes wild¨
-	#(which usually happens with longer texts in other than Czech language)
-	
 	
 	#phase, that counts ALL max_length - long strings
 sub first_counting_phase {
@@ -55,7 +47,6 @@ sub second_counting_phase {
 	my $min_score;
 	my $max_length = shift;
 	my $number_of_articles = shift;
-	my $count_bottom_ref = shift;
 	
 	my $all_counts_ref = shift;
 	my $article_ref = shift;
@@ -86,7 +77,7 @@ sub second_counting_phase {
 		
 		shift @all_words;
 	}
-	%score = map {$_ => ((2 - 1/ split_size($_))*($keys_count{$_})*log($number_of_articles / (2*$all_counts_ref->{$_})))} keys %keys_count;
+	%score = map {$_ => ((2 - 1/ split_size($_))*($keys_count{$_})*log($number_of_articles / ($all_counts_ref->{$_})))} keys %keys_count;
 	
 	my $score_sum=sum (values %score);
 	
@@ -158,6 +149,43 @@ sub make_corrections {
 	}
 }
 
+sub count_top_themes {
+	my %appearances;
+	my %top_theme_scores;
+	my %all_forms;
+	
+	my @articles = @_;
+	
+	for my $i (0..$#articles) {
+		my $article = $articles[$i];
+		
+		my @keys;
+		@keys = @{$article->{top_keys}} if $article->{top_keys};
+		
+		for my $key (@keys) {
+			$appearances{$lemma}->{$i} = undef;
+			$scores{$lemma}+=$key->{score};
+			push (@{$all_forms{$lemma}}, @{$key->{all_forms}});
+		}
+	}
+	
+	my @results;
+	for my $lemma (sort $top_theme_scores{$b}) <=> $top_theme_scores{$a}} keys %scores) {
+		my %result;
+		$result{lemma} = $lemma;
+		my @res_appearances = keys %{$appearances{$lemma}};
+		$result{articles} = \@res_appearances;
+		$result{best_form} = most_frequent(@{$all_forms{$lemma}});
+		$result{all_forms} = \@{$all_forms{$lemma}};
+		$result{score} = real_score(\%scores, \%appearances, $lemma);
+		push (@results, \%result);
+	}
+	
+	
+	splice (@results, 250)if @results>250;
+	
+	return \@results;
+}
 
 sub count_themes {
 	my @articles = @_;
@@ -189,13 +217,13 @@ sub count_themes {
 	foreach (@articles) {first_counting_phase($max_length, \%all_counts,map{$_->{lemma}} @{$_->{all_words_copy}})};
 	
 	
-	foreach (@articles) { $_->{top_keys}=second_counting_phase($max_length, scalar @articles,\%count_bottom_hash, \%all_counts,$_) };
+	foreach (@articles) { $_->{top_keys}=second_counting_phase($max_length, scalar @articles, \%all_counts,$_) };
 	
 	foreach (@articles) { delete $_->{all_words_copy} };
 	
 	
 	
-	return @articles;
+	return {articles=>\@articles, top_themes=>count_top_themes(@articles)};
 }
 
 1;

@@ -26,8 +26,9 @@ sub redo_all_on_one {
 	($article) = tag_texts($article);
 	
 	update_pool_articles($which, $article);
-		
-	($article) = count_themes($article);
+	
+	my %r = count_themes($article);
+	($article) = @{$r{articles}};
 	
 	
 	update_pool_articles($which, $article);
@@ -41,13 +42,13 @@ sub retag_recount {
 	
 	@articles = tag_texts(@articles);
 	
-	
-	@articles = count_themes(@articles);
+	my %r = count_themes(@articles);
+	@articles = @{$r{articles}};
 	
 	update_pool_articles(0, @articles);
 	
 	
-	count_pool_themes;
+	update_pool_themes(@{$r{themes}});
 }
 
 sub do_everything {
@@ -75,8 +76,9 @@ sub do_everything {
 	my_log("do_everything - hello again. tagged all");
 	
 	update_pool_articles($start, @articles);
-		
-	@articles = count_themes(@articles);
+	
+	my %r = count_themes(@articles);
+	@articles = @{$r{articles}};
 	my_log("do_everything - counted all");
 	
 	
@@ -90,7 +92,7 @@ sub step {
 	my_log("step - starting");
 	do_everything;
 	my_log("step - counting top themes...");
-	count_pool_themes;
+	update_pool_themes(@{$r{themes}});
 	my_log("step - ...done");
 	
 	my $new_day = get_day;
@@ -111,7 +113,8 @@ sub recount {
 	my @articles = read_pool_articles;
 	my_log("recount - read, gonna count");
 	
-	@articles = count_themes(@articles);
+	my %r = count_themes(@articles);
+	@articles = @{$r{articles}};
 	my_log("recount - counted, gonna update");
 	
 	
@@ -119,7 +122,7 @@ sub recount {
 	
 	my_log("recount - updated, gonna count pool themes");
 	
-	count_pool_themes;
+	update_pool_themes(@{$r{themes}});
 	my_log("recount - counted, end");
 	
 	

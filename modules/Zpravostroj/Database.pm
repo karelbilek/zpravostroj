@@ -19,7 +19,7 @@ use Zpravostroj::TopThemes;
 
 
 use base 'Exporter';
-our @EXPORT = qw( get_pool_count add_new_articles read_pool_articles save_key_count update_pool_articles archive_pool unarchive load_anything count_pool_themes);
+our @EXPORT = qw( get_pool_count add_new_articles read_pool_articles save_key_count update_pool_themes archive_pool unarchive load_anything count_pool_themes);
 
 my $database_dir = read_option("articles_address");
 my $pool_dir = $database_dir."/pool";
@@ -197,12 +197,10 @@ sub read_pool_articles {
 
 
 
-sub count_pool_themes {
+sub update_pool_themes {
 	
 	my $where = $pool_dir."/".$topthemes;
-	my @articles = read_pool_articles;
-			#-------------------------------FUTURE:::::add some buffering so I dont have to read it again
-	my @themes = top_themes(@articles);
+	my @themes = @_;
 	dump_anything($where, \@themes);
 }
 
