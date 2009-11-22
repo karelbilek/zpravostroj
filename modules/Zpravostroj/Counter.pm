@@ -223,9 +223,11 @@ sub count_themes {
 	
 	foreach (@articles) { delete $_->{all_words_copy} };
 	
+	my $top_themes = count_top_themes(@articles);
 	
+	print "size of themes is ".scalar @$top_themes."\n";
 	
-	return (articles=>\@articles, top_themes=>count_top_themes(@articles));
+	return (articles=>\@articles, top_themes=>$top_themes);
 }
 
 1;

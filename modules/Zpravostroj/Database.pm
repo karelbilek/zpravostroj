@@ -199,8 +199,8 @@ sub read_pool_articles {
 sub update_pool_themes {
 	
 	my $where = $pool_dir."/".$topthemes;
-	my @themes = @_;
-	dump_anything($where, \@themes);
+	my $themes = shift;
+	dump_anything($where, $themes);
 }
 
 

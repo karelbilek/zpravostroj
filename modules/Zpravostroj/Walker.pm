@@ -48,7 +48,7 @@ sub retag_recount {
 	update_pool_articles(0, @articles);
 	
 	
-	update_pool_themes(@{$r{themes}});
+	update_pool_themes($r{top_themes});
 }
 
 sub do_everything {
@@ -86,7 +86,7 @@ sub do_everything {
 	
 	update_pool_articles($start, @articles);
 	
-	update_pool_themes(@{$r{themes}});
+	update_pool_themes($r{top_themes});
 	return $start;
 }
 
@@ -123,7 +123,7 @@ sub recount {
 	
 	my_log("recount - updated, gonna count pool themes");
 	
-	update_pool_themes(@{$r{themes}});
+	update_pool_themes($r{top_themes});
 	my_log("recount - counted, end");
 	
 	
