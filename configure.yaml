@@ -31,13 +31,11 @@ all_article_properties: #dont remove anything that is in more files
                         #     it will be impossible to change then!
     - url
     - title
-    - keys 		# DELETE THIS LATER MMKAY?
     - top_keys
     - extracted
     - html
     - all_words
     - all_named
-    - top_keys
 log_file: /a/merkur2/ufallabhome/bilek/rocnik/data/log
 warning_file: /a/merkur2/ufallabhome/bilek/rocnik/data/warnings
 themes_dir: /a/merkur2/ufallabhome/bilek/rocnik/data/themes

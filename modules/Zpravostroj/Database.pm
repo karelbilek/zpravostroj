@@ -223,8 +223,9 @@ sub update_pool_articles {
 			my %updating = %{shift (@input)};
 		
 			foreach (keys %updating) {
-				(exists $all_article_properties{$_}) or die "forbidden article property $_";
-				$article{$_} = $updating{$_};
+				#(exists $all_article_properties{$_}) or die "forbidden article property $_";
+				#
+				if (exists $all_article_properties{$_}) {$article{$_} = $updating{$_}} else {delete $article{$_}};
 			}
 		
 			dump_article($i, \%article);

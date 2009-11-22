@@ -84,7 +84,6 @@ sub load_yaml_file {
 sub most_frequent {
 	my @array=@_;
 	my %appearances;
-	@appearances{@array}=(0) x scalar @array;
 	for my $element (@array){$appearances{$element}++};
 	return ((sort {$appearances{$b}<=>$appearances{$a}} @array)[0]);
 	
@@ -133,7 +132,7 @@ sub make_normal_word {
     my $text = shift;
     return unless defined $text;
     
-    $text =~ s/^([^\-\.,_;\/\\\^\?!]*).*$/$1/;
+    $text =~ s/^([^\-\.,_;\/\\\^\?:\(\)!]*).*$/$1/;
         #remove all weird letters
     	
     $text =~ s/ +$//;

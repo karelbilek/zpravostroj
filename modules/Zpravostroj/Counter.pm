@@ -10,6 +10,7 @@ use Zpravostroj::Other;
 use base 'Exporter';
 our @EXPORT = qw( count_themes);
 use utf8;
+use List::Util qw(sum);
 # use Clone::Fast qw( clone );
 
 
@@ -87,6 +88,8 @@ sub second_counting_phase {
 	}
 	%score = map {$_ => ((2 - 1/ split_size($_))*($keys_count{$_})*log($number_of_articles / (2*$all_counts_ref->{$_})))} keys %keys_count;
 	
+	my $score_sum=sum (values %score);
+	
 	my @all_lemmas_sorted= (sort {$score{$b}<=>$score{$a}} (keys %score));
 	my @res_lemmas;
 	
@@ -110,12 +113,7 @@ sub second_counting_phase {
 	
 	my @res;
 	for my $lemma (sort {$score{$b}<=>$score{$a}} keys %res_lemmas_hash) {
-		my %form_vote;
-		for my $form (@{$forms{$lemma}}) {
-			$form_vote{$form}++;
-		}
-		my @sorted = sort {$form_vote{$b}<=>$form_vote{$a}} keys %form_vote;
-		push (@res, {lemma=>$lemma, best_form=>$sorted[0],all_forms=>\@sorted, score=>$score{$lemma}, count=>$keys_count{$lemma}, reverse=>($all_counts_ref->{$lemma})});
+		push (@res, {lemma=>$lemma, best_form=>most_frequent(@{$forms{$lemma}}),all_forms=>\@{$forms{$lemma}}, score=>100*($score{$lemma}/$score_sum), count=>$keys_count{$lemma}, reverse=>($all_counts_ref->{$lemma})});
 	}
 	
 	return \@res;
