@@ -18,7 +18,7 @@ use Zpravostroj::Other;
 
 
 use base 'Exporter';
-our @EXPORT = qw( get_pool_count add_new_articles read_pool_articles save_key_count update_pool_themes archive_pool unarchive load_anything update_pool_articles);
+our @EXPORT = qw( get_pool_count add_new_articles read_pool_articles save_key_count update_pool_themes archive_pool unarchive load_anything update_pool_articles set_global get_global);
 
 my $database_dir = read_option("articles_address");
 my $pool_dir = $database_dir."/pool";
@@ -30,6 +30,7 @@ my %all_article_properties;
 
 my $archive="archive.yaml.bz2";
 my $topthemes = "top_themes.yaml.bz2";
+
 
 
 sub save_key_count {
@@ -117,44 +118,31 @@ sub load_anything {
 	
 	my $where = shift;
 	
-
 	my $no_existence_warning = shift;
-	
-
 	
 	if (!-e $where) {
 		my_warning("load_anything - $where does not exist!!") unless ($no_existence_warning);
 		return "";
 	}
 	
-
-	
 	my $z = new IO::Uncompress::Bunzip2($where);
-	
-
 	
 	if (!$z) {
 		my_warning("load_anything - $where cannot be read for weird reason...");
 		return \%all_article_properties; #trick - I return EMPTY article
 	}
 	
-
-	
 	my $all = do {local ($/); <$z>};
 	close $z;
 	
-
 	my $result;
 	if ($all) {
-
 		eval {$result = Load($all)};
 		
-
 		if ($@) {
 			my_warning("load_anything - some weird error given when loading $where - ".$@." :-(");
 			return \%all_article_properties; #trick - I return EMPTY article
 		}
-	
 		return $result;
 	} else {
 		return \%all_article_properties; #trick - I return EMPTY article
@@ -196,6 +184,27 @@ sub dump_anything {
 	print $z $dumped unless (!$what);
 	close $z;
 }
+
+sub set_global {
+	my $name=shift;
+	my $contents= shift;
+	open my $fh, ">", $database_dir."/".$name;
+	print $fh $contents;
+	close $fh;
+}
+
+sub get_global {
+	my $name = shift;
+	if (-e $database_dir."/".$name) {
+		open my $fh, "<", $database_dir."/".$name;
+		chomp (my $c = <$fh>);
+		close $fh;
+		return $c;
+	} else {
+		return "";
+	}
+}
+
 
 sub read_pool_articles {
 	my $begin = shift;
@@ -283,7 +292,7 @@ sub archive_pool {
 	for my $article(@articles) {
 		my $article_file=$archive_dir."/".$i.".yaml.bz2";
 		
-		my @keys = map ({best_form=>$_->{best_form}, lemma=>$_->{lemma}}, @{$article->{keys}});
+		my @keys = map ({best_form=>$_->{best_form}, lemma=>$_->{lemma}}, @{$article->{top_keys}});
 		dump_anything($article_file, {url=>($article->{url}), keys=>\@keys, title=>$article->{title}});
 		
 		$i++;

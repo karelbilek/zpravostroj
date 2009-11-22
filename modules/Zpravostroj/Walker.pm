@@ -13,7 +13,6 @@ use Zpravostroj::Counter;
 use base 'Exporter';
 our @EXPORT = qw(do_everything recount step retag_recount redo_all_on_one);
 
-my $last_day="";
 
 sub redo_all_on_one {
 	my $which = shift;
@@ -71,13 +70,17 @@ sub do_everything {
 		
 	update_pool_articles($start, @articles);
 	
+	#-------------------------------now i am reading ALL ARTICLES
 	
-	#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!this is WRONG AND YOU SHOULD FEEL WRONG
-	my %r = count_themes(@articles);
+	@articles = read_pool_articles
+	
+	my %r = count_themes(0.85, 0.07, 0.9, 0.6, @articles);
+								#I should save these elsewhere but I am too tired to actually do that now
+	
 	@articles = @{$r{articles}};
-		
 	
-	update_pool_articles($start, @articles);
+	
+	update_pool_articles( @articles);
 	
 	update_pool_themes($r{top_themes});
 	return $start;
@@ -86,14 +89,21 @@ sub do_everything {
 sub step {
 	do_everything;
 	
-		
 	my $new_day = get_day;
-	if (($last_day eq "") or ($last_day eq $new_day)) {
-		#-----
-	} else {
+	my $last_day = get_global("day");
+	
+	# if ((!$last_day) or ($last_day eq $new_day)) {
+	# 	#-----
+	# } else {
+	# 	archive_pool;
+	# }
+	
+	
+	if (($last_day) and !($last_day eq $new_day)) {
 		archive_pool;
 	}
-	$last_day = $new_day;
+	
+	set_global("day", $new_day);
 }
 
 
