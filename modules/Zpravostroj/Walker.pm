@@ -100,7 +100,7 @@ sub step {
 sub recount {
 	my @articles = read_pool_articles;
 		
-	my %r = count_themes(1,1,1,1,@articles);
+	my %r = count_themes(0.85,0.07,0.9,0.6,@articles);
 	@articles = @{$r{articles}};
 	
 	

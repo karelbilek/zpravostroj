@@ -156,9 +156,9 @@ sub make_corrections {
 sub real_score {
 	my ($score_ref, $appearances_ref, $all_counts_ref, $number_of_articles, $what, $a, $b, $c, $d) = @_;
 	
-	#return ;#
+	# return ;
 	my $score = (log(scalar (keys %{$appearances_ref->{$what}})+1)**$a)*(log($number_of_articles/(($b*100)*($all_counts_ref->{$what})))**$c)* (($score_ref->{$what})**$d);
-	#print "---$a--$b--$c--$d--$score-\n";
+	# print "---$a--$b--$c--$d--$score-\n";
 	return $score;
 	
 }
