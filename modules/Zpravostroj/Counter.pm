@@ -158,7 +158,7 @@ sub real_score {
 	
 	# return ;
 	my $score = (log(scalar (keys %{$appearances_ref->{$what}})+1)**$a)*(log($number_of_articles/(($b*100)*($all_counts_ref->{$what})))**$c)* (($score_ref->{$what})**$d);
-	# print "---$a--$b--$c--$d--$score-\n";
+	print "$score-\n";
 	return $score;
 	
 }
@@ -202,7 +202,6 @@ sub count_top_themes {
 		$result{best_form} = most_frequent(@{$all_forms{$lemma}});
 		$result{all_forms} = \@{$all_forms{$lemma}};
 		$result{score} = real_score(\%top_theme_scores, \%appearances, $all_counts_ref, scalar @articles, $lemma, $pa, $pb, $pc, $pd);
-		$result {somerandomcrap} = (scalar @articles)/(1000*($all_counts_ref->{$lemma}));
 		push (@results, \%result);
 	}
 	

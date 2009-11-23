@@ -72,7 +72,7 @@ sub do_everything {
 	
 	#-------------------------------now i am reading ALL ARTICLES
 	
-	@articles = read_pool_articles
+	@articles = read_pool_articles;
 	
 	my %r = count_themes(0.85, 0.07, 0.9, 0.6, @articles);
 								#I should save these elsewhere but I am too tired to actually do that now
@@ -80,7 +80,7 @@ sub do_everything {
 	@articles = @{$r{articles}};
 	
 	
-	update_pool_articles( @articles);
+	update_pool_articles(0, @articles);
 	
 	update_pool_themes($r{top_themes});
 	return $start;

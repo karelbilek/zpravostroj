@@ -122,7 +122,7 @@ sub load_anything {
 	
 	if (!-e $where) {
 		my_warning("load_anything - $where does not exist!!") unless ($no_existence_warning);
-		return "";
+		return \%all_article_properties; #trick - I return EMPTY article
 	}
 	
 	my $z = new IO::Uncompress::Bunzip2($where);
