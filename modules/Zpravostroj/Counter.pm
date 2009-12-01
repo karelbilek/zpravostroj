@@ -158,7 +158,6 @@ sub real_score {
 	
 	# return ;
 	my $score = (log(scalar (keys %{$appearances_ref->{$what}})+1)**$a)*(log($number_of_articles/(($b*100)*($all_counts_ref->{$what})))**$c)* (($score_ref->{$what})**$d);
-	print "$score-\n";
 	return $score;
 	
 }
@@ -252,7 +251,6 @@ sub count_themes {
 	
 	my $top_themes = count_top_themes(\%all_counts, $pa, $pb, $pc, $pd, @articles);
 	
-	print "size of themes is ".scalar @$top_themes."\n";
 	
 	return (articles=>\@articles, top_themes=>$top_themes);
 }

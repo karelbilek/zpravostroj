@@ -18,7 +18,7 @@ use Zpravostroj::Other;
 
 
 use base 'Exporter';
-our @EXPORT = qw( get_pool_count add_new_articles read_pool_articles save_key_count update_pool_themes archive_pool unarchive load_anything update_pool_articles set_global get_global);
+our @EXPORT = qw( get_pool_count add_new_articles read_pool_articles save_key_count update_pool_themes archive_pool unarchive load_anything update_pool_articles set_global get_global get_top_themes);
 
 my $database_dir = read_option("articles_address");
 my $pool_dir = $database_dir."/pool";
@@ -31,7 +31,23 @@ my %all_article_properties;
 my $archive="archive.yaml.bz2";
 my $topthemes = "top_themes.yaml.bz2";
 
-
+sub get_top_themes {
+	my $day = shift;
+	my $today = get_day;
+	my $archive_dir;
+	
+	if (!$day or $today eq $day) {
+		$archive_dir = $pool_dir;
+	} else {
+		$archive_dir = $database_dir;
+		if (-d $archive_dir) {
+			return ();
+		}
+	}
+	
+	
+	return @{load_anything($archive_dir."/".$topthemes)};
+}
 
 sub save_key_count {
 	my ($key, $day, $count) = @_;
@@ -273,7 +289,7 @@ sub update_pool_articles {
 sub archive_pool {
 	my_log ("archive_pool - entering");
 	
-	my $day = get_day();
+	my $day = get_day(1);
 	my $archive_dir = $database_dir."/".$day;
 	if (!-d $archive_dir) {
 		mkdir $archive_dir or die "Dir $archive_dir cannot be created. Better luck next time, pal.";

@@ -8,6 +8,7 @@ use warnings;
 use File::Spec;
 use utf8;
 use DateTime;
+use DateTime::Duration;
 #use Text::Unaccent;
 
 
@@ -31,8 +32,13 @@ my $log_file = read_option("log_file");
 
 
 sub get_day {
-
-	return DateTime->today->dmy;
+	my $move = shift;
+	
+	if (!$move) {
+		return DateTime->today->dmy;
+	} else  {
+		return (DateTime->today - DateTime::Duration->new(days=>$move))->dmy;
+	}
 }
 
 sub get_time {
