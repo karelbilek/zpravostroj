@@ -87,21 +87,17 @@ sub do_everything {
 }
 
 sub step {
-	do_everything;
 	
 	my $new_day = get_day;
 	my $last_day = get_global("day");
-	
-	# if ((!$last_day) or ($last_day eq $new_day)) {
-	# 	#-----
-	# } else {
-	# 	archive_pool;
-	# }
 	
 	
 	if (($last_day) and !($last_day eq $new_day)) {
 		archive_pool;
 	}
+	
+	do_everything;
+	
 	
 	set_global("day", $new_day);
 }
