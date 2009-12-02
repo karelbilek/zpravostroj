@@ -18,7 +18,7 @@ use Zpravostroj::Other;
 
 
 use base 'Exporter';
-our @EXPORT = qw( get_pool_count add_new_articles read_pool_articles save_key_count update_pool_themes archive_pool unarchive load_anything update_pool_articles set_global get_global get_top_themes);
+our @EXPORT = qw( get_pool_count add_new_articles read_pool_articles update_pool_themes archive_pool unarchive load_anything update_pool_articles set_global get_global get_top_themes dump_to_archive load_all_from_archive);
 
 my $database_dir = read_option("articles_address");
 my $pool_dir = $database_dir."/pool";
@@ -49,39 +49,39 @@ sub get_top_themes {
 	return @{load_anything($archive_dir."/".$topthemes)};
 }
 
-sub save_key_count {
-	my ($key, $day, $count) = @_;
-	
-	if (!$key) {
-		my_warning("save_key_count - key is empty :-(");
-		return;
-	}
-	
-	
-	my $first_letter = substr($key,0,1);
-	my $two_letters = $first_letter;
-	if (length $key >= 2) {
-		$two_letters .= substr($key,1,1);
-	}
-	
-	my $first_dir = $themes_dir."/".$first_letter;
-	my $second_dir = $first_dir."/".$two_letters;
-	my $key_file = $second_dir."/".$key.".yaml.bz2";
-	
-	mkdir $themes_dir;
-	mkdir $first_dir;
-	mkdir $second_dir;
-	
-	my %key_hash;
-	if (my $key_ref=load_anything($key_file, 1)) {
-		%key_hash = %$key_ref;
-	} else {
-		$key_hash{key} = $key;
-	}
-	
-	$key_hash{counts}->{$day}=$count;
-	dump_anything($key_file, \%key_hash);
-}
+# sub save_key_count {
+# 	my ($key, $day, $count) = @_;
+# 	
+# 	if (!$key) {
+# 		my_warning("save_key_count - key is empty :-(");
+# 		return;
+# 	}
+# 	
+# 	
+# 	my $first_letter = substr($key,0,1);
+# 	my $two_letters = $first_letter;
+# 	if (length $key >= 2) {
+# 		$two_letters .= substr($key,1,1);
+# 	}
+# 	
+# 	my $first_dir = $themes_dir."/".$first_letter;
+# 	my $second_dir = $first_dir."/".$two_letters;
+# 	my $key_file = $second_dir."/".$key.".yaml.bz2";
+# 	
+# 	mkdir $themes_dir;
+# 	mkdir $first_dir;
+# 	mkdir $second_dir;
+# 	
+# 	my %key_hash;
+# 	if (my $key_ref=load_anything($key_file, 1)) {
+# 		%key_hash = %$key_ref;
+# 	} else {
+# 		$key_hash{key} = $key;
+# 	}
+# 	
+# 	$key_hash{counts}->{$day}=$count;
+# 	dump_anything($key_file, \%key_hash);
+# }
 
 sub get_pool_count {
 	my_log ("get_pool_count - entering");
@@ -284,69 +284,104 @@ sub update_pool_articles {
 	my_log ("update_pool_articles - escaping");
 }
 
-
-
-sub archive_pool {
-	my_log ("archive_pool - entering");
+sub dump_to_archive {
+	my $where = shift;
+	my $topthemes_ref = shift;
+	my @articles = @_;
 	
-	my $day = get_day(1);
-	my $archive_dir = $database_dir."/".$day;
+	my $archive_dir = $database_dir."/".$where;
 	if (!-d $archive_dir) {
+		mkdir $archive_dir or die "Dir $archive_dir cannot be created. Better luck next time, pal.";
+	} else {
+		#this is cruel BUT NECESARRY!!!1
+		`rm -r $archive_dir`;
 		mkdir $archive_dir or die "Dir $archive_dir cannot be created. Better luck next time, pal.";
 	}
 	
 	my $big_zip = $archive_dir."/".$archive;
 	
-	my @articles = read_pool_articles;
-	
 	dump_anything($big_zip, \@articles);
 	
-	my_log ("archive_pool - everything dumped to big zip, lets extract extra keys...");
+	my_log ("dump_to_archive - everything dumped to big zip, lets extract extra keys...");
 	
-	
-	my $i=0;
-	for my $article(@articles) {
+	for my $i (0..$#articles){
 		my $article_file=$archive_dir."/".$i.".yaml.bz2";
+		
+		my $article = $articles[$i];
 		
 		my @keys = map ({best_form=>$_->{best_form}, lemma=>$_->{lemma}}, @{$article->{top_keys}});
 		dump_anything($article_file, {url=>($article->{url}), keys=>\@keys, title=>$article->{title}});
 		
-		$i++;
 	}
 	
 	my $topthemes_file = $archive_dir."/".$topthemes;
 	
-	my_log ("archive_pool - OK, done, now let's copy the topthemes file...");	
-	copy($pool_dir."/".$topthemes, $topthemes_file);
+	dump_anything($topthemes_file, $topthemes_ref);
 	
-	my @themes = @{load_anything($topthemes_file)};
-	splice (@themes, 100)if @themes>100;
-	
-	for my $theme(@themes) {
-		save_key_count($theme->{lemma}, $day, scalar @{$theme->{articles}});
-	}
-	
-	
-	my_log ("archive_pool - done. Now lets remove the pool...");
-	rm(\1, $pool_dir);
-	my_log ("archive_pool - ...done. Exiting.");
 }
 
-sub unarchive {
-	my_log ("unarchive - this should not get called.... yet.");
-	my $day = shift;
+sub archive_pool {
 	
+	my $day = get_day(1);
 	my $archive_dir = $database_dir."/".$day;
+	
+	my @articles = read_pool_articles;
+	
+	my $topthemes_ref = load_anything($pool_dir."/".$topthemes);
+	
+	dump_to_archive($day, $topthemes_ref, @articles);
+}
+
+sub load_all_from_archive {
+	
+	my $where = shift;
+	my $archive_dir = $database_dir."/".$where;
+	
 	if (!-d $archive_dir) {
-		die "Wrong date $day OR folder $archive_dir just doesn't exist.";
+		return (top_themes=>[], articles=>[]);
 	}
 	
-	my $archive_file = $archive_dir."/".$archive;
 	
-	my $what = load_anything($archive_file);
+	my %res;
 	
-	my @articles = @{$what};
-	return @articles;
+	my $topthemes_file = $archive_dir."/".$topthemes;
+	$res{top_themes} = load_anything($topthemes_file);
+	
+	my $big_zip = $archive_dir."/".$archive;
+	$res{articles} = load_anything($big_zip);
+	
 }
+
+sub load_top_themes_from_archive {
+	
+	my $where = shift;
+	my $archive_dir = $database_dir."/".$where;
+	
+	if (!-d $archive_dir) {
+		return [];
+	}
+	
+	
+	my $topthemes_file = $archive_dir."/".$topthemes;
+	return load_anything($topthemes_file);
+	
+}
+
+sub load_short_from_archive {
+	
+	my $where = shift;
+	my $what = shift;
+	my $archive_dir = $database_dir."/".$where;
+	
+	if (!-d $archive_dir) {
+		return [];
+	}
+	
+	
+	my $topthemes_file = $archive_dir."/".$topthemes;
+	return load_anything($topthemes_file);
+	
+}
+
 
 1;

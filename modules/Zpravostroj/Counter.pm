@@ -196,7 +196,7 @@ sub count_top_themes {
 			
 		my %result;
 		$result{lemma} = $lemma;
-		my @res_appearances = keys %{$appearances{$lemma}};
+		my @res_appearances = map {{id=>$_, title=>$articles[$_]->{title}, url=>$articles[$_]->{url}}} keys %{$appearances{$lemma}};
 		$result{articles} = \@res_appearances;
 		$result{best_form} = most_frequent(@{$all_forms{$lemma}});
 		$result{all_forms} = \@{$all_forms{$lemma}};
