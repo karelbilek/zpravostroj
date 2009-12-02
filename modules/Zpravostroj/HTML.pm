@@ -13,10 +13,10 @@ use Zpravostroj::Database;
 
 sub generate_HTML {
 	 my $q = shift;
-	# my $x = $q->param('lol');
-	
+	my $x = $q->param('lol');
+	return $x if $x;
 	my @themes = get_top_themes;
-	my @forms = map {my$r=$_->{best_form};$r;$r=~s/_/ /g;$r} @themes;
+	my @forms = map {my$r=$_->{best_form};$r=~s/_/ /g;$r} @themes;
 	
 	my $res;
 	$res.=start_html(-title=>'Zpravostroj - nejčastější témata',
