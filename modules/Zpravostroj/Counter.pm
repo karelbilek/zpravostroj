@@ -10,17 +10,10 @@ use Zpravostroj::Other;
 use base 'Exporter';
 our @EXPORT = qw( count_themes);
 use utf8;
+use List::Util qw(sum);
 # use Clone::Fast qw( clone );
 
 
-
-my $max_first_named = read_option("counter_first_named"); 			#30
-my $max_first_themes = read_option("counter_first_themes");			#15
-	#number of named entities/themes that get it to final keys
-	#BUT! this is BEFORE the subthemes cleaning!
-	#number of entities should be high - this is actually just a safety catch if the NE recogniser goes wild¨
-	#(which usually happens with longer texts in other than Czech language)
-	
 	
 	#phase, that counts ALL max_length - long strings
 sub first_counting_phase {
@@ -54,7 +47,6 @@ sub second_counting_phase {
 	my $min_score;
 	my $max_length = shift;
 	my $number_of_articles = shift;
-	my $count_bottom_ref = shift;
 	
 	my $all_counts_ref = shift;
 	my $article_ref = shift;
@@ -85,13 +77,15 @@ sub second_counting_phase {
 		
 		shift @all_words;
 	}
-	%score = map {$_ => ((2 - 1/ split_size($_))*($keys_count{$_})*log($number_of_articles / (2*$all_counts_ref->{$_})))} keys %keys_count;
+	%score = map {$_ => ((2 - 1/ split_size($_))*($keys_count{$_})*log($number_of_articles / ($all_counts_ref->{$_})))} keys %keys_count;
+	
+	my $score_sum=sum (values %score);
 	
 	my @all_lemmas_sorted= (sort {$score{$b}<=>$score{$a}} (keys %score));
 	my @res_lemmas;
 	
 	# verze A - u prvniho s jednickou se zastavim
-	push (@res_lemmas, shift @all_lemmas_sorted) while ($keys_count{$all_lemmas_sorted[0]}>1);
+	push (@res_lemmas, shift @all_lemmas_sorted) while (@all_lemmas_sorted && $keys_count{$all_lemmas_sorted[0]}>1);
 	
 	# verze B - vezmi vse co je >1
 	# @res_lemmas = map {if ($keys_count{$_}>1){$_}else{()}} @all_lemmas_sorted;
@@ -110,12 +104,7 @@ sub second_counting_phase {
 	
 	my @res;
 	for my $lemma (sort {$score{$b}<=>$score{$a}} keys %res_lemmas_hash) {
-		my %form_vote;
-		for my $form (@{$forms{$lemma}}) {
-			$form_vote{$form}++;
-		}
-		my @sorted = sort {$form_vote{$b}<=>$form_vote{$a}} keys %form_vote;
-		push (@res, {lemma=>$lemma, best_form=>$sorted[0],all_forms=>\@sorted, score=>$score{$lemma}, count=>$keys_count{$lemma}, reverse=>($all_counts_ref->{$lemma})});
+		push (@res, {lemma=>$lemma, best_form=>most_frequent(@{$forms{$lemma}}),all_forms=>\@{$forms{$lemma}}, score=>100*($score{$lemma}/$score_sum), count=>$keys_count{$lemma}, reverse=>($all_counts_ref->{$lemma})});
 	}
 	
 	return \@res;
@@ -144,24 +133,89 @@ sub connect_bottom {
 
 sub make_corrections {
 	my $article_ref = shift;
-	
-	for my $length (1..longest_correction) {
-		for my $i (0..(scalar @{$article_ref->{all_words}})-$length){
+	if (!defined $article_ref->{all_words}) {
+		my @empty = ();
+		$article_ref->{all_words} = \@empty;
+	} else {
+		for my $length (1..longest_correction) {
+			for my $i (0..(scalar @{$article_ref->{all_words}})-$length){
 				
-			my $joined_form = join (" ", map {$_->{form}} @{$article_ref->{all_words}}[$i..$i+$length-1]);
+				my $joined_form = join (" ", map {$_->{form}} @{$article_ref->{all_words}}[$i..$i+$length-1]);
 			
-			if (my $correction = get_correction($joined_form)) {
-				my @correction_split = split (" ", $correction);
-				for my $j (0..$length-1) {
-					${$article_ref->{all_words}}[$j+$i]->{lemma}=$correction_split[$j];
+				if (my $correction = get_correction($joined_form)) {
+					my @correction_split = split (" ", $correction);
+					for my $j (0..$length-1) {
+						${$article_ref->{all_words}}[$j+$i]->{lemma}=$correction_split[$j];
+					}
 				}
 			}
 		}
 	}
 }
 
+sub real_score {
+	my ($score_ref, $appearances_ref, $all_counts_ref, $number_of_articles, $what, $a, $b, $c, $d) = @_;
+	
+	# return ;
+	my $score = (log(scalar (keys %{$appearances_ref->{$what}})+1)**$a)*(log($number_of_articles/(($b*100)*($all_counts_ref->{$what})))**$c)* (($score_ref->{$what})**$d);
+	return $score;
+	
+}
+
+sub count_top_themes {
+	my %appearances;
+	my %top_theme_scores;
+	my %all_forms;
+	
+	my $all_counts_ref = shift;
+	my $pa = shift;
+	my $pb = shift;
+	my $pc = shift;
+	my $pd = shift;
+	my @articles = @_;
+	
+	for my $i (0..$#articles) {
+		my $article = $articles[$i];
+		
+		my @keys;
+		@keys = @{$article->{top_keys}} if $article->{top_keys};
+		
+		for my $key (@keys) {
+			my $lemma = $key->{lemma};
+			
+			$appearances{$lemma}->{$i} = undef;
+			$top_theme_scores{$lemma}+=$key->{score};
+			push (@{$all_forms{$lemma}}, @{$key->{all_forms}});
+		}
+	}
+	
+	my @results;
+	for my $lemma (sort {
+			real_score(\%top_theme_scores, \%appearances, $all_counts_ref, scalar @articles, $b, $pa, $pb, $pc, $pd) <=> real_score(\%top_theme_scores, \%appearances, $all_counts_ref, scalar @articles, $a, $pa, $pb, $pc, $pd)
+		} keys %top_theme_scores) {
+			
+		my %result;
+		$result{lemma} = $lemma;
+		my @res_appearances = keys %{$appearances{$lemma}};
+		$result{articles} = \@res_appearances;
+		$result{best_form} = most_frequent(@{$all_forms{$lemma}});
+		$result{all_forms} = \@{$all_forms{$lemma}};
+		$result{score} = real_score(\%top_theme_scores, \%appearances, $all_counts_ref, scalar @articles, $lemma, $pa, $pb, $pc, $pd);
+		push (@results, \%result);
+	}
+	
+	
+	splice (@results, 250)if @results>250;
+	
+	return \@results;
+}
 
 sub count_themes {
+	my $pa = shift;
+	my $pb = shift;
+	my $pc = shift;
+	my $pd = shift;
+	
 	my @articles = @_;
 	
 	my %all_counts;
@@ -183,7 +237,7 @@ sub count_themes {
 	
 	
 	
-	my $max_length=read_option("max_theme_length");
+	my $max_length=4;#read_option("max_theme_length");
 	
 	
 	# counting IDF AGAIN!!!! with different words!!
@@ -191,13 +245,14 @@ sub count_themes {
 	foreach (@articles) {first_counting_phase($max_length, \%all_counts,map{$_->{lemma}} @{$_->{all_words_copy}})};
 	
 	
-	foreach (@articles) { $_->{top_keys}=second_counting_phase($max_length, scalar @articles,\%count_bottom_hash, \%all_counts,$_) };
+	foreach (@articles) { $_->{top_keys}=second_counting_phase($max_length, scalar @articles, \%all_counts,$_) };
 	
 	foreach (@articles) { delete $_->{all_words_copy} };
 	
+	my $top_themes = count_top_themes(\%all_counts, $pa, $pb, $pc, $pd, @articles);
 	
 	
-	return @articles;
+	return (articles=>\@articles, top_themes=>$top_themes);
 }
 
 1;
