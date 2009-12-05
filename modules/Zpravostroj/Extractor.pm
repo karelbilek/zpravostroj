@@ -123,6 +123,7 @@ sub extract_text {
 	
 	my_log("extract_text - basically extracted");
 	my @sentences = split(" *[\.\"\'] *", $extracted);
+	foreach (@sentences) {s/\n//g};
 	my %written;
 	my $result="";
 	

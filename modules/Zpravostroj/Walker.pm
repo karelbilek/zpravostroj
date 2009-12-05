@@ -11,7 +11,7 @@ use Zpravostroj::Tagger;
 use Zpravostroj::Counter;
 
 use base 'Exporter';
-our @EXPORT = qw(do_everything recount step retag_recount redo_all_on_one);
+our @EXPORT = qw(do_everything recount step retag_recount redo_all_on_one recount_day);
 
 
 sub redo_all_on_one {
@@ -116,6 +116,14 @@ sub recount {
 	update_pool_themes($r{top_themes});
 	
 	
+}
+
+sub recount_day {
+	my $what=shift;
+	my %all = load_all_from_archive($what);
+	
+	my %r =  count_themes(0.85,0.07,0.9,0.6,@{$all{articles}});
+	dump_to_archive($what, $r{top_themes}, @{$r{articles}});
 }
 
 1;

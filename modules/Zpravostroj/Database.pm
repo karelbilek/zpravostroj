@@ -18,7 +18,7 @@ use Zpravostroj::Other;
 
 
 use base 'Exporter';
-our @EXPORT = qw( get_pool_count add_new_articles read_pool_articles update_pool_themes archive_pool unarchive load_anything update_pool_articles set_global get_global get_top_themes dump_to_archive load_all_from_archive);
+our @EXPORT = qw( get_pool_count add_new_articles read_pool_articles update_pool_themes archive_pool unarchive load_anything update_pool_articles set_global get_global get_top_themes dump_to_archive load_all_from_archive load_top_themes_from_archive);
 
 my $database_dir = read_option("articles_address");
 my $pool_dir = $database_dir."/pool";
@@ -40,9 +40,9 @@ sub get_top_themes {
 		$archive_dir = $pool_dir;
 	} else {
 		$archive_dir = $database_dir;
-		if (-d $archive_dir) {
-			return ();
-		}
+	}
+	if (!-d $archive_dir) {
+		return ();
 	}
 	
 	
@@ -330,6 +330,8 @@ sub archive_pool {
 	my $topthemes_ref = load_anything($pool_dir."/".$topthemes);
 	
 	dump_to_archive($day, $topthemes_ref, @articles);
+	
+	`rm -r $pool_dir`;
 }
 
 sub load_all_from_archive {
@@ -350,6 +352,7 @@ sub load_all_from_archive {
 	my $big_zip = $archive_dir."/".$archive;
 	$res{articles} = load_anything($big_zip);
 	
+	return %res;
 }
 
 sub load_top_themes_from_archive {
