@@ -45,8 +45,11 @@ sub get_top_themes {
 		return ();
 	}
 	
+	my $arr_ref;
+	$arr_ref = load_anything($archive_dir."/".$topthemes)
+		or $arr_ref = [];
 	
-	return @{load_anything($archive_dir."/".$topthemes)};
+	return @{$arr_ref};
 }
 
 # sub save_key_count {
@@ -125,7 +128,10 @@ sub add_new_articles {
 
 sub load_article {
 	my $i = shift;
-	return load_anything(get_pool_filename($i));
+	my $art_ref;
+	$art_ref=load_anything(get_pool_filename($i))
+		or $art_ref=\%all_article_properties;
+	return $art_ref;
 	
 }
 
@@ -138,14 +144,14 @@ sub load_anything {
 	
 	if (!-e $where) {
 		my_warning("load_anything - $where does not exist!!") unless ($no_existence_warning);
-		return \%all_article_properties; #trick - I return EMPTY article
+		return 0;
 	}
 	
 	my $z = new IO::Uncompress::Bunzip2($where);
 	
 	if (!$z) {
 		my_warning("load_anything - $where cannot be read for weird reason...");
-		return \%all_article_properties; #trick - I return EMPTY article
+		return 0;
 	}
 	
 	my $all = do {local ($/); <$z>};
@@ -157,11 +163,11 @@ sub load_anything {
 		
 		if ($@) {
 			my_warning("load_anything - some weird error given when loading $where - ".$@." :-(");
-			return \%all_article_properties; #trick - I return EMPTY article
+			return 0;
 		}
 		return $result;
 	} else {
-		return \%all_article_properties; #trick - I return EMPTY article
+		return 0;
 	}
 
 }
@@ -328,6 +334,9 @@ sub archive_pool {
 	my @articles = read_pool_articles;
 	
 	my $topthemes_ref = load_anything($pool_dir."/".$topthemes);
+	if (!$topthemes_ref) {
+		$topthemes_ref = [];
+	}
 	
 	dump_to_archive($day, $topthemes_ref, @articles);
 	
@@ -347,10 +356,12 @@ sub load_all_from_archive {
 	my %res;
 	
 	my $topthemes_file = $archive_dir."/".$topthemes;
-	$res{top_themes} = load_anything($topthemes_file);
+	$res{top_themes} = load_anything($topthemes_file)
+		or $res{top_themes} = [];
 	
 	my $big_zip = $archive_dir."/".$archive;
-	$res{articles} = load_anything($big_zip);
+	$res{articles} = load_anything($big_zip)
+		or $res{articles} = [];
 	
 	return %res;
 }
@@ -366,25 +377,19 @@ sub load_top_themes_from_archive {
 	
 	
 	my $topthemes_file = $archive_dir."/".$topthemes;
-	return load_anything($topthemes_file);
-	
-}
-
-sub load_short_from_archive {
-	
-	my $where = shift;
-	my $what = shift;
-	my $archive_dir = $database_dir."/".$where;
-	
-	if (!-d $archive_dir) {
-		return [];
+	my $topthemes_ref;
+	$topthemes_ref = load_anything($topthemes_file);
+	if (!$topthemes_ref){
+		print "wtf\n";
+		 $topthemes_ref = [];
+	} else {
+		if (!($topthemes_ref =~ /^ARRAY/)) {
+			$topthemes_ref = [];
+		}
+		print $topthemes_file;
 	}
 	
-	
-	my $topthemes_file = $archive_dir."/".$topthemes;
-	return load_anything($topthemes_file);
-	
+	return $topthemes_ref;
 }
-
 
 1;

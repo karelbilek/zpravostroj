@@ -158,6 +158,9 @@ sub real_score {
 	
 	# return ;
 	my $score = (log(scalar (keys %{$appearances_ref->{$what}})+1)**$a)*(log($number_of_articles/(($b*100)*($all_counts_ref->{$what})))**$c)* (($score_ref->{$what})**$d);
+	if ($score != $score) { #only when NaN
+		return 0;
+	}
 	return $score;
 	
 }

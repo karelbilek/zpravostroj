@@ -126,7 +126,12 @@ my $scenario;
 sub tag_texts {
 	
 	my @articles = @_;
- 
+	
+	if (!@articles) {
+		return ();
+	}
+	
+	
 	my_log("tag_texts - entering");
 	unless ($scenario_initialized) {
 		my_log("tag_texts - initializing scenario for the first time");
