@@ -18,7 +18,7 @@ use Zpravostroj::Other;
 
 
 use base 'Exporter';
-our @EXPORT = qw( get_pool_count add_new_articles read_pool_articles update_pool_themes archive_pool unarchive load_anything update_pool_articles set_global get_global get_top_themes dump_to_archive load_all_from_archive load_top_themes_from_archive);
+our @EXPORT = qw( add_new_articles update_pool_themes archive_pool update_pool_articles set_global get_global dump_to_archive);
 
 my $database_dir = read_option("articles_address");
 my $pool_dir = $database_dir."/pool";
@@ -31,60 +31,71 @@ my %all_article_properties;
 my $archive="archive.yaml.bz2";
 my $topthemes = "top_themes.yaml.bz2";
 
-sub get_top_themes {
-	my $day = shift;
-	my $today = get_day;
-	my $archive_dir;
+sub read_db {
+	#my $today = get_day;
 	
-	if (!$day or $today eq $day) {
-		$archive_dir = $pool_dir;
-	} else {
-		$archive_dir = $database_dir;
+	my %parameters = @_;
+	my %results;
+	
+	#my $begin;
+	#$begin = $parameters{articles_begin} if $parameters{articles_begin};
+	
+	#my $end;
+	#$end = $parameters{articles_end} if $parameters{articles_end};
+	
+	if ($parameters{pool} or ($parameters{date} eq get_day)) {
+		#reading pool
+		if ($parameters{top_themes}) {
+			my $arr_ref;
+			$arr_ref = load_anything($pool_dir."/".$topthemes)
+				or $arr_ref = [];
+			$results{top_themes} = $arr_ref;
+		}
+		
+		if ($parameters{articles}) {
+			my @res;
+			
+			my $begin = (exists $parameters{articles_begin}) ? $parameters{articles_begin} : 0;
+			
+			my $end = (exists $parameters{articles_end}) ? $parameters{articles_end} : (get_pool_count()-1);
+			
+			foreach my $i ($begin..$end){
+				my $article = load_article($i);
+				push (@res, $article);
+			}
+			$results{articles} = \@res;
+		}
+		
+		if ($parameters{count}) {
+			$results{count} = get_pool_count();
+		}
+		
+	} elsif (my $day = $parameters{date}) {
+		#reading from archive
+		if ($parameters{top_themes}) {
+			my $arr_ref;
+			$arr_ref = load_anything($database_dir."/".$day."/".$topthemes)
+				or $arr_ref = [];
+			$results{top_themes} = $arr_ref;
+		}
+		
+		if ($parameters{articles} or $parameters{count}) {
+							#the count is EXTREMELY uneffective, but there is no actual reason to call it by "itself"
+				
+			my $arr_ref;
+			$arr_ref = load_anything($database_dir."/".$day."/".$archive)
+				or $arr_ref = [];
+			if ((exists $parameters{articles_begin}) and exists $parameters{articles_end}) {
+				my @splited = @{$arr_ref}[$parameters{articles_begin}..$parameters{articles_end}];
+				$results{articles} = \@splited;
+			} else {
+				$results{articles} = $arr_ref;
+			}
+		}
 	}
-	if (!-d $archive_dir) {
-		return ();
-	}
-	
-	my $arr_ref;
-	$arr_ref = load_anything($archive_dir."/".$topthemes)
-		or $arr_ref = [];
-	
-	return @{$arr_ref};
+	return %results;
 }
 
-# sub save_key_count {
-# 	my ($key, $day, $count) = @_;
-# 	
-# 	if (!$key) {
-# 		my_warning("save_key_count - key is empty :-(");
-# 		return;
-# 	}
-# 	
-# 	
-# 	my $first_letter = substr($key,0,1);
-# 	my $two_letters = $first_letter;
-# 	if (length $key >= 2) {
-# 		$two_letters .= substr($key,1,1);
-# 	}
-# 	
-# 	my $first_dir = $themes_dir."/".$first_letter;
-# 	my $second_dir = $first_dir."/".$two_letters;
-# 	my $key_file = $second_dir."/".$key.".yaml.bz2";
-# 	
-# 	mkdir $themes_dir;
-# 	mkdir $first_dir;
-# 	mkdir $second_dir;
-# 	
-# 	my %key_hash;
-# 	if (my $key_ref=load_anything($key_file, 1)) {
-# 		%key_hash = %$key_ref;
-# 	} else {
-# 		$key_hash{key} = $key;
-# 	}
-# 	
-# 	$key_hash{counts}->{$day}=$count;
-# 	dump_anything($key_file, \%key_hash);
-# }
 
 sub get_pool_count {
 	my_log ("get_pool_count - entering");
@@ -227,28 +238,6 @@ sub get_global {
 	}
 }
 
-
-sub read_pool_articles {
-	my $begin = shift;
-	$begin=0 if !$begin;
-	
-	my $end = shift;
-	$end = (get_pool_count()-1) if !$end;
-	
-	return () if ($end < $begin);
-	
-	my @result;
-	foreach my $i ($begin..$end){
-		my $article = load_article($i);
-
-		push (@result, $article) if (defined $article);
-			#if some article is unreadable, this will "delete" him from database
-	}
-	return @result;
-}
-
-
-
 sub update_pool_themes {
 	my $themes = shift;
 	if (!$themes) {
@@ -329,67 +318,12 @@ sub dump_to_archive {
 sub archive_pool {
 	
 	my $day = get_day(1);
-	my $archive_dir = $database_dir."/".$day;
 	
-	my @articles = read_pool_articles;
+	my %r = read_db(pool=>1, top_themes=>1, articles=>1);
 	
-	my $topthemes_ref = load_anything($pool_dir."/".$topthemes);
-	if (!$topthemes_ref) {
-		$topthemes_ref = [];
-	}
-	
-	dump_to_archive($day, $topthemes_ref, @articles);
+	dump_to_archive($day, $r{top_themes}, $r{articles});
 	
 	`rm -r $pool_dir`;
-}
-
-sub load_all_from_archive {
-	
-	my $where = shift;
-	my $archive_dir = $database_dir."/".$where;
-	
-	if (!-d $archive_dir) {
-		return (top_themes=>[], articles=>[]);
-	}
-	
-	
-	my %res;
-	
-	my $topthemes_file = $archive_dir."/".$topthemes;
-	$res{top_themes} = load_anything($topthemes_file)
-		or $res{top_themes} = [];
-	
-	my $big_zip = $archive_dir."/".$archive;
-	$res{articles} = load_anything($big_zip)
-		or $res{articles} = [];
-	
-	return %res;
-}
-
-sub load_top_themes_from_archive {
-	
-	my $where = shift;
-	my $archive_dir = $database_dir."/".$where;
-	
-	if (!-d $archive_dir) {
-		return [];
-	}
-	
-	
-	my $topthemes_file = $archive_dir."/".$topthemes;
-	my $topthemes_ref;
-	$topthemes_ref = load_anything($topthemes_file);
-	if (!$topthemes_ref){
-		print "wtf\n";
-		 $topthemes_ref = [];
-	} else {
-		if (!($topthemes_ref =~ /^ARRAY/)) {
-			$topthemes_ref = [];
-		}
-		print $topthemes_file;
-	}
-	
-	return $topthemes_ref;
 }
 
 1;
