@@ -85,7 +85,7 @@ sub read_db {
 		}
 		
 		if ($parameters{articles}) {
-			if ($paramers{short}) {
+			if ($parameters{short}) {
 				my @res;
 
 				my $begin = (exists $parameters{articles_begin}) ? $parameters{articles_begin} : 0;
@@ -149,7 +149,7 @@ sub write_db {
 			
 			for my $i (0..$#{$parameters{articles}}){
 				
-				my $article = $parameters{articles}}->[$i];
+				my $article = $parameters{articles}->[$i];
 				
 				my @keys = map ({best_form=>$_->{best_form}, lemma=>$_->{lemma}}, @{$article->{top_keys}});
 				
@@ -158,7 +158,7 @@ sub write_db {
 			}
 		}
 		if (exists $parameters{top_themes}) {
-			dump_anything($database_dir."/".$day."/".$top_themes);
+			dump_anything($database_dir."/".$day."/".$topthemes);
 		}
 	}
 	return $res; #sometimes i DO want to return something
