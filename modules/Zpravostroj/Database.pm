@@ -18,7 +18,7 @@ use Zpravostroj::Other;
 
 
 use base 'Exporter';
-our @EXPORT = qw( add_new_articles update_pool_themes archive_pool update_pool_articles set_global get_global dump_to_archive);
+our @EXPORT = qw( write_db read_db archive_pool set_global get_global );
 
 my $database_dir = read_option("articles_address");
 my $pool_dir = $database_dir."/pool";
@@ -37,7 +37,7 @@ sub read_db {
 	my %parameters = @_;
 	my %results;
 	
-	if ($parameters{pool} or ($parameters{date} eq get_day)) {
+	if ($parameters{pool} or (exists $parameters{date} and $parameters{date} eq get_day)) {
 		#reading pool
 		if ($parameters{top_themes}) {
 			my $arr_ref;
@@ -119,7 +119,7 @@ sub read_db {
 			}
 		}
 	}
-	return %results;
+	return \%results;
 }
 
 sub write_db {
@@ -129,11 +129,14 @@ sub write_db {
 		if (exists $parameters{articles}) {
 			my $i;
 			if ($parameters{append}) {
-			
+				
 				$res = my $i = get_pool_count();
+				
 			} elsif ($parameters{articles_begin}) { 
+				
 				$i = $parameters{articles_begin};
 			}
+			
 			foreach my $article_ref (@{$parameters{articles}}) {
 				dump_anything($pool_dir."/".$i.$appendix, $article_ref);
 				$i++;
@@ -144,6 +147,8 @@ sub write_db {
 		}
 	} elsif (my $day = $parameters{day}) {
 		#it ALWAYS rewrites EVERYTHING - so no appending / rewriting
+		get_count($day); #this is just for creating directories
+		
 		if (exists $parameters{articles}) {
 			dump_anything($database_dir."/".$day."/".$archive, $parameters{articles});
 			

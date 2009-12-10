@@ -11,80 +11,87 @@ use Zpravostroj::Tagger;
 use Zpravostroj::Counter;
 
 use base 'Exporter';
-our @EXPORT = qw(do_everything recount step retag_recount redo_all_on_one recount_day redo_everything_day);
+our @EXPORT = qw(step redo_it);
 
 
-sub redo_all_on_one {
-	my $which = shift;
-	my ($article) = read_pool_articles($which, $which);
+
+sub read_new {
+	my @new_articles = get_all_links;
+	if (!scalar @new_articles) {
+		return;
+	}
+	my $start = write_db(pool=>1, append=>1, articles=>\@new_articles);
 	
-	extract_texts($article);
+	@new_articles = read_from_webs(@new_articles);
 	
-	update_pool_articles($which, $article);
+	@new_articles = extract_texts(@new_articles);
+	write_db(pool=>1, articles_begin=>$start, articles=>\@new_articles);
 	
-	($article) = tag_texts($article);
+	@new_articles = tag_texts(@new_articles);
+	write_db(pool=>1, articles_begin=>$start, articles=>\@new_articles);
 	
-	update_pool_articles($which, $article);
+	my @all_articles = (read_db(pool=>1, articles=>1))->{articles};
 	
-	my %r = count_themes($article);
-	($article) = @{$r{articles}};
+	my %r = count_themes(0.85, 0.07, 0.9, 0.6, @all_articles);
 	
-	
-	update_pool_articles($which, $article);
+	write_db(%r, pool=>1)
+
 }
 
-sub retag_recount {
-	my @articles = read_pool_articles;
-	@articles = extract_texts(@articles);
+sub redo_it {
+	my %parameters = @_;
+	my @articles;
+	my @top_themes;
 	
-	
-	
-	@articles = tag_texts(@articles);
-	
-	my %r = count_themes(1,1,1,1, @articles);
-	@articles = @{$r{articles}};
-	
-	update_pool_articles(0, @articles);
-	
-	
-	update_pool_themes($r{top_themes});
-}
-
-sub do_everything {
-	my $start = get_pool_count;
-	
-	my @articles = get_all_links;
-		if (!scalar @articles) {
-				return $start;
+	if ($parameters{pool}) {
+		if (my $which = $parameters{which}) {
+			@articles = (read_db(pool=>1, articles=>1, articles_one=>$which))->{articles};
+		} else {
+			@articles = (read_db(pool=>1, articles=>1))->{articles};
+		}
+	} elsif (my $day = $parameters{day}) {
+		@articles = (read_db(day=>$day, articles=>1))->{articles};
 	}
 	
-	add_new_articles(@articles);	
-		
-	@articles = read_from_webs(@articles);
-		
-	@articles = extract_texts(@articles);
-		
-	update_pool_articles($start, @articles);
+	if (!scalar @articles) {
+		return;
+	}
 	
-	@articles = tag_texts(@articles);
-		
-	update_pool_articles($start, @articles);
+	if ($parameters{do_reading}) {
+		@articles = read_from_webs(@articles);
+	}
 	
-	#-------------------------------now i am reading ALL ARTICLES
+	if ($parameters{do_extracting}) {
+		@articles = extract_texts(@articles);
+	}
 	
-	@articles = read_pool_articles;
+	if ($parameters{do_tagging}) {
+		@articles = tag_texts(@articles);
+	}
 	
-	my %r = count_themes(0.85, 0.07, 0.9, 0.6, @articles);
-								#I should save these elsewhere but I am too tired to actually do that now
+	if ($parameters{do_counting}) {
+		my %r = count_themes(0.85, 0.07, 0.9, 0.6, @articles);
+		@articles = @{$r{articles}};
+		@top_themes = @{$r{top_themes}};
+	}
 	
-	@articles = @{$r{articles}};
-	
-	
-	update_pool_articles(0, @articles);
-	
-	update_pool_themes($r{top_themes});
-	return $start;
+	if ($parameters{pool}) {
+		if (my $which = $parameters{which}) {
+			write_db(pool=>1, articles_begin=>$which, articles=>\@articles); #counting themes is impossible if doing just one
+		} else {
+			write_db(pool=>1, articles=>\@articles);
+			if ($parameters{do_counting}) {
+				write_db(pool=>1, top_themes=>\@top_themes);
+			}
+		}
+	} elsif (my $day = $parameters{day}) {
+		write_db(day=>$day, articles=>\@articles);
+		if ($parameters{do_counting}) {
+			write_db(day=>$day, top_themes=>\@top_themes);
+		}
+	}
 }
+
 
 sub step {
 	
@@ -96,48 +103,11 @@ sub step {
 		archive_pool;
 	}
 	
-	do_everything;
+	read_new;
 	
 	
 	set_global("day", $new_day);
 }
 
-
-sub recount {
-	my @articles = read_pool_articles;
-		
-	my %r = count_themes(0.85,0.07,0.9,0.6,@articles);
-	@articles = @{$r{articles}};
-	
-	
-	update_pool_articles(0, @articles);
-	
-	
-	update_pool_themes($r{top_themes});
-	
-	
-}
-
-sub recount_day {
-	my $what=shift;
-	my %all = load_all_from_archive($what);
-	
-	my %r =  count_themes(0.85,0.07,0.9,0.6,@{$all{articles}});
-	dump_to_archive($what, $r{top_themes}, @{$r{articles}});
-}
-
-sub redo_everything_day {
-	
-	my $what=shift;
-	my %all = load_all_from_archive($what);
-	
-	my @articles = read_from_webs(@{$all{articles}});
-		
-	@articles = extract_texts(@articles);
-	@articles = tag_texts(@articles);
-	
-	my %r = count_themes(0.85,0.07,0.9,0.6,@articles);
-	dump_to_archive($what, $r{top_themes}, @{$r{articles}});
-}
 
 1;
