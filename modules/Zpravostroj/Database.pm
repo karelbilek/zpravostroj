@@ -22,6 +22,7 @@ our @EXPORT = qw( add_new_articles update_pool_themes archive_pool update_pool_a
 
 my $database_dir = read_option("articles_address");
 my $pool_dir = $database_dir."/pool";
+my $appendix = ".yaml.bz2";
 
 my $themes_dir = read_option("themes_dir");
 
@@ -32,16 +33,9 @@ my $archive="archive.yaml.bz2";
 my $topthemes = "top_themes.yaml.bz2";
 
 sub read_db {
-	#my $today = get_day;
 	
 	my %parameters = @_;
 	my %results;
-	
-	#my $begin;
-	#$begin = $parameters{articles_begin} if $parameters{articles_begin};
-	
-	#my $end;
-	#$end = $parameters{articles_end} if $parameters{articles_end};
 	
 	if ($parameters{pool} or ($parameters{date} eq get_day)) {
 		#reading pool
@@ -57,17 +51,24 @@ sub read_db {
 			
 			my $begin = (exists $parameters{articles_begin}) ? $parameters{articles_begin} : 0;
 			
-			my $end = (exists $parameters{articles_end}) ? $parameters{articles_end} : (get_pool_count()-1);
+			my $end = (exists $parameters{articles_end}) ? $parameters{articles_end} : (get_count("pool")-1);
+			
+			if (exists $parameters{articles_one}) {
+				$begin = $end = $parameters{articles_one};
+			}
 			
 			foreach my $i ($begin..$end){
-				my $article = load_article($i);
+				my $article = load_anything($pool_dir."/".$i.$appendix);
+				if (!$article) {
+					$article = \%all_article_properties;
+				}
 				push (@res, $article);
 			}
 			$results{articles} = \@res;
 		}
 		
 		if ($parameters{count}) {
-			$results{count} = get_pool_count();
+			$results{count} = get_count("pool");
 		}
 		
 	} elsif (my $day = $parameters{date}) {
@@ -79,72 +80,107 @@ sub read_db {
 			$results{top_themes} = $arr_ref;
 		}
 		
-		if ($parameters{articles} or $parameters{count}) {
-							#the count is EXTREMELY uneffective, but there is no actual reason to call it by "itself"
-				
-			my $arr_ref;
-			$arr_ref = load_anything($database_dir."/".$day."/".$archive)
-				or $arr_ref = [];
-			if ((exists $parameters{articles_begin}) and exists $parameters{articles_end}) {
-				my @splited = @{$arr_ref}[$parameters{articles_begin}..$parameters{articles_end}];
-				$results{articles} = \@splited;
+		if ($parameters{count}) {
+			$results{count} = get_count($day);
+		}
+		
+		if ($parameters{articles}) {
+			if ($paramers{short}) {
+				my @res;
+
+				my $begin = (exists $parameters{articles_begin}) ? $parameters{articles_begin} : 0;
+
+				my $end = (exists $parameters{articles_end}) ? $parameters{articles_end} : (get_count($day)-1);
+
+				if (exists $parameters{articles_one}) {
+					$begin = $end = $parameters{articles_one};
+				}
+
+				foreach my $i ($begin..$end){
+					my $article = load_anything($database_dir."/".$day."/".$i.$appendix);
+					if (!$article) {
+						$article = \%all_article_properties;
+					}
+					push (@res, $article);
+				}
+				$results{articles} = \@res;
 			} else {
-				$results{articles} = $arr_ref;
+				
+				my $arr_ref;
+				$arr_ref = load_anything($database_dir."/".$day."/".$archive)
+					or $arr_ref = [];
+				if ((exists $parameters{articles_begin}) and exists $parameters{articles_end}) {
+					my @splited = @{$arr_ref}[$parameters{articles_begin}..$parameters{articles_end}];
+					$results{articles} = \@splited;
+				} else {
+					$results{articles} = $arr_ref;
+				}
+				
 			}
 		}
 	}
 	return %results;
 }
 
+sub write_db {
+	my %parameters = @_;
+	my $res;
+	if ($parameters{pool}) {
+		if (exists $parameters{articles}) {
+			my $i;
+			if ($parameters{append}) {
+			
+				$res = my $i = get_pool_count();
+			} elsif ($parameters{articles_begin}) { 
+				$i = $parameters{articles_begin};
+			}
+			foreach my $article_ref (@{$parameters{articles}}) {
+				dump_anything($pool_dir."/".$i.$appendix, $article_ref);
+				$i++;
+			}
+		}
+		if (exists $parameters{top_themes}) {
+			dump_anything($pool_dir."/".$topthemes, $parameters{top_themes});
+		}
+	} elsif (my $day = $parameters{day}) {
+		#it ALWAYS rewrites EVERYTHING - so no appending / rewriting
+		if (exists $parameters{articles}) {
+			dump_anything($database_dir."/".$day."/".$archive, $parameters{articles});
+			
+			for my $i (0..$#{$parameters{articles}}){
+				
+				my $article = $parameters{articles}}->[$i];
+				
+				my @keys = map ({best_form=>$_->{best_form}, lemma=>$_->{lemma}}, @{$article->{top_keys}});
+				
+				dump_anything($database_dir."/".$day."/".$i.".yaml.bz2", {url=>($article->{url}), keys=>\@keys, title=>$article->{title}});
+				
+			}
+		}
+		if (exists $parameters{top_themes}) {
+			dump_anything($database_dir."/".$day."/".$top_themes);
+		}
+	}
+	return $res; #sometimes i DO want to return something
+}
 
-sub get_pool_count {
-	my_log ("get_pool_count - entering");
-	if (!-d $pool_dir) {
+sub get_count {
+	my $what = shift;
+	my $dir = $database_dir."/".$what;
+	if (!-d $dir) {
 		if (!-d $database_dir) {
 			mkdir $database_dir or die "making directory $database_dir not succesful.";
 		}
-		mkdir $pool_dir or die "making directory $pool_dir not succesful.";
+		mkdir $dir or die "making directory $pool_dir not succesful.";
 		return 0;
 	} else {
 		
 		my $count=0;
-		eval {$count = scalar grep(/(^|\/)\d+\.yaml\.bz2$/, <$pool_dir/*.yaml.bz2>)};
-		
-		if ($@) {
-			my_warning("get_pool_count - weird error getting pool count - $@");
-		}
+		$count = scalar grep(/(^|\/)\d+\.yaml\.bz2$/, <$dir/*.yaml.bz2>);
 		return $count;
 	}
 }
 
-sub get_pool_filename {
-	my $i = shift;
-	return $pool_dir."/".$i.".yaml.bz2";
-}
-
-sub add_new_articles {
-	my_log ("add_new_articles - entering");
-	my @articles = @_;
-	my $i = get_pool_count;
-	foreach my $article_ref (@articles) {
-		foreach (keys %$article_ref) {
-			(exists $all_article_properties{$_}) or die "forbidden article property $_";
-		}
-		dump_article($i, $article_ref);
-		$i++;
-	}
-	my_log ("add_new_articles - done");
-	
-}
-
-sub load_article {
-	my $i = shift;
-	my $art_ref;
-	$art_ref=load_anything(get_pool_filename($i))
-		or $art_ref=\%all_article_properties;
-	return $art_ref;
-	
-}
 
 sub load_anything {
 	
@@ -184,12 +220,6 @@ sub load_anything {
 }
 
 
-sub dump_article {
-	my $i = shift;
-	my $what = shift;
-	
-	dump_anything(get_pool_filename($i), $what);
-}
 
 sub dump_anything {
 	my $where = shift;
@@ -238,82 +268,6 @@ sub get_global {
 	}
 }
 
-sub update_pool_themes {
-	my $themes = shift;
-	if (!$themes) {
-		die "SHIT\n";
-	}
-	my $filename = shift;
-	if (!$filename) {
-		$filename = $topthemes;
-	} else {
-		$filename = $filename.".yaml.bz2";
-	}
-	
-	my $where = $pool_dir."/".$filename;
-	dump_anything($where, $themes);
-}
-
-
-
-sub update_pool_articles {
-	my_log ("update_pool_articles - entering");
-	
-	my $begin = shift;
-	$begin=0 if !$begin;
-	my @input = @_;
-	if (@input) {
-		foreach my $i ($begin..$begin+(scalar @input)-1){
-		
-			my %article = %{shift (@input)};
-		
-			foreach (keys %article) {
-				#(exists $all_article_properties{$_}) or die "forbidden article property $_";
-				#
-				if (!exists $all_article_properties{$_}) {delete $article{$_}};
-			}
-		
-			dump_article($i, \%article);
-		}
-	}
-	my_log ("update_pool_articles - escaping");
-}
-
-sub dump_to_archive {
-	my $where = shift;
-	my $topthemes_ref = shift;
-	my @articles = @_;
-	
-	my $archive_dir = $database_dir."/".$where;
-	if (!-d $archive_dir) {
-		mkdir $archive_dir or die "Dir $archive_dir cannot be created. Better luck next time, pal.";
-	} else {
-		#this is cruel BUT NECESARRY!!!1
-		`rm -r $archive_dir`;
-		mkdir $archive_dir or die "Dir $archive_dir cannot be created. Better luck next time, pal.";
-	}
-	
-	my $big_zip = $archive_dir."/".$archive;
-	
-	dump_anything($big_zip, \@articles);
-	
-	my_log ("dump_to_archive - everything dumped to big zip, lets extract extra keys...");
-	
-	for my $i (0..$#articles){
-		my $article_file=$archive_dir."/".$i.".yaml.bz2";
-		
-		my $article = $articles[$i];
-		
-		my @keys = map ({best_form=>$_->{best_form}, lemma=>$_->{lemma}}, @{$article->{top_keys}});
-		dump_anything($article_file, {url=>($article->{url}), keys=>\@keys, title=>$article->{title}});
-		
-	}
-	
-	my $topthemes_file = $archive_dir."/".$topthemes;
-	
-	dump_anything($topthemes_file, $topthemes_ref);
-	
-}
 
 sub archive_pool {
 	
@@ -321,7 +275,7 @@ sub archive_pool {
 	
 	my %r = read_db(pool=>1, top_themes=>1, articles=>1);
 	
-	dump_to_archive($day, $r{top_themes}, $r{articles});
+	write_db(%r, day=>$day);
 	
 	`rm -r $pool_dir`;
 }
