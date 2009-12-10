@@ -29,9 +29,9 @@ sub generate_HTML {
 	
 	my @themes;
 	if ($day) {
-		@themes = @{load_top_themes_from_archive($day)};
+		@themes = @{read_db(day=>$day, top_themes=>1)->{top_themes}};
 	} else {
-		@themes = get_top_themes;
+		@themes = @{read_db(pool=>1, top_themes=>1)->{top_themes}};
 	}
 	foreach (@themes) {$_->{best_form}=~s/_/ /g;};
 	

@@ -219,7 +219,10 @@ sub count_themes {
 	my $pc = shift;
 	my $pd = shift;
 	
-	my @articles = @_;
+	my $art_ref = shift;
+	my @articles = @$art_ref;
+	
+	
 	
 	my %all_counts;
 	

@@ -37,7 +37,7 @@ sub read_db {
 	my %parameters = @_;
 	my %results;
 	
-	if ($parameters{pool} or (exists $parameters{date} and $parameters{date} eq get_day)) {
+	if ($parameters{pool} or (exists $parameters{day} and $parameters{day} eq get_day)) {
 		#reading pool
 		if ($parameters{top_themes}) {
 			my $arr_ref;
@@ -71,7 +71,7 @@ sub read_db {
 			$results{count} = get_count("pool");
 		}
 		
-	} elsif (my $day = $parameters{date}) {
+	} elsif (my $day = $parameters{day}) {
 		#reading from archive
 		if ($parameters{top_themes}) {
 			my $arr_ref;
@@ -109,6 +109,7 @@ sub read_db {
 				my $arr_ref;
 				$arr_ref = load_anything($database_dir."/".$day."/".$archive)
 					or $arr_ref = [];
+
 				if ((exists $parameters{articles_begin}) and exists $parameters{articles_end}) {
 					my @splited = @{$arr_ref}[$parameters{articles_begin}..$parameters{articles_end}];
 					$results{articles} = \@splited;
@@ -127,10 +128,10 @@ sub write_db {
 	my $res;
 	if ($parameters{pool}) {
 		if (exists $parameters{articles}) {
-			my $i;
+			my $i=0;
 			if ($parameters{append}) {
 				
-				$res = my $i = get_pool_count();
+				$res = my $i = get_count("pool");
 				
 			} elsif ($parameters{articles_begin}) { 
 				
@@ -158,7 +159,7 @@ sub write_db {
 				
 				my @keys = map ({best_form=>$_->{best_form}, lemma=>$_->{lemma}}, @{$article->{top_keys}});
 				
-				dump_anything($database_dir."/".$day."/".$i.".yaml.bz2", {url=>($article->{url}), keys=>\@keys, title=>$article->{title}});
+				dump_anything($database_dir."/".$day."/".$i.$appendix, {url=>($article->{url}), keys=>\@keys, title=>$article->{title}});
 				
 			}
 		}
@@ -278,7 +279,7 @@ sub archive_pool {
 	
 	my $day = get_day(1);
 	
-	my %r = read_db(pool=>1, top_themes=>1, articles=>1);
+	my %r = %{read_db(pool=>1, top_themes=>1, articles=>1)};
 	
 	write_db(%r, day=>$day);
 	

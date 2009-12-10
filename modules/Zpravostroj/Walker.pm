@@ -16,6 +16,7 @@ our @EXPORT = qw(step redo_it);
 
 
 sub read_new {
+	
 	my @new_articles = get_all_links;
 	if (!scalar @new_articles) {
 		return;
@@ -30,9 +31,9 @@ sub read_new {
 	@new_articles = tag_texts(@new_articles);
 	write_db(pool=>1, articles_begin=>$start, articles=>\@new_articles);
 	
-	my @all_articles = (read_db(pool=>1, articles=>1))->{articles};
+	my $all_articles_ref = (read_db(pool=>1, articles=>1))->{articles};
 	
-	my %r = count_themes(0.85, 0.07, 0.9, 0.6, @all_articles);
+	my %r = count_themes(0.85, 0.07, 0.9, 0.6, $all_articles_ref);
 	
 	write_db(%r, pool=>1)
 
@@ -50,7 +51,8 @@ sub redo_it {
 			@articles = (read_db(pool=>1, articles=>1))->{articles};
 		}
 	} elsif (my $day = $parameters{day}) {
-		@articles = (read_db(day=>$day, articles=>1))->{articles};
+		@articles = @{(read_db(day=>$day, articles=>1))->{articles}};
+
 	}
 	
 	if (!scalar @articles) {
@@ -70,7 +72,7 @@ sub redo_it {
 	}
 	
 	if ($parameters{do_counting}) {
-		my %r = count_themes(0.85, 0.07, 0.9, 0.6, @articles);
+		my %r = count_themes(0.85, 0.07, 0.9, 0.6, \@articles);
 		@articles = @{$r{articles}};
 		@top_themes = @{$r{top_themes}};
 	}

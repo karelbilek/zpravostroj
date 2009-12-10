@@ -48,7 +48,6 @@ sub get_time {
 
 sub my_warning {
 	my $what = shift;
-	#print $what."\n";
 	open (my $fh, ">>", $warning_file);
 	print {$fh} get_day(),":", get_time()," - ", $what,"\n";
 	close $fh;
