@@ -204,6 +204,25 @@ sub save_to_countree {
 	}
 }
 
+sub resolve_countree_conflict {
+	my $first = shift;
+	my @first = split (//,$first);
+	my $second = shift;
+	my @second = split (//,$first);
+	my $base = shift;
+	my @base = split (//,$first);
+	
+	my $i = @base;
+	my $conflict = "";
+	
+	while (($first[$i] eq $second[$i]) and ($i < @first) and ($i < @second)) {
+		$conflict=$conflict.$first[$i];
+		$i++;
+	}
+	
+	#TODO
+}
+
 sub get_count {
 	my $what = shift;
 	my $dir = $database_dir."/".$what;
