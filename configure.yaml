@@ -38,4 +38,5 @@ all_article_properties: #dont remove anything that is in more files
     - all_named
 log_file: /a/merkur2/ufallabhome/bilek/rocnik/data/log
 warning_file: /a/merkur2/ufallabhome/bilek/rocnik/data/warnings
-themes_dir: /a/merkur2/ufallabhome/bilek/rocnik/data/themes
+countree_dir: /a/merkur2/ufallabhome/bilek/rocnik/data/countree
+

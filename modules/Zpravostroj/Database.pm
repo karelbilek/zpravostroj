@@ -24,7 +24,8 @@ my $database_dir = read_option("articles_address");
 my $pool_dir = $database_dir."/pool";
 my $appendix = ".yaml.bz2";
 
-my $themes_dir = read_option("themes_dir");
+my $countree_dir = read_option("countree_dir");
+
 
 my %all_article_properties;
 @all_article_properties{@{read_option("all_article_properties")}}=();
@@ -154,21 +155,53 @@ sub write_db {
 			dump_anything($database_dir."/".$day."/".$archive, $parameters{articles});
 			
 			for my $i (0..$#{$parameters{articles}}){
-				
 				my $article = $parameters{articles}->[$i];
-				
 				my @keys = map ({best_form=>$_->{best_form}, lemma=>$_->{lemma}}, @{$article->{top_keys}});
-				
 				dump_anything($database_dir."/".$day."/".$i.$appendix, {url=>($article->{url}), keys=>\@keys, title=>$article->{title}});
-				
+			}	#saves some little info about the article extra, rest to the megaarchive 
+			
+			if (!exists $parameters{append_to_countree}) {
+				#TODO
 			}
+			
+			
 		}
 		if (exists $parameters{top_themes}) {
-			print "GOGO\n";
 			dump_anything($database_dir."/".$day."/".$topthemes, $parameters{top_themes});
 		}
 	}
 	return $res; #sometimes i DO want to return something
+}
+
+sub save_to_countree {
+	my $word = shift;
+	my $count = shift;
+	
+	#$countree_dir
+	if (-d $countree_dir) {
+		mkdir $countree_dir;
+		open my $fh, $countree_dir."/".$word;
+		print {$fh} $count;
+		return;
+	}
+	
+	my @files = <$countree_dir/*>;
+	
+	if (!@files) {
+		open my $fh, $countree_dir."/".$word;
+		print {$fh} $count;
+		return;
+	}
+	
+	if ((grep {/^c/} @files) == 1 and (grep {/^d/} @files) == 0) {
+		#there is just one file in root
+		my $first_name = substr ($files[1], 1);
+		my $first_letter = substr($first_name, 1);
+		mkdir $countree_dir."/".first_letter;
+		rename $countree_dir."/c".$first_name, $countree_dir."/".$first_letter."/c".$first_name;
+		
+		my $my_first_letter = #TODO
+	}
 }
 
 sub get_count {
