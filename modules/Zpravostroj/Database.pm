@@ -18,7 +18,7 @@ use Zpravostroj::Other;
 
 
 use base 'Exporter';
-our @EXPORT = qw( write_db read_db archive_pool set_global get_global );
+our @EXPORT = qw( write_db read_db archive_pool set_global get_global save_to_countree);
 
 my $database_dir = read_option("articles_address");
 my $pool_dir = $database_dir."/pool";
@@ -182,27 +182,33 @@ sub save_to_countree {
 	#TODO .... hello, more than two files?????
 	
 	#$countree_dir
-	if (-d $countree_dir) {
+	if (!-d $countree_dir) {
 		mkdir $countree_dir;
-		open my $fh, $countree_dir."/".$word;
+		open (my $fh, ">", $countree_dir."/c".$word);
 		print {$fh} $count;
 		return;
 	}
 	
 	my @files = <$countree_dir/*>;
 	
+
+	
 	if (!@files) {
-		open my $fh, $countree_dir."/".$word;
+		open (my $fh, ">", $countree_dir."/c".$word);
 		print {$fh} $count;
 		return;
 	}
 	
-	if ((my @first = (grep {/^c/} @files))==1 and (grep {/^d/} @files) == 0) {
+	if ((my @first = (grep {/\/c[^\/]*$/} @files))==1 and (grep {/\/d[^\/]*$/} @files) == 0) {
 		#there is just one file in root
-		my $first = substr ($first[0], 1);
+		print "mufu";
+		my $first = $first[0];
+		$first=~ s/^.*\/c([^\/]*)$/$1/;
 		my $new = resolve_countree_conflict($first, $word, "");
-		open my $fh, $new;
-		print {$fh}, $count;
+		open (my $fh, ">", $new);
+		print {$fh} $count;
+	} else {
+
 	}
 }
 
@@ -210,21 +216,20 @@ sub resolve_countree_conflict {
 	my $first = shift;
 	my @first = split (//,$first);
 	my $second = shift;
-	my @second = split (//,$first);
+	my @second = split (//,$second);
 	my $base = shift;
-	my @base = split (//,$first);
+	my @base = split (//,$base);
 	my $base_address = $countree_dir.join("", (map {("/d", $_)} @base))."/"; #works even when base is empty
 	
 	my $i = @base;
 	my @conflict;
 	my $dirs = $base_address;
 	
-	while (($first[$i] eq $second[$i]) and ($i < @first) and ($i < @second)) {
+	while (($i < @first) and ($i < @second) and ($first[$i] eq $second[$i])) {
 		push @conflict, $first[$i];
 		
 		$dirs.="d".$first[$i]."/";
 		mkdir $dirs;
-		
 		$i++;
 	}
 	
@@ -235,8 +240,8 @@ sub resolve_countree_conflict {
 	mkdir $new_second_dir;
 	
 	#TODO
-	rename $base_address."c".$first , $new_first_dir."c".$first;
-	return $new_first_dir."c".$second;
+	rename $base_address."/c".$first , $new_first_dir."/c".$first;
+	return $new_second_dir."/c".$second;
 }
 
 sub get_count {
