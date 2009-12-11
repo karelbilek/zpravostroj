@@ -177,6 +177,10 @@ sub save_to_countree {
 	my $word = shift;
 	my $count = shift;
 	
+	#TODO more files with the same name
+	#TODO shorter/longer problem
+	#TODO .... hello, more than two files?????
+	
 	#$countree_dir
 	if (-d $countree_dir) {
 		mkdir $countree_dir;
@@ -193,14 +197,12 @@ sub save_to_countree {
 		return;
 	}
 	
-	if ((grep {/^c/} @files) == 1 and (grep {/^d/} @files) == 0) {
+	if ((my @first = (grep {/^c/} @files))==1 and (grep {/^d/} @files) == 0) {
 		#there is just one file in root
-		my $first_name = substr ($files[1], 1);
-		my $first_letter = substr($first_name, 1);
-		mkdir $countree_dir."/".first_letter;
-		rename $countree_dir."/c".$first_name, $countree_dir."/".$first_letter."/c".$first_name;
-		
-		my $my_first_letter = #TODO
+		my $first = substr ($first[0], 1);
+		my $new = resolve_countree_conflict($first, $word, "");
+		open my $fh, $new;
+		print {$fh}, $count;
 	}
 }
 
@@ -211,17 +213,30 @@ sub resolve_countree_conflict {
 	my @second = split (//,$first);
 	my $base = shift;
 	my @base = split (//,$first);
+	my $base_address = $countree_dir.join("", (map {("/d", $_)} @base))."/"; #works even when base is empty
 	
 	my $i = @base;
-	my $conflict = "";
+	my @conflict;
+	my $dirs = $base_address;
 	
 	while (($first[$i] eq $second[$i]) and ($i < @first) and ($i < @second)) {
-		$conflict=$conflict.$first[$i];
+		push @conflict, $first[$i];
+		
+		$dirs.="d".$first[$i]."/";
+		mkdir $dirs;
+		
 		$i++;
 	}
 	
-	my $base_address = $countree_dir."/d".join("/d", @base)."/"; #works even when 
+	
+	my $new_first_dir = $dirs."d".$first[$i];
+	mkdir $new_first_dir;
+	my $new_second_dir = $dirs."d".$second[$i];
+	mkdir $new_second_dir;
+	
 	#TODO
+	rename $base_address."c".$first , $new_first_dir."c".$first;
+	return $new_first_dir."c".$second;
 }
 
 sub get_count {
