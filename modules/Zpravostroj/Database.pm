@@ -220,6 +220,7 @@ sub resolve_countree_conflict {
 		$i++;
 	}
 	
+	my $base_address = $countree_dir."/d".join("/d", @base)."/"; #works even when 
 	#TODO
 }
 
