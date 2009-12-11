@@ -89,6 +89,7 @@ sub redo_it {
 	} elsif (my $day = $parameters{day}) {
 		write_db(day=>$day, articles=>\@articles);
 		if ($parameters{do_counting}) {
+			print "YES\n";
 			write_db(day=>$day, top_themes=>\@top_themes);
 		}
 	}

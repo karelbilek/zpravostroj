@@ -164,7 +164,8 @@ sub write_db {
 			}
 		}
 		if (exists $parameters{top_themes}) {
-			dump_anything($database_dir."/".$day."/".$topthemes);
+			print "GOGO\n";
+			dump_anything($database_dir."/".$day."/".$topthemes, $parameters{top_themes});
 		}
 	}
 	return $res; #sometimes i DO want to return something
