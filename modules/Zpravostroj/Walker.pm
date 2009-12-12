@@ -42,7 +42,7 @@ sub read_new {
 sub redo_it {
 	my %parameters = @_;
 	my @articles;
-	my @top_themes;
+	my $top_themes_ref;
 	
 	if ($parameters{pool}) {
 		if (my $which = $parameters{which}) {
@@ -71,10 +71,14 @@ sub redo_it {
 		@articles = tag_texts(@articles);
 	}
 	
+	my $count_bottom_ref;
+	my $all_counts_ref;
 	if ($parameters{do_counting}) {
 		my %r = count_themes(0.85, 0.07, 0.9, 0.6, \@articles);
 		@articles = @{$r{articles}};
-		@top_themes = @{$r{top_themes}};
+		$top_themes_ref = $r{top_themes};
+		$count_bottom_ref = $r{count_bottom};
+		$all_counts_ref = $r{all_counts};
 	}
 	
 	if ($parameters{pool}) {
@@ -83,14 +87,14 @@ sub redo_it {
 		} else {
 			write_db(pool=>1, articles=>\@articles);
 			if ($parameters{do_counting}) {
-				write_db(pool=>1, top_themes=>\@top_themes);
+				write_db(pool=>1, top_themes=>$top_themes_ref);
 			}
 		}
 	} elsif (my $day = $parameters{day}) {
 		write_db(day=>$day, articles=>\@articles);
 		if ($parameters{do_counting}) {
 			print "YES\n";
-			write_db(day=>$day, top_themes=>\@top_themes);
+			write_db(day=>$day, top_themes=>$top_themes_ref, count_bottom=>$count_bottom_ref, all_counts => $all_counts_ref);
 		}
 	}
 }

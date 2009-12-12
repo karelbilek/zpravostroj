@@ -149,15 +149,6 @@ sub write_db {
 		
 		if (exists $parameters{articles}) {
 		
-			add_bottom($parameters{count_bottom});
-			
-			my %count_hash;
-			for my $key (keys %{$parameters{all_counts}}) {
-				$count_hash{magic_transform($key)}->{$key} = $parameters{all_counts}->{$key};
-			}
-			
-			update_reverse_counts(\%count_hash);
-		
 			dump_anything($database_dir."/".$day."/".$archive, $parameters{articles});
 			
 			for my $i (0..$#{$parameters{articles}}){
@@ -172,6 +163,15 @@ sub write_db {
 		}
 		if (exists $parameters{top_themes}) {
 			dump_anything($database_dir."/".$day."/".$topthemes, $parameters{top_themes});
+		}
+		if (exists $parameters{count_bottom} and exists $parameters{all_counts}) {
+			add_bottom($parameters{count_bottom});
+			
+			my %count_hash;
+			for my $key (keys %{$parameters{all_counts}}) {
+				$count_hash{magic_transform($key)}->{$key} = $parameters{all_counts}->{$key};
+			}
+			update_reverse_counts(\%count_hash);
 		}
 	}
 	return $res; #sometimes i DO want to return something
