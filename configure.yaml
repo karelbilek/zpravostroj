@@ -18,6 +18,7 @@ min_word_length: 3
 max_theme_length: 15
 counter_first_named: 30
 counter_first_themes: 15
+count_bottom: 200
 tagger_wanted_named:
     - g
     - m

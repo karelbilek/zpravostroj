@@ -20,12 +20,14 @@ use Zpravostroj::Other;
 use base 'Exporter';
 our @EXPORT = qw( write_db read_db archive_pool set_global get_global );
 
+my $bottom_count = read_option("count_bottom");
 my $database_dir = read_option("articles_address");
 my $pool_dir = $database_dir."/pool";
 my $appendix = ".yaml.bz2";
 
 my $count_dir = read_option("count_dir");
 mkdir $count_dir;
+my $bottom_file = $count_dir."/bottom.yaml.bz2";
 
 my %all_article_properties;
 @all_article_properties{@{read_option("all_article_properties")}}=();
@@ -146,15 +148,15 @@ sub write_db {
 		get_count($day); #this is just for creating directories
 		
 		if (exists $parameters{articles}) {
+		
+			add_bottom($parameters{count_bottom});
 			
-			if (!exists $parameters{append_articles}) {
-				die "append_articles needed like, totally, dude\n";
+			my %count_hash;
+			for my $key (keys %{$parameters{all_counts}}) {
+				$count_hash{magic_transform($key)}->{$key} = $parameters{all_counts}->{$key};
 			}
 			
-			if (!$parameters{append_articles}) {
-				#this is taking quite a time - thats why you should more append than ss
-				ssssssssssssssssssssssshit
-			}
+			update_reverse_counts(\%count_hash);
 		
 			dump_anything($database_dir."/".$day."/".$archive, $parameters{articles});
 			
@@ -175,6 +177,25 @@ sub write_db {
 	return $res; #sometimes i DO want to return something
 }
 
+sub magic_transform {
+	my $word = shift;
+	my @words = split (//, $word);
+	return (join ("", map {substr($_, 0, 3)} @words));
+}
+
+sub add_bottom {
+	my $add_bottom_hash_ref = shift;
+	my %original_bottom_hash = %{(load_anything($bottom_file) || {})};
+	@original_bottom_hash{keys %$add_bottom_hash_ref} = values %$add_bottom_hash_ref;
+	if ((keys %original_bottom_hash) > $bottom_count) {
+		my @sorted = sort {$original_bottom_hash{$b} <=> $original_bottom_hash{$a}} keys %original_bottom_hash;
+		for my $i (50..$#sorted) {
+			delete $original_bottom_hash{$sorted[$i]};
+		}
+	}
+	dump_anything($bottom_file, \%original_bottom_hash);
+}
+
 sub get_count {
 	my $what = shift;
 	my $dir = $database_dir."/".$what;
@@ -192,14 +213,14 @@ sub get_count {
 	}
 }
 
-sub update_counts {
+sub update_reverse_counts {
 	my $new_hash_ref = shift;
 	for my $base (keys %$new_hash_ref) {
 		my $count_file;
 		if ($base eq "") {
 			$count_file = $count_dir."/short.yaml.bz2";
 		} else {
-			my @sh = ((map {substr($base,0,$_)} (1,2,3)),$base);
+			my @sh = (map {substr($base,0,$_)} (1..length $base));
 			
 			
 			my $ndir = $count_dir;

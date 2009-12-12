@@ -236,7 +236,7 @@ sub count_themes {
 	
 	
 	my %count_bottom_hash;
-	@count_bottom_hash{@counts_bottom}=();
+	@count_bottom_hash{@counts_bottom}=@all_counts{@counts_bottom};
 		
 	# foreach (@articles) {$_->{all_words_clone} = clone ($_->{all_words})};
 	foreach (@articles) {connect_bottom($_, \%count_bottom_hash)};
@@ -258,7 +258,7 @@ sub count_themes {
 	my $top_themes = count_top_themes(\%all_counts, $pa, $pb, $pc, $pd, @articles);
 	
 	
-	return (articles=>\@articles, top_themes=>$top_themes);
+	return (articles=>\@articles, top_themes=>$top_themes, count_bottom=>\%count_bottom_hash, all_counts=>\%all_counts);
 }
 
 1;
