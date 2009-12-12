@@ -24,7 +24,8 @@ my $database_dir = read_option("articles_address");
 my $pool_dir = $database_dir."/pool";
 my $appendix = ".yaml.bz2";
 
-my $themes_dir = read_option("themes_dir");
+my $count_dir = read_option("count_dir");
+mkdir $count_dir;
 
 my %all_article_properties;
 @all_article_properties{@{read_option("all_article_properties")}}=();
@@ -41,8 +42,7 @@ sub read_db {
 		#reading pool
 		if ($parameters{top_themes}) {
 			my $arr_ref;
-			$arr_ref = load_anything($pool_dir."/".$topthemes)
-				or $arr_ref = [];
+			$arr_ref = load_anything($pool_dir."/".$topthemes) || [];
 			$results{top_themes} = $arr_ref;
 		}
 		
@@ -58,10 +58,7 @@ sub read_db {
 			}
 			
 			foreach my $i ($begin..$end){
-				my $article = load_anything($pool_dir."/".$i.$appendix);
-				if (!$article) {
-					$article = \%all_article_properties;
-				}
+				my $article = load_anything($pool_dir."/".$i.$appendix) || \%all_article_properties;
 				push (@res, $article);
 			}
 			$results{articles} = \@res;
@@ -75,8 +72,7 @@ sub read_db {
 		#reading from archive
 		if ($parameters{top_themes}) {
 			my $arr_ref;
-			$arr_ref = load_anything($database_dir."/".$day."/".$topthemes)
-				or $arr_ref = [];
+			$arr_ref = load_anything($database_dir."/".$day."/".$topthemes) || [];
 			$results{top_themes} = $arr_ref;
 		}
 		
@@ -107,8 +103,7 @@ sub read_db {
 			} else {
 				
 				my $arr_ref;
-				$arr_ref = load_anything($database_dir."/".$day."/".$archive)
-					or $arr_ref = [];
+				$arr_ref = load_anything($database_dir."/".$day."/".$archive) || [];
 
 				if ((exists $parameters{articles_begin}) and exists $parameters{articles_end}) {
 					my @splited = @{$arr_ref}[$parameters{articles_begin}..$parameters{articles_end}];
@@ -151,6 +146,16 @@ sub write_db {
 		get_count($day); #this is just for creating directories
 		
 		if (exists $parameters{articles}) {
+			
+			if (!exists $parameters{append_articles}) {
+				die "append_articles needed like, totally, dude\n";
+			}
+			
+			if (!$parameters{append_articles}) {
+				#this is taking quite a time - thats why you should more append than ss
+				ssssssssssssssssssssssshit
+			}
+		
 			dump_anything($database_dir."/".$day."/".$archive, $parameters{articles});
 			
 			for my $i (0..$#{$parameters{articles}}){
@@ -164,7 +169,6 @@ sub write_db {
 			}
 		}
 		if (exists $parameters{top_themes}) {
-			print "GOGO\n";
 			dump_anything($database_dir."/".$day."/".$topthemes, $parameters{top_themes});
 		}
 	}
@@ -188,6 +192,34 @@ sub get_count {
 	}
 }
 
+sub update_counts {
+	my $new_hash_ref = shift;
+	for my $base (keys %$new_hash_ref) {
+		my $count_file;
+		if ($base eq "") {
+			$count_file = $count_dir."/short.yaml.bz2";
+		} else {
+			my @sh = ((map {substr($base,0,$_)} (1,2,3)),$base);
+			
+			
+			my $ndir = $count_dir;
+			foreach (@sh) {$ndir.="/".$_; mkdir $ndir};
+			
+			$count_file = $count_dir."/counts.yaml.bz2";
+		}
+		
+		my $orig_hash_ref = load_anything($count_file) || {};
+		
+		for my $word (keys %{$new_hash_ref->{$base}}) {
+			$orig_hash_ref->{$word} += $new_hash_ref->{$base}->{$word};
+			if ($orig_hash_ref->{$word} == 0) {
+				delete $orig_hash_ref->{$word};
+			}
+		}
+		
+		dump_anything($count_file, $orig_hash_ref);
+	}
+}
 
 sub load_anything {
 	

@@ -11,6 +11,7 @@ RSS_sources:
     - http://www.financninoviny.cz/sluzby/rss/index.php
     - http://bleskove.aktualne.centrum.cz/export/rss-bleskove-hp.phtml
 articles_address: /a/merkur2/ufallabhome/bilek/rocnik/data/articles
+count_dir: /a/merkur2/ufallabhome/bilek/rocnik/data/counts
 RSS_address: /a/merkur2/ufallabhome/bilek/rocnik/data/RSS
 RSS_kept: 1000
 min_word_length: 3
