@@ -199,17 +199,71 @@ sub save_to_countree {
 		return;
 	}
 	
+	
+	
+	my @node_letters;
+	my $node_address = $countree_dir;
+	my @word_letters = split(//, $word);
+	#my $saved = false;
+	while (true) {
+		if ((grep {/\/d[^\/]*$/} @files) == 0) {
+			my ($first_file) = grep {/\/c[^\/]*$/} @files;
+			my $first_word =~ s/^.*\/c([^\/]*)$/$1/;
+			
+			if ($first eq $word) {
+				open (my $inp, "<", $first_file);
+				chomp(my $numb = <$inp>);
+				$numb+=$count;
+				close $inp;
+				open (my $outp, ">", $first_file);
+				print {$outp} $numb;
+				return;
+			}
+			
+			my @first_letters = split (//, $first);
+			
+			my $i = @node_letters;
+			my $dirs = $node_address;
+	
+			while (($i < @first) and ($i < @second) and ($first_letters[$i] eq $word_letters[$i])) {
+		
+				$dirs.="d".$first_letters[$i]."/";
+				mkdir $dirs;
+				$i++;
+			}
+			
+			my $new_first_dir = $dirs."d".$first_letters[$i];
+			mkdir $new_first_dir;
+	
+			my $new_word_dir = $dirs."d".$word_letters[$i];
+			mkdir $new_word_dir;
+	
+			rename $node_address."/c".$first , $new_first_dir."/c".$first_word;
+			
+			open (my $fh, ">", $new_second_dir."/c".$second);
+			print {$fh} $count;
+			
+			return ;
+		}
+		
+	}
+	
+	
+	
+	
 	if ((my @first = (grep {/\/c[^\/]*$/} @files))==1 and (grep {/\/d[^\/]*$/} @files) == 0) {
 		#there is just one file in root
-		print "mufu";
 		my $first = $first[0];
 		$first=~ s/^.*\/c([^\/]*)$/$1/;
 		my $new = resolve_countree_conflict($first, $word, "");
 		open (my $fh, ">", $new);
 		print {$fh} $count;
-	} else {
-
-	}
+		return;
+	} 
+	
+	my $base;
+	my @word = split (//, $word);
+	#while (not ((my @first = (grep {/\/c[^\/]*$/} @files))==1 and (grep {/\/d[^\/]*$/} @files) == 0));
 }
 
 sub resolve_countree_conflict {
