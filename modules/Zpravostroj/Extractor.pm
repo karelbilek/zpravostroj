@@ -126,12 +126,24 @@ sub extract_text {
 	foreach (@sentences) {s/\n//g};
 	my %written;
 	my $result="";
+	my %ends_written;
 	
 	my_log("extract_text - going to check repeated sentences...");
 	for my $sentence (@sentences) {
-		unless (exists $written{$sentence}) {
-			$result.=$sentence.". ";
+		if (!exists $written{$sentence}) {
+			my @words = split (/ /, $sentence);
+			
 			$written{$sentence}=1;
+			
+			if (@words < 10) {
+				$result.=$sentence.". ";
+			} else {
+				my $end_sentence = join (" ", @words[$#words-9..$#words]);
+				if (!exists $ends_written{$end_sentence}) {
+					$result.=$sentence.". ";
+					$ends_written{$end_sentence} = 1;
+				}
+			}
 		}
 	}
 	
