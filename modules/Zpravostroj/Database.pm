@@ -27,6 +27,7 @@ my $appendix = ".yaml.bz2";
 
 my $count_dir = read_option("count_dir");
 mkdir $count_dir;
+
 my $bottom_file = $count_dir."/bottom.yaml.bz2";
 my $all_counts_file = $count_dir."/inverse_counts.yaml.bz2";
 
@@ -167,7 +168,7 @@ sub write_db {
 		}
 		if (exists $parameters{count_bottom} and exists $parameters{all_counts}) {
 			dump_anything($database_dir."/".$day."/inverse_counts.yaml.bz2", $parameters{all_counts});
-			dump_anything($database_dir."/".$day."/bottom.yaml.bz2", $parameters{all_counts});
+			dump_anything($database_dir."/".$day."/bottom.yaml.bz2", $parameters{count_bottom});
 			
 			add_bottom($parameters{count_bottom});
 			add_counts($parameters{all_counts});
@@ -191,24 +192,22 @@ sub remove_counts {
 	my $all_counts_ref = shift;
 	my %original_counts_hash = %{(load_anything($all_counts_file) || {})};
 	for my $key (keys %$all_counts_ref) {
-		$original_counts_hash{$key}-=$all_counts_ref->{$key};
-		if (!$original_counts_hash{$key}) {
-			delete $original_counts_hash{$key};
-		}
+		$original_counts_hash{$key}-=$all_counts_ref->{$key} ;
+		delete $original_counts_hash{$key} if ($original_counts_hash{$key}==0);
 	}
-	dump_anything($all_counts_file, \$original_bottom_hash); 
+	dump_anything($all_counts_file, \%original_counts_hash); 
 }
 
 sub remove_bottom {
 	my $all_counts_ref = shift;
 	my %original_bottom_hash = %{(load_anything($bottom_file) || {})};
 	for my $key (keys %$all_counts_ref) {
-		$original_bottom_hash{$key}-=$all_counts_ref->{$key};
-		if (!$original_bottom_hash{$key}) {
-			delete $original_bottom_hash{$key};
+		if (exists $original_bottom_hash{$key}) {
+			$original_bottom_hash{$key}-=$all_counts_ref->{$key} ;
+			delete $original_bottom_hash{$key} if ($original_bottom_hash{$key}==0);
 		}
 	}
-	dump_anything($bottom_file, \$original_bottom_hash); 
+	dump_anything($bottom_file, \%original_bottom_hash); 
 }
 
 sub add_counts {
@@ -217,7 +216,7 @@ sub add_counts {
 	for my $key (keys %$all_counts_ref) {
 		$original_counts_hash{$key}+=$all_counts_ref->{$key};
 	}
-	dump_anything($all_counts_file, \$original_counts_hash); 
+	dump_anything($all_counts_file, \%original_counts_hash); 
 }
 sub add_bottom {
 	my $add_bottom_hash_ref = shift;
@@ -230,6 +229,16 @@ sub add_bottom {
 		}
 	}
 	dump_anything($bottom_file, \%original_bottom_hash);
+}
+
+sub read_bottom_counts {
+	my %hash = %{load_anything($bottom_file) || {}};
+	return %hash;
+}
+
+sub read_all_counts {
+	my %hash = %{load_anything($all_counts_file) || {}};
+	return %hash;
 }
 
 sub get_count {
