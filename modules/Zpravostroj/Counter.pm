@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use Zpravostroj::Other;
+use Zpravostroj::Database; #for reading global counts
 
 
 
@@ -237,25 +238,34 @@ sub count_themes {
 	
 	my %count_bottom_hash;
 	@count_bottom_hash{@counts_bottom}=@all_counts{@counts_bottom};
+	my %count_bottom_hash_with_db = (%count_bottom_hash, read_db_bottom());
 		
 	# foreach (@articles) {$_->{all_words_clone} = clone ($_->{all_words})};
-	foreach (@articles) {connect_bottom($_, \%count_bottom_hash)};
+	foreach (@articles) {connect_bottom($_, \%count_bottom_hash_with_db)};
 	
 	
 	
-	my $max_length=3;#read_option("max_theme_length");
+	my $max_length=10;#read_option("max_theme_length");
 	
 	
 	# counting IDF AGAIN!!!! with different words!!
 	%all_counts=();
 	foreach (@articles) {first_counting_phase($max_length, \%all_counts,map{$_->{lemma}} @{$_->{all_words_copy}})};
 	
+	my %all_counts_with_db=%all_counts;
+	{
+		my %db_counts = read_db_all_counts();
+		for my $key (keys %db_counts) {
+			$all_counts_with_db{$key}+=$db_counts{$key};
+		}		
+	}
 	
-	foreach (@articles) { $_->{top_keys}=second_counting_phase($max_length, scalar @articles, \%all_counts,$_) };
+	
+	foreach (@articles) { $_->{top_keys}=second_counting_phase($max_length, scalar @articles, \%all_counts_with_db,$_) };
 	
 	foreach (@articles) { delete $_->{all_words_copy} };
 	
-	my $top_themes = count_top_themes(\%all_counts, $pa, $pb, $pc, $pd, @articles);
+	my $top_themes = count_top_themes(\%all_counts_with_db, $pa, $pb, $pc, $pd, @articles);
 	
 	
 	return (articles=>\@articles, top_themes=>$top_themes, count_bottom=>\%count_bottom_hash, all_counts=>\%all_counts);

@@ -18,7 +18,7 @@ use Zpravostroj::Other;
 
 
 use base 'Exporter';
-our @EXPORT = qw( write_db read_db archive_pool set_global get_global null_day_counts);
+our @EXPORT = qw( write_db read_db archive_pool set_global get_global null_day_counts read_db_bottom read_db_all_counts);
 
 my $bottom_count = read_option("count_bottom");
 my $database_dir = read_option("articles_address");
@@ -231,12 +231,12 @@ sub add_bottom {
 	dump_anything($bottom_file, \%original_bottom_hash);
 }
 
-sub read_bottom_counts {
+sub read_db_bottom {
 	my %hash = %{load_anything($bottom_file) || {}};
 	return %hash;
 }
 
-sub read_all_counts {
+sub read_db_all_counts {
 	my %hash = %{load_anything($all_counts_file) || {}};
 	return %hash;
 }
