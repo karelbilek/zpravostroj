@@ -28,6 +28,7 @@ my $appendix = ".yaml.bz2";
 my $count_dir = read_option("count_dir");
 mkdir $count_dir;
 my $bottom_file = $count_dir."/bottom.yaml.bz2";
+my $all_counts_file = $count_dir."/inverse_counts.yaml.bz2";
 
 my %all_article_properties;
 @all_article_properties{@{read_option("all_article_properties")}}=();
@@ -165,16 +166,12 @@ sub write_db {
 			dump_anything($database_dir."/".$day."/".$topthemes, $parameters{top_themes});
 		}
 		if (exists $parameters{count_bottom} and exists $parameters{all_counts}) {
-			dump_anything($database_dir."/".$day."/all_counts.yaml.bz2", $parameters{all_counts});
-			add_bottom($parameters{count_bottom});
+			dump_anything($database_dir."/".$day."/inverse_counts.yaml.bz2", $parameters{all_counts});
+			dump_anything($database_dir."/".$day."/bottom.yaml.bz2", $parameters{all_counts});
 			
-			my %count_hash;
-			for my $key (keys %{$parameters{all_counts}}) {
-				$count_hash{magic_transform($key)}->{$key} = $parameters{all_counts}->{$key};
-			}
-			print "cunted, lets rite!\n";
-			update_reverse_counts(\%count_hash);
-			print "\n pooof\n";
+			add_bottom($parameters{count_bottom});
+			add_counts($parameters{all_counts});
+
 		}
 	}
 	return $res; #sometimes i DO want to return something
@@ -183,27 +180,45 @@ sub write_db {
 sub null_day_counts {
 	my $day = shift;
 	
-	my $all_counts_ref = load_anything($database_dir."/".$day."/all_counts.yaml.bz2");
-	if ($all_counts_ref) {
-		my %count_hash;
-		for my $key (keys %$all_counts_ref) {
-			$count_hash{magic_transform($key)}->{$key} = -$all_counts_ref->{$key};
+	my $all_counts_ref = load_anything($database_dir."/".$day."/inverse_counts.yaml.bz2") || {};
+	remove_counts($all_counts_ref);
+	my $bottom_ref = load_anything($database_dir."/".$day."/bottom.yaml.bz2") || {};
+	remove_bottom($bottom_ref);
+	
+}
+
+sub remove_counts {
+	my $all_counts_ref = shift;
+	my %original_counts_hash = %{(load_anything($all_counts_file) || {})};
+	for my $key (keys %$all_counts_ref) {
+		$original_counts_hash{$key}-=$all_counts_ref->{$key};
+		if (!$original_counts_hash{$key}) {
+			delete $original_counts_hash{$key};
 		}
-		print "minus cunted, lets minus rite!\n";
-		update_reverse_counts(\%count_hash);
-		print "\n pooof\n";
 	}
+	dump_anything($all_counts_file, \$original_bottom_hash); 
 }
 
-sub magic_transform {
-	my $word = shift;
-	my @words = split (/ /, $word);
-	my $res = (join ("", map {substr($_, 0, 1)} @words));
-	$res =~ s/[^a-zA-Z0-9]//g;
-	#return "";
-	return $res;
+sub remove_bottom {
+	my $all_counts_ref = shift;
+	my %original_bottom_hash = %{(load_anything($bottom_file) || {})};
+	for my $key (keys %$all_counts_ref) {
+		$original_bottom_hash{$key}-=$all_counts_ref->{$key};
+		if (!$original_bottom_hash{$key}) {
+			delete $original_bottom_hash{$key};
+		}
+	}
+	dump_anything($bottom_file, \$original_bottom_hash); 
 }
 
+sub add_counts {
+	my $all_counts_ref = shift;
+	my %original_counts_hash = %{(load_anything($all_counts_file) || {})};
+	for my $key (keys %$all_counts_ref) {
+		$original_counts_hash{$key}+=$all_counts_ref->{$key};
+	}
+	dump_anything($all_counts_file, \$original_counts_hash); 
+}
 sub add_bottom {
 	my $add_bottom_hash_ref = shift;
 	my %original_bottom_hash = %{(load_anything($bottom_file) || {})};
@@ -234,39 +249,7 @@ sub get_count {
 	}
 }
 
-sub update_reverse_counts {
-	my $new_hash_ref = shift;
-	for my $base (keys %$new_hash_ref) {
-		my $count_file;
-		if ($base eq "") {
-			$count_file = $count_dir."/short.yaml.bz2";
-		} else {
-			
-			
-			
-			#my $ndir = $count_dir."/".$base;
-			#mkdir $ndir;
-			my @sh = (map {substr($base,0,$_)} (1..length $base));
-			my $ndir = $count_dir;
-			foreach (@sh) {$ndir.="/".$_; mkdir $ndir};
-			
-			$count_file = $ndir."/counts.yaml.bz2";
-		}
-		
-		my $orig_hash_ref = load_anything($count_file) || {};
-		
-		for my $word (keys %{$new_hash_ref->{$base}}) {
-			$orig_hash_ref->{$word} += $new_hash_ref->{$base}->{$word};
-			if ($orig_hash_ref->{$word} == 0) {
-				delete $orig_hash_ref->{$word};
-			}
-		}
-		
-		dump_anything($count_file, $orig_hash_ref);
-		$| = 1;
-		print "$base.";
-	}
-}
+
 
 sub load_anything {
 	
