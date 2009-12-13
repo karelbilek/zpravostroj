@@ -72,6 +72,11 @@ sub read_db {
 			$results{count} = get_count("pool");
 		}
 		
+		if ($parameters{count_bottom} or $parameters{all_counts}) {
+			$results{all_counts}=load_anything($pool_dir."/inverse_counts.yaml.bz2");
+			$results{count_bottom}=($pool_dir."/bottom.yaml.bz2");
+		}
+		
 	} elsif (my $day = $parameters{day}) {
 		#reading from archive
 		if ($parameters{top_themes}) {
@@ -83,6 +88,8 @@ sub read_db {
 		if ($parameters{count}) {
 			$results{count} = get_count($day);
 		}
+		
+		
 		
 		if ($parameters{articles}) {
 			if ($parameters{short}) {
@@ -145,9 +152,15 @@ sub write_db {
 		if (exists $parameters{top_themes}) {
 			dump_anything($pool_dir."/".$topthemes, $parameters{top_themes});
 		}
+		
+		if (exists $parameters{count_bottom} and exists $parameters{all_counts}) {
+			dump_anything($pool_dir."/inverse_counts.yaml.bz2", $parameters{all_counts});
+			dump_anything($pool_dir."/bottom.yaml.bz2", $parameters{count_bottom});
+
+		}
 	} elsif (my $day = $parameters{day}) {
 		#it ALWAYS rewrites EVERYTHING - so no appending / rewriting
-		get_count($day); #this is just for creating directories
+		get_count($day); #this is just for creating directory
 		
 		if (exists $parameters{articles}) {
 		

@@ -51,32 +51,41 @@ sub redo_it {
 			@articles = (read_db(pool=>1, articles=>1))->{articles};
 		}
 	} elsif (my $day = $parameters{day}) {
-		@articles = @{(read_db(day=>$day, articles=>1))->{articles}};
-
+		if ($parameters{do_reading}) {
+			@articles = @{(read_db(day=>$day, articles=>1, short=>1))->{articles}};
+		} else {
+			@articles = @{(read_db(day=>$day, articles=>1))->{articles}};
+		}
 	}
 	
 	if (!scalar @articles) {
 		return;
 	}
 	
+	print "will read...\n";
 	if ($parameters{do_reading}) {
 		@articles = read_from_webs(@articles);
 	}
 	
+	print "will extract...\n";
 	if ($parameters{do_extracting}) {
 		@articles = extract_texts(@articles);
 	}
 	
+	print "will tag...\n";
 	if ($parameters{do_tagging}) {
 		@articles = tag_texts(@articles);
 	}
 	
+	print "will count...\n";
 	my $count_bottom_ref;
 	my $all_counts_ref;
 	if ($parameters{do_counting}) {
 		if (my $day = $parameters{day}) {
+			print "will null...\n";
 			null_day_counts($day);
 		}
+		print "will count fo real...\n";
 		my %r = count_themes(0.85, 0.07, 0.9, 0.6, \@articles);
 		@articles = @{$r{articles}};
 		$top_themes_ref = $r{top_themes};
@@ -94,11 +103,15 @@ sub redo_it {
 			}
 		}
 	} elsif (my $day = $parameters{day}) {
+		print "will write to db...\n";
+
 		write_db(day=>$day, articles=>\@articles);
 		if ($parameters{do_counting}) {
 			write_db(day=>$day, top_themes=>$top_themes_ref, count_bottom=>$count_bottom_ref, all_counts => $all_counts_ref);
 		}
 	}
+	print "Dan...\n";
+
 }
 
 
