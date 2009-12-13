@@ -74,6 +74,9 @@ sub redo_it {
 	my $count_bottom_ref;
 	my $all_counts_ref;
 	if ($parameters{do_counting}) {
+		if (my $day = $parameters{day}) {
+			null_day_counts($day);
+		}
 		my %r = count_themes(0.85, 0.07, 0.9, 0.6, \@articles);
 		@articles = @{$r{articles}};
 		$top_themes_ref = $r{top_themes};
@@ -93,7 +96,6 @@ sub redo_it {
 	} elsif (my $day = $parameters{day}) {
 		write_db(day=>$day, articles=>\@articles);
 		if ($parameters{do_counting}) {
-			print "YES\n";
 			write_db(day=>$day, top_themes=>$top_themes_ref, count_bottom=>$count_bottom_ref, all_counts => $all_counts_ref);
 		}
 	}

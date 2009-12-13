@@ -18,7 +18,7 @@ use Zpravostroj::Other;
 
 
 use base 'Exporter';
-our @EXPORT = qw( write_db read_db archive_pool set_global get_global );
+our @EXPORT = qw( write_db read_db archive_pool set_global get_global null_day_counts);
 
 my $bottom_count = read_option("count_bottom");
 my $database_dir = read_option("articles_address");
@@ -165,22 +165,43 @@ sub write_db {
 			dump_anything($database_dir."/".$day."/".$topthemes, $parameters{top_themes});
 		}
 		if (exists $parameters{count_bottom} and exists $parameters{all_counts}) {
+			dump_anything($database_dir."/".$day."/all_counts.yaml.bz2", $parameters{all_counts});
 			add_bottom($parameters{count_bottom});
 			
 			my %count_hash;
 			for my $key (keys %{$parameters{all_counts}}) {
 				$count_hash{magic_transform($key)}->{$key} = $parameters{all_counts}->{$key};
 			}
+			print "cunted, lets rite!\n";
 			update_reverse_counts(\%count_hash);
+			print "\n pooof\n";
 		}
 	}
 	return $res; #sometimes i DO want to return something
 }
 
+sub null_day_counts {
+	my $day = shift;
+	
+	my $all_counts_ref = load_anything($database_dir."/".$day."/all_counts.yaml.bz2");
+	if ($all_counts_ref) {
+		my %count_hash;
+		for my $key (keys %$all_counts_ref) {
+			$count_hash{magic_transform($key)}->{$key} = -$all_counts_ref->{$key};
+		}
+		print "minus cunted, lets minus rite!\n";
+		update_reverse_counts(\%count_hash);
+		print "\n pooof\n";
+	}
+}
+
 sub magic_transform {
 	my $word = shift;
-	my @words = split (//, $word);
-	return (join ("", map {substr($_, 0, 3)} @words));
+	my @words = split (/ /, $word);
+	my $res = (join ("", map {substr($_, 0, 1)} @words));
+	$res =~ s/[^a-zA-Z0-9]//g;
+	#return "";
+	return $res;
 }
 
 sub add_bottom {
@@ -220,13 +241,16 @@ sub update_reverse_counts {
 		if ($base eq "") {
 			$count_file = $count_dir."/short.yaml.bz2";
 		} else {
+			
+			
+			
+			#my $ndir = $count_dir."/".$base;
+			#mkdir $ndir;
 			my @sh = (map {substr($base,0,$_)} (1..length $base));
-			
-			
 			my $ndir = $count_dir;
 			foreach (@sh) {$ndir.="/".$_; mkdir $ndir};
 			
-			$count_file = $count_dir."/counts.yaml.bz2";
+			$count_file = $ndir."/counts.yaml.bz2";
 		}
 		
 		my $orig_hash_ref = load_anything($count_file) || {};
@@ -239,6 +263,8 @@ sub update_reverse_counts {
 		}
 		
 		dump_anything($count_file, $orig_hash_ref);
+		$| = 1;
+		print "$base.";
 	}
 }
 

@@ -243,7 +243,7 @@ sub count_themes {
 	
 	
 	
-	my $max_length=10;#read_option("max_theme_length");
+	my $max_length=3;#read_option("max_theme_length");
 	
 	
 	# counting IDF AGAIN!!!! with different words!!
