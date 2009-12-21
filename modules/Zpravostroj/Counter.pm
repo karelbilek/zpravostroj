@@ -134,6 +134,7 @@ sub connect_bottom {
 
 sub make_corrections {
 	my $article_ref = shift;
+	print $article_ref;
 	if (!defined $article_ref->{all_words}) {
 		my @empty = ();
 		$article_ref->{all_words} = \@empty;
@@ -158,7 +159,7 @@ sub real_score {
 	my ($score_ref, $appearances_ref, $all_counts_ref, $number_of_articles, $what, $a, $b, $c, $d) = @_;
 	
 	# return ;
-	my $score = (log(scalar (keys %{$appearances_ref->{$what}})+1)**$a)*(log($number_of_articles/(($b*100)*($all_counts_ref->{$what})))**$c)* (($score_ref->{$what})**$d);
+	my $score = (log(scalar (keys %{$appearances_ref->{$what}})+1)**$a)*(log($number_of_articles/(($all_counts_ref->{$what})))**$c)* (($score_ref->{$what})**$d);
 	if ($score != $score) { #only when NaN
 		return 0;
 	}

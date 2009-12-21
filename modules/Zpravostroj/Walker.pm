@@ -40,6 +40,7 @@ sub read_new {
 }
 
 sub redo_it {
+	print "___\n";
 	my %parameters = @_;
 	my @articles;
 	my $top_themes_ref;
@@ -49,6 +50,8 @@ sub redo_it {
 			@articles = (read_db(pool=>1, articles=>1, articles_one=>$which))->{articles};
 		} else {
 			@articles = (read_db(pool=>1, articles=>1))->{articles};
+			use YAML::XS;
+			print Dump \@articles;
 		}
 	} elsif (my $day = $parameters{day}) {
 		if ($parameters{do_reading}) {
@@ -59,6 +62,7 @@ sub redo_it {
 	}
 	
 	if (!scalar @articles) {
+		print "!!!!";
 		return;
 	}
 	
@@ -87,6 +91,7 @@ sub redo_it {
 		}
 		print "will count fo real...\n";
 		my %r = count_themes(0.85, 0.07, 0.9, 0.6, \@articles);
+		#my %r = count_themes(0.85, 0.07, 0.9, 100, \@articles);
 		@articles = @{$r{articles}};
 		$top_themes_ref = $r{top_themes};
 		$count_bottom_ref = $r{count_bottom};
