@@ -102,7 +102,6 @@ sub extract_text {
 	
 	
 	if (!exists $article{html}) {
-		my_warning("extract_text - article does not have html atribute!");
 		return \%article;
 	}
 	
@@ -117,18 +116,15 @@ sub extract_text {
 	
 	$dom_tree->write($text);
 	$dom_tree->close();
-	my_log("extract_text - created DOM");
     
 	my $extracted = check_unknown($dom_tree);
 	
-	my_log("extract_text - basically extracted");
 	my @sentences = split(" *[\.\"\'] *", $extracted);
 	foreach (@sentences) {s/\n//g};
 	my %written;
 	my $result="";
 	my %ends_written;
 	
-	my_log("extract_text - going to check repeated sentences...");
 	for my $sentence (@sentences) {
 		if (!exists $written{$sentence}) {
 			my @words = split (/ /, $sentence);
@@ -152,27 +148,36 @@ sub extract_text {
 	eval{$article{title} = $dom_tree->getElementsByTagName('title')->[0]->text()};
 		#sometimes, article does not have title. it happens.
 		
-	my_log("extract_text - exiting");
     return \%article;
 }
 
 sub extract_texts {   
 	my @articles = @_;
+	my_log("Extractor", "Let's go! [this usually works OK so I wont log too much]");
 	my @results;
 	my $i=0;
 	
 	for my $article (@articles) {
-		my_log("extract_texts - before $i");
+		my_log("Extractor", "article $i-----");
 		my $result={};
 	
 		eval{$result = extract_text($article)};
 		
-		if ($@) {my_warning("extract_texts - weird error $@")};
+		if ($@) {
+			my_warning("Extractor", "extract_texts - weird error $@");
+			my_log("Extractor", "-----didnt work. check out the warnings.");
+		} else {
+			if ($result->{extracted} eq "") {
+				my_log("Extractor", "-----didnt work. check out the warnings.");
+				my_warning("Extractor", "extract_texts - empty result!!!§§§§");
+			} else {
+				my_log("Extractor", "-----did work. thumbs up!");
+			}
+		}
 		
-		my_log("extract_texts - after $i");
 		push(@results, $result);
 		$i++;
 	}
-	my_log("extract_texts - exiting");
+	my_log("Extractor", "Dan.  kthxbai");
 	return @results;
 }

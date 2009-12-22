@@ -18,7 +18,7 @@ our @EXPORT = qw(get_day my_log my_warning split_size all_subthemes is_word  mak
 
 	#!!!!!!!!!!!! ------ GLOBALS ------ !!!!!!!!!!!!
 my ($option_ref) = load_yaml_file("configure.yaml");
-my $warning_file = read_option("warning_file");
+my $warning_dir = read_option("warning_dir");
 
 
 my $czechs="ÁČĎĚÉÍŇÓŘŠŤÚŮÝŽáčďěéíňóřšťúůýž";
@@ -27,7 +27,7 @@ my $czechs="ÁČĎĚÉÍŇÓŘŠŤÚŮÝŽáčďěéíňóřšťúůýž";
 	
 my $longest_correction=0;
 my %corrections;
-my $log_file = read_option("log_file");
+my $log_dir = read_option("log_dir");
 	#!!!!!!!!!!!! ------ GLOBALS ------ !!!!!!!!!!!!
 
 
@@ -47,17 +47,27 @@ sub get_time {
 }
 
 sub my_warning {
+	my $type = shift;
 	my $what = shift;
-	open (my $fh, ">>", $warning_file);
-	print {$fh} get_day(),":", get_time()," - ", $what,"\n";
+	mkdir $warning_dir;
+	my $day_dir = $warning_dir."/".get_day();
+	mkdir $day_dir;
+	my $warning_file = $day_dir."/".$type;
+	open (my $fh, ">>", $warning_file) or die $warning_file." cannot be opened, wonder why? Dying painfully\n";
+	print {$fh} get_time()," - ", $what,"\n";
 	close $fh;
 }
 
 
 sub my_log {
+	my $type = shift;
 	my $what = shift;
-	open (my $fh, ">>", $log_file) or die $log_file."cannot be opened, wonder why? Dying painfully\n";
-	print {$fh} get_day(),":", get_time()," - ", $what,"\n";
+	mkdir $log_dir;
+	my $day_dir = $warning_dir."/".get_day();
+	mkdir $day_dir;
+	my $log_file = $day_dir."/".$type;
+	open (my $fh, ">>", $log_file) or die $log_file." cannot be opened, wonder why? Dying painfully\n";
+	print {$fh} get_time()," - ", $what,"\n";
 	close $fh;
 }
 
@@ -73,7 +83,7 @@ sub load_yaml_file {
 	my $whole_name = File::Spec->catpath( $volume, $directory, '../../'.$name );
 	
 	if (!-e $whole_name) {
-		my_warning("load_yaml_file - file ".$whole_name." does not exists!");
+		my_warning("Other", "load_yaml_file - file ".$whole_name." does not exists!");
 		return "";
 	}
 
@@ -81,7 +91,7 @@ sub load_yaml_file {
 	
 	eval{$ref = LoadFile($whole_name)};
 	if ($@) {
-		my_warning("load_yaml_file - some strange error when reading ". $whole_name." - ".$@." :-(");
+		my_warning("Other", "load_yaml_file - some strange error when reading ". $whole_name." - ".$@." :-(");
 	}
 	return $ref;
 }

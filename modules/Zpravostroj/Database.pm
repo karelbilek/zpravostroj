@@ -281,14 +281,14 @@ sub load_anything {
 	my $no_existence_warning = shift;
 	
 	if (!-e $where) {
-		my_warning("load_anything - $where does not exist!!") unless ($no_existence_warning);
+		my_warning("Database", "load_anything - $where does not exist!!") unless ($no_existence_warning);
 		return 0;
 	}
 	
 	my $z = new IO::Uncompress::Bunzip2($where);
 	
 	if (!$z) {
-		my_warning("load_anything - $where cannot be read for weird reason...");
+		my_warning("Database", "load_anything - $where cannot be read for weird reason...");
 		return 0;
 	}
 	
@@ -300,7 +300,7 @@ sub load_anything {
 		eval {$result = Load($all)};
 		
 		if ($@) {
-			my_warning("load_anything - some weird error given when loading $where - ".$@." :-(");
+			my_warning("Database", "load_anything - some weird error given when loading $where - ".$@." :-(");
 			return 0;
 		}
 		return $result;
@@ -320,19 +320,19 @@ sub dump_anything {
 	# open my $z, "| bzip2 > $where";
 	my $z = new IO::Compress::Bzip2($where);
 	if (!$z) {
-		my_warning("dump_anything - cannot create file ".$where);
+		my_warning("Database", "dump_anything - cannot create file ".$where);
 		return;
 	}	
 	
 	if (!$what) {
-		my_warning ("dump_anything - \$what is empty :-(");
+		my_warning ("Database", "dump_anything - \$what is empty :-(");
 		return;
 	}
 
 	my $dumped;
 	eval {$dumped = Dump($what)};
 	if ($@) {
-		my_warning("dump_anything - cannot dump when trying to write to ".$where."- ".$@." :-(");
+		my_warning("Database", "dump_anything - cannot dump when trying to write to ".$where."- ".$@." :-(");
 	}
 	
 	print $z $dumped unless (!$what);

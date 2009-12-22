@@ -210,12 +210,13 @@ sub count_top_themes {
 	}
 	
 	
-	splice (@results, 250)if @results>250;
+	splice (@results, 250) if @results>250;
 	
 	return \@results;
 }
 
 sub count_themes {
+	my_log("Counter", "count_themes entering. I hope we are all well and all on this board. Lock and load!");
 	my $pa = shift;
 	my $pb = shift;
 	my $pc = shift;
@@ -228,9 +229,16 @@ sub count_themes {
 	
 	my %all_counts;
 	
+	my_log("Counter", "First make corrections.");
+	
 	foreach (@articles) {make_corrections($_)};
 	
+	my_log("Counter", "Then count it for the first time, ignoring the first-step words.");
+	
+	
 	foreach (@articles) {first_counting_phase(1, \%all_counts,map{$_->{lemma}} @{$_->{all_words}})};
+	
+	my_log("Counter", "Hey yo. Now, connect the bottoms-");
 	
 	my @counts_bottom = sort {$all_counts{$b} <=> $all_counts{$a}} keys %all_counts;
 	splice (@counts_bottom, @counts_bottom/44);
@@ -240,11 +248,13 @@ sub count_themes {
 	my %count_bottom_hash;
 	@count_bottom_hash{@counts_bottom}=@all_counts{@counts_bottom};
 	my %count_bottom_hash_with_db = (%count_bottom_hash, read_db_bottom());
+	
+	
 		
 	# foreach (@articles) {$_->{all_words_clone} = clone ($_->{all_words})};
 	foreach (@articles) {connect_bottom($_, \%count_bottom_hash_with_db)};
 	
-	
+	my_log("Counter", "- dan. now for the 2nd time...");
 	
 	my $max_length=5;#read_option("max_theme_length");
 	
@@ -253,6 +263,8 @@ sub count_themes {
 	%all_counts=();
 	foreach (@articles) {first_counting_phase($max_length, \%all_counts,map{$_->{lemma}} @{$_->{all_words_copy}})};
 	
+	my_log("Counter", "- dan. now the socalled 2nd phase...");
+	
 	my %all_counts_with_db=%all_counts;
 	{
 		my %db_counts = read_db_all_counts();
@@ -260,14 +272,17 @@ sub count_themes {
 			$all_counts_with_db{$key}+=$db_counts{$key};
 		}		
 	}
-	
+	my_log("Counter", "- something someting -");
 	
 	foreach (@articles) { $_->{top_keys}=second_counting_phase($max_length, scalar @articles, \%all_counts_with_db,$_) };
+	
+	my_log("Counter", "- done. now count the top_themes...");
 	
 	foreach (@articles) { delete $_->{all_words_copy} };
 	
 	my $top_themes = count_top_themes(\%all_counts_with_db, $pa, $pb, $pc, $pd, @articles);
 	
+	my_log("Counter", "- done. kthxbai.");
 	
 	return (articles=>\@articles, top_themes=>$top_themes, count_bottom=>\%count_bottom_hash, all_counts=>\%all_counts);
 }

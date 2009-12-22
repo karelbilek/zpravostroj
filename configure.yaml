@@ -38,6 +38,6 @@ all_article_properties: #dont remove anything that is in more files
     - html
     - all_words
     - all_named
-log_file: /a/merkur2/ufallabhome/bilek/rocnik/data/log
-warning_file: /a/merkur2/ufallabhome/bilek/rocnik/data/warnings
+log_dir: /a/merkur2/ufallabhome/bilek/rocnik/data/log/
+warning_dir: /a/merkur2/ufallabhome/bilek/rocnik/data/warnings/
 themes_dir: /a/merkur2/ufallabhome/bilek/rocnik/data/themes

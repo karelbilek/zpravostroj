@@ -52,7 +52,7 @@ sub save_words {
 		}
 	};
 	if ($@) {
-		my_warning("save_words - unidentified error - $@");
+		my_warning("Tagger", "save_words - unidentified error - $@");
 	}
 }
 
@@ -77,7 +77,7 @@ sub save_named {
 		}
 	};
 	if ($@) {
-		my_warning("save_named - unidentified error - $@");
+		my_warning("Tagger", "save_named - unidentified error - $@");
 	}
 }
  
@@ -91,12 +91,12 @@ sub doc_to_hash {
 	
 	foreach my $bundle ( $document->get_bundles() ) {
 		eval {save_words(\@words, $bundle->get_tree('SCzechM'))};
-		if ($@) {my_warning("doc_to_hash - cannot get SCzechM tree - $@")};
+		if ($@) {my_warning("Tagger", "doc_to_hash - cannot get SCzechM tree - $@")};
 	}
 	
 	foreach my $bundle ( $document->get_bundles() ) {
 		eval {save_named( \%named, $bundle->get_tree('SCzechN'))};
-		if ($@) {my_warning("doc_to_hash - cannot get SCzechN tree - $@")};
+		if ($@) {my_warning("Tagger", "doc_to_hash - cannot get SCzechN tree - $@")};
 	}
 	
 	
@@ -109,12 +109,11 @@ sub doc_to_hash {
 my $save_err;
 
 sub shut_up {
-	my_log("shut_up");
+	my $ref = shift;
 	open $save_err, ">&STDERR";
-	open STDERR, '>', "/dev/null";
+	open STDERR, '>', $ref;
 }
 sub open_up {
-	my_log("open_up");
 	open STDERR, ">&", $save_err;
 }
 
@@ -124,6 +123,7 @@ my $scenario_initialized = 0;
 my $scenario;
  
 sub tag_texts {
+	my_log("Tagger", "===============================================PAIN BEGINS");
 	
 	my @articles = @_;
 	
@@ -132,26 +132,27 @@ sub tag_texts {
 	}
 	
 	
-	my_log("tag_texts - entering");
 	unless ($scenario_initialized) {
-		my_log("tag_texts - initializing scenario for the first time");
 		
-		shut_up();
+		my_log("Tagger", "===============================================INITIALISING SCENARIO");
+		my $errbuf;
+		shut_up(\$errbuf);
 		
 		my $err;
 		my $errcount;
 		do {
 			eval {$scenario = TectoMT::Scenario->new({'blocks'=> [ qw(SCzechW_to_SCzechM::Sentence_segmentation SCzechW_to_SCzechM::Tokenize  SCzechW_to_SCzechM::TagHajic SCzechM_to_SCzechN::SVM_ne_recognizer) ]})};
-					#redirecting STDERR doesn'  stop eval from working
+					#redirecting STDERR doesn't stop eval from working
 			$err=$@;
 			$errcount++;
 		} while ($err and ($errcount < 5)); 
-					#I simply HAVE to have scenario for future work. If it causes infinite loop, so be it, I just NEED the scenario
+		
 		if ($err) {
 			die $err;
 		}
 		open_up();
-		my_log("tag_texts - done initializing");
+		my_log("Tagger", "===============================================DONE, now errbuf...");
+		my_log("Tagger",$errbuf);
 		$scenario_initialized = 1;
 	}
 	
@@ -162,25 +163,33 @@ sub tag_texts {
 	
 	map ($documents_hash{$_}=create_new_document($_->{extracted}), @articles);
 	
-	my_log("tag_texts - lets apply the thing on the document! ha ha!");
-	shut_up();
+	my_log("Tagger", "===============================================MAIN TAGGING");
+	
+	my $errbuf;
+	shut_up(\$errbuf);
 	
 	eval {$scenario->apply_on_tmt_documents(@documents_hash{@articles})};
 	if ($@) {
-		my_warning("tag_texts - error while applying to tmt documents - $@; trying for 2nd time");
+		my_log("Tagger", "======================================FIRST TIME NOT OK");
 		eval {$scenario->apply_on_tmt_documents(@documents_hash{@articles})};
 		if ($@) {
-			my_warning("tag_texts - giving up.");
+			my_log("Tagger", "======================================2ND TIME NOT OK");
+			my_warning("Tagger", "tag_texts - shi'it :-( $@");
+		} else {
+			my_log("Tagger", "======================================2ND TIME OK");
 		}
-	};
+	} else {
+		my_log("Tagger", "======================================FIRST TIME OK");
+	}
 	
-	open_up();
-	my_log("tag_texts - done. hashing back....");
-	
+	open_up();	
+	my_log("Tagger", "===============================================DONE, now errbuf...");
+	my_log("Tagger",$errbuf);
 	
 	map (doc_to_hash($_, $documents_hash{$_}), @articles);
 	
-	my_log("tag_texts - ...done. exiting");
+	my_log("Tagger", "===============================================DONEALL");
+	
 	return @articles;
 }
  

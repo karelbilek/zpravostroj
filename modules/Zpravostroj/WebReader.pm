@@ -42,18 +42,19 @@ sub read_from_web {
 }
 
 sub read_from_webs {
-	my_log("read_from_webs - entering...");
 	my @result;
+	my_log("WebReader", "lets go!");
 	
-	for my $article_ref (@_) {
+	for my $article_ref (@_) {		
 		my %article = %$article_ref;
 		eval {$article{html}=read_from_web($article{url})};
 		if ($@) {
-			my_warning("read_from_webs - error when reading $article{url} - $@");
+			my_warning("WebReader", "read_from_webs - error when reading $article{url} - $@");
 		}
 		push (@result, \%article);
 	}
 	
-	my_log("read_from_webs - ...done. exiting.");
+	my_log("WebReader", "Dan.");
+	
 	return @result;
 }

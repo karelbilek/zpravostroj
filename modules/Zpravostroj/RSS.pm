@@ -25,30 +25,31 @@ sub get_filename {
 
 sub get_new_links{
 	my $source=shift;
-	my_log("get_new_links - entering for $source");
 	
 	my %options = @_; #if there is a limit (just for testing)
 	my $content = read_from_web ($source, 1);
 	
+	my_log("RSS", "new_links - let's try and eval the guy");
 	my $rai;
 	eval { $rai = XML::RAI->parse($content);};
-
-
-		#this might be a bug in XML::RAI...I don't really know 
-		#why RAI expects it encoded but apparently it does
 	
+	if ($@) {
+		my_log("RSS", "new_links the guy really has issues! $@");
+	} else {
+		my_log("RSS", "new_links - it JUST WORKS!");
+	}
+		
 	my $source_name = lc $source;
 	$source_name =~ s/^http:\/\/([^\.]*\.)*([^\.]*)\.cz.*$/$+/;	
 	
 	my @visited_arr;
-	my_log("get_new_links - loading RSSarray...");
 	
+	my_log("RSS", "new_links - this is actually quite boring");
 	
 	if (-e (my $filename = get_filename($source_name))) {
 		@visited_arr = @{LoadFile($filename)};
 	}
 	
-	my_log("get_new_links - ...done");
 	
 	my %visited_hash;
 	@visited_hash{@visited_arr}=();
@@ -57,11 +58,18 @@ sub get_new_links{
 	my $count=0;
 	
 	my @items;
+	
+	my_log("RSS", "new_links - let's try and eval the guy for the 2nd time");
 	eval {@items = @{$rai->items};};
 			#in VERY rare occasions XML::RAI just cannot parse RSS
 			#I wont force it to
+	if ($@) {
+		my_log("RSS", "new_links the guy really has issues! $@");
+	} else {
+		my_log("RSS", "new_links - it JUST WORKS!");
+	}
 	
-	my_log("get_new_links - check each one...");
+	my_log("RSS", "new_links will do some boring stuff");
 	
 	foreach my $item (@items) {
 		last if (($options{"limit"}) and ($count>=$options{"limit"}));
@@ -69,7 +77,6 @@ sub get_new_links{
 		push (@results, $item->link()) unless (exists $visited_hash{$item->link()});
 	}
 	
-	my_log("get_new_links - adding visited..");
 	
 	
 	unshift (@visited_arr, @results);
@@ -79,24 +86,25 @@ sub get_new_links{
 	
 	
 	
-	my_log("get_new_links - dumping everything...");
 	DumpFile(get_filename($source_name), \@visited_arr);
-	my_log("get_new_links -...done. exiting.");
 	
+	my_log("RSS", "new_links Dan");
 	return map ({url=>$_}, @results);
 	
 }
 
 sub get_all_links {
-	my_log("get_all_links - entering");
 	my @RSS_sources = @{read_option("RSS_sources")};
 	my @result;
 	for my $source (@RSS_sources) {
+		my_log("RSS", "all_links - let's try source $source rite?");
 		eval {push (@result, get_new_links($source))};
 		if ($@) {
-			my_warning("get_all_links - error downloading $source - $@");
+			my_warning("RSS", "all_links - error downloading $source - $@");
+		} else {
+			my_log("RSS", "all_links - all OK and fine");
 		}
 	}
-	my_log("get_all_links - exiting");
+	my_log("RSS", "all_links - Dan.");
 	return @result;
 }
