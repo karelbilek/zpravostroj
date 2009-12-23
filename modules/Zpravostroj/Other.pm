@@ -5,6 +5,7 @@ use YAML::XS qw(LoadFile);
 use strict;
 use warnings;
 
+use File::Touch;
 use File::Spec;
 use utf8;
 use DateTime;
@@ -49,10 +50,15 @@ sub get_time {
 sub my_warning {
 	my $type = shift;
 	my $what = shift;
-	mkdir $warning_dir;
+        if (! -d $warning_dir){
+	     mkdir $warning_dir or die "cannot mkdir $warning_dir\n";
+        }
 	my $day_dir = $warning_dir."/".get_day();
-	mkdir $day_dir;
+        if (! -d $day_dir){
+	    mkdir $day_dir or die "cannot mkdir $day_dir\n";
+        }
 	my $warning_file = $day_dir."/".$type;
+        touch $warning_file or die $warning_file." cannot be touched, dying\n";
 	open (my $fh, ">>", $warning_file) or die $warning_file." cannot be opened, wonder why? Dying painfully\n";
 	print {$fh} get_time()," - ", $what,"\n";
 	close $fh;
