@@ -50,15 +50,16 @@ sub get_time {
 sub my_warning {
 	my $type = shift;
 	my $what = shift;
-        if (! -d $warning_dir){
-	     mkdir $warning_dir or die "cannot mkdir $warning_dir\n";
-        }
+	
+	mkdir $warning_dir or die "cannot mkdir $warning_dir\n";
+	
 	my $day_dir = $warning_dir."/".get_day();
-        if (! -d $day_dir){
-	    mkdir $day_dir or die "cannot mkdir $day_dir\n";
-        }
+	
+	mkdir $day_dir or die "cannot mkdir $day_dir\n";
+	
 	my $warning_file = $day_dir."/".$type;
-        touch $warning_file or die $warning_file." cannot be touched, dying\n";
+	
+	touch $warning_file or die $warning_file." cannot be touched, dying\n";
 	open (my $fh, ">>", $warning_file) or die $warning_file." cannot be opened, wonder why? Dying painfully\n";
 	print {$fh} get_time()," - ", $what,"\n";
 	close $fh;
@@ -69,7 +70,7 @@ sub my_log {
 	my $type = shift;
 	my $what = shift;
 	mkdir $log_dir;
-	my $day_dir = $warning_dir."/".get_day();
+	my $day_dir = $log_dir."/".get_day();
 	mkdir $day_dir;
 	my $log_file = $day_dir."/".$type;
 	open (my $fh, ">>", $log_file) or die $log_file." cannot be opened, wonder why? Dying painfully\n";
