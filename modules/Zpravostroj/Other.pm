@@ -55,7 +55,7 @@ sub my_warning {
 	
 	my $day_dir = $warning_dir."/".get_day();
 	
-	if (-d $day_dir) {mkdir $day_dir or die "cannot mkdir $day_dir\n";}
+	if (!-d $day_dir) {mkdir $day_dir or die "cannot mkdir $day_dir\n";}
 	
 	my $warning_file = $day_dir."/".$type;
 	
