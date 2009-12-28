@@ -10,7 +10,7 @@ use utf8;
  
 use TectoMT::Scenario;
 use TectoMT::Document;
- 
+use IO::CaptureOutput qw(capture);
 use Zpravostroj::Other;
  
 use base 'Exporter';
@@ -106,16 +106,16 @@ sub doc_to_hash {
 	$article->{all_named}=\@arnamed;
 }
 
-my $save_err;
-
-sub shut_up {
-	my $ref = shift;
-	open $save_err, ">&STDERR";
-	open STDERR, '>', $ref;
-}
-sub open_up {
-	open STDERR, ">&", $save_err;
-}
+# my $save_err;
+# 
+# sub shut_up {
+# 	my $ref = shift;
+# 	open $save_err, ">&STDERR";
+# 	open STDERR, '>', \$ref;
+# }
+# sub open_up {
+# 	open STDERR, ">&", $save_err;
+# }
 
 
  
@@ -136,21 +136,20 @@ sub tag_texts {
 		
 		my_log("Tagger", "===============================================INITIALISING SCENARIO");
 		my $errbuf;
-		shut_up(\$errbuf);
-		
-		my $err;
-		my $errcount;
-		do {
-			eval {$scenario = TectoMT::Scenario->new({'blocks'=> [ qw(SCzechW_to_SCzechM::Sentence_segmentation SCzechW_to_SCzechM::Tokenize  SCzechW_to_SCzechM::TagHajic SCzechM_to_SCzechN::SVM_ne_recognizer) ]})};
+		capture {
+			my $err;
+			my $errcount;
+			do {
+				eval {$scenario = TectoMT::Scenario->new({'blocks'=> [ qw(SCzechW_to_SCzechM::Sentence_segmentation SCzechW_to_SCzechM::Tokenize  SCzechW_to_SCzechM::TagHajic SCzechM_to_SCzechN::SVM_ne_recognizer) ]})};
 					#redirecting STDERR doesn't stop eval from working
-			$err=$@;
-			$errcount++;
-		} while ($err and ($errcount < 5)); 
+				$err=$@;
+				$errcount++;
+			} while ($err and ($errcount < 5)); 
 		
-		if ($err) {
-			die $err;
-		}
-		open_up();
+			if ($err) {
+				die $err;
+			}
+		} \$errbuf, \$errbuf;
 		my_log("Tagger", "===============================================DONE, now errbuf...");
 		my_log("Tagger",$errbuf);
 		$scenario_initialized = 1;
@@ -166,23 +165,22 @@ sub tag_texts {
 	my_log("Tagger", "===============================================MAIN TAGGING");
 	
 	my $errbuf;
-	shut_up(\$errbuf);
-	
-	eval {$scenario->apply_on_tmt_documents(@documents_hash{@articles})};
-	if ($@) {
-		my_log("Tagger", "======================================FIRST TIME NOT OK");
+	capture {
 		eval {$scenario->apply_on_tmt_documents(@documents_hash{@articles})};
 		if ($@) {
-			my_log("Tagger", "======================================2ND TIME NOT OK");
-			my_warning("Tagger", "tag_texts - shi'it :-( $@");
+			my_log("Tagger", "======================================FIRST TIME NOT OK");
+			eval {$scenario->apply_on_tmt_documents(@documents_hash{@articles})};
+			if ($@) {
+				my_log("Tagger", "======================================2ND TIME NOT OK");
+				my_warning("Tagger", "tag_texts - shi'it :-/ $@");
+			} else {
+					my_log("Tagger", "======================================2ND TIME OK");
+			}
 		} else {
-			my_log("Tagger", "======================================2ND TIME OK");
+			my_log("Tagger", "======================================FIRST TIME OK");
 		}
-	} else {
-		my_log("Tagger", "======================================FIRST TIME OK");
-	}
+	} \$errbuf, \$errbuf;
 	
-	open_up();	
 	my_log("Tagger", "===============================================DONE, now errbuf...");
 	my_log("Tagger",$errbuf);
 	

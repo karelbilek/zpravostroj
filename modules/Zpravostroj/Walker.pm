@@ -69,7 +69,6 @@ sub redo_it {
 			@articles = (read_db(pool=>1, articles=>1))->{articles};
 			#my_log("Walker-redo", "I read pool articles");
 			#use YAML::XS;
-			#print Dump \@articles;
 		}
 	} elsif (my $day = $parameters{day}) {
 		if ($parameters{do_reading}) {

@@ -134,7 +134,6 @@ sub connect_bottom {
 
 sub make_corrections {
 	my $article_ref = shift;
-	print $article_ref;
 	if (!defined $article_ref->{all_words}) {
 		my @empty = ();
 		$article_ref->{all_words} = \@empty;
